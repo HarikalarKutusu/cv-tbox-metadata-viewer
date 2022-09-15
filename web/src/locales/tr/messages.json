@@ -1,0 +1,55 @@
+{
+    "app.title": "Common Voice Metadata Görüntüleyici",
+    "app.subtitle": "CV-ToolBox paketinin bir parçasıdır",
+    "app.copyright": "CV-ToolBox (c) Harikalar Kutusu, özgür yazılımdır",
+
+    "ui.languageselector.title": "Select your voice & interface language",
+
+    "colnames.version": "Version",
+    "colnames.date": "Rel. Date",
+    "colnames.locale": "Locale",
+  
+    "colnames.clips": "Clips",
+    "colnames.users": "Users",
+    "colnames.duration": "Duration (sec)",
+    "colnames.totalHrs": "Total Hours",
+    "colnames.validHrs": "Valid Hours",
+    "colnames.validDurationSecs": "Valid Duration (sec)",
+    "colnames.avgDurationSecs": "Avg Duration (sec)",
+  
+    "colnames.buckets": "Buckets",
+    "colnames.buckets_validated": "Validated Set",
+    "colnames.buckets_invalidated": "CHANGEME",
+    "colnames.buckets_other": "CHANGEME",
+    "colnames.buckets_train": "CHANGEME",
+    "colnames.buckets_dev": "CHANGEME",
+    "colnames.buckets_test": "CHANGEME",
+    "colnames.buckets_reported": "CHANGEME",
+  
+    "colnames.ages": "Age Info",
+    "colnames.ages_nodata": "CHANGEME",
+    "colnames.ages_teens": "CHANGEME",
+    "colnames.ages_twenties": "CHANGEME",
+    "colnames.ages_thirties": "CHANGEME",
+    "colnames.ages_fourties": "CHANGEME",
+    "colnames.ages_fifties": "CHANGEME",
+    "colnames.ages_sixties": "CHANGEME",
+    "colnames.ages_seventies": "CHANGEME",
+    "colnames.ages_eighties": "CHANGEME",
+    "colnames.ages_nineties": "CHANGEME",
+  
+    "colnames.genders": "Gender Info",
+    "colnames.genders_nodata": "CHANGEME",
+    "colnames.genders_male": "CHANGEME",
+    "colnames.genders_female": "CHANGEME",
+    "colnames.genders_other": "CHANGEME",
+  
+    "colnames.reportedSentences": "CHANGEME",
+  
+    "colnames.size": "CHANGEME",
+    "colnames.checksum": "CHANGEME",
+  
+    "select.languages": "Üzerinde çalışacağınız dilleri seçiniz",
+    "select.versions": "Üzerinde çalışacağınız sürümleri seçiniz"
+
+}

@@ -1,0 +1,54 @@
+{
+  "app.title": "Common Voice Metadata Viewer",
+  "app.subtitle": "Part of CV-ToolBox",
+  "app.copyright": "CV-ToolBox is (c) Harikalar Kutusu, it is free to use",
+
+  "ui.languageselector.title": "Select your voice & interface language",
+
+  "colnames.version": "Version",
+  "colnames.date": "Rel. Date",
+  "colnames.locale": "Locale",
+
+  "colnames.clips": "Clips",
+  "colnames.users": "Users",
+  "colnames.duration": "Duration (sec)",
+  "colnames.totalHrs": "Total Hours",
+  "colnames.validHrs": "Valid Hours",
+  "colnames.validDurationSecs": "Valid Duration (sec)",
+  "colnames.avgDurationSecs": "Avg Duration (sec)",
+
+  "colnames.buckets": "Buckets",
+  "colnames.buckets_validated": "Validated Set",
+  "colnames.buckets_invalidated": "Invalidated",
+  "colnames.buckets_other": "Other",
+  "colnames.buckets_train": "Train",
+  "colnames.buckets_dev": "Dev",
+  "colnames.buckets_test": "Test",
+  "colnames.buckets_reported": "Reported",
+
+  "colnames.ages": "Age Info",
+  "colnames.ages_nodata": "No Data",
+  "colnames.ages_teens": "<20",
+  "colnames.ages_twenties": "20-29",
+  "colnames.ages_thirties": "30-39",
+  "colnames.ages_fourties": "40-49",
+  "colnames.ages_fifties": "50-59",
+  "colnames.ages_sixties": "60-69",
+  "colnames.ages_seventies": "70-79",
+  "colnames.ages_eighties": "80-89",
+  "colnames.ages_nineties": "90-99",
+
+  "colnames.genders": "Gender Info",
+  "colnames.genders_nodata": "No Data",
+  "colnames.genders_male": "Male",
+  "colnames.genders_female": "Female",
+  "colnames.genders_other": "Other",
+
+  "colnames.reportedSentences": "Reported",
+
+  "colnames.size": "File Size",
+  "colnames.checksum": "Checksum",
+
+  "select.languages": "Select languages to work on",
+  "select.versions": "Select versions to work on"
+}
