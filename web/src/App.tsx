@@ -11,7 +11,7 @@ import { useStore } from "./stores/store";
 
 import "./App.css";
 
-import { LanguageSelector } from "./components/languageSelector"
+import { LanguageSelector } from "./components/languageSelector";
 import { MetadataTable } from "./components/metaDataTable";
 import {
   METADATA_FILE,
@@ -22,11 +22,12 @@ import {
 } from "./helpers/metadataHelper";
 import DataFrame from "dataframe-js";
 
-function App() {
+import { AppUI } from "./components/ui/ui";
 
+function App() {
   // Is data ready?
-  const [initDone, setInitDone] = useState(false);
-  // const { initDone, setInitDone } = useStore();
+  // const [initDone, setInitDone] = useState(false);
+  const { initDone, setInitDone } = useStore();
   // Store
   const { langCode, setLangCode } = useStore();
   const { metaData, setMetaData } = useStore();
@@ -65,14 +66,15 @@ function App() {
     <>
       <div className="App data_table">
         <Suspense>
-          <LanguageSelector />
-          <br />
-          { intl.get('app.title')}
-          <MetadataTable
+          {/* <LanguageSelector /> */}
+          {/* <br /> */}
+          {/* { intl.get('app.title')} */}
+          {/* <MetadataTable
             view="main"
             defaultSortField="version"
             defaultSortAsc={false}
-          />
+          /> */}
+          <AppUI />
         </Suspense>
       </div>
       ;

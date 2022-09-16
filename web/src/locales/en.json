@@ -3,7 +3,7 @@
   "app.subtitle": "Part of CV-ToolBox",
   "app.copyright": "CV-ToolBox is (c) Harikalar Kutusu, it is free to use",
 
-  "ui.languageselector.title": "Select your interface language",
+  "ui.languageselector.title": "Select your user interface language",
 
   "ui.filter.language": "Filter languages",
   "ui.filter.version": "Filter versions",
@@ -13,21 +13,25 @@
 
   "ui.action.reset": "Reset table",
 
+  "menu.views.title": "Tables",
   "menu.views.summary": "Summary",
+  "menu.views.calculated": "Calculated",
   "menu.views.buckets-all": "All buckets",
   "menu.views.buckets-main": "Major buckets",
   "menu.views.buckets-model": "Model splits",
-  "menu.views.ages": "Ages",
-  "menu.views.genders": "Genders",
+  "menu.views.users": "Per User Values",
+  "menu.views.ages": "Age Distribution",
+  "menu.views.genders": "Gender Distribution",
   "menu.views.other": "Other Info",
-  "menu.graphs": "",
+
+  "menu.graphs.title": "Graphs",
 
   "pagination.perpage": "Show per page",
   "pagination.rangeseparator": "of",
   "pagination.selectallrows": "All",
 
   "colnames.version": "Version",
-  "colnames.date": "Rel. Date",
+  "colnames.date": "Rel.Date",
   "colnames.locale": "Locale",
 
   "colnames.clips": "Clips",
@@ -36,10 +40,10 @@
   "colnames.totalHrs": "Total Hours",
   "colnames.validHrs": "Valid Hours",
   "colnames.validDurationSecs": "Valid Duration (sec)",
-  "colnames.avgDurationSecs": "Avg Duration (sec)",
+  "colnames.avgDurationSecs": "Avg.Duration (sec)",
 
   "colnames.buckets": "Buckets",
-  "colnames.buckets_validated": "Validated Set",
+  "colnames.buckets_validated": "Validated",
   "colnames.buckets_invalidated": "Invalidated",
   "colnames.buckets_other": "Other",
   "colnames.buckets_train": "Train",
@@ -48,26 +52,26 @@
   "colnames.buckets_reported": "Reported",
 
   "colnames.ages": "Age Info",
-  "colnames.ages_nodata": "No Data",
-  "colnames.ages_teens": "<20",
-  "colnames.ages_twenties": "20-29",
-  "colnames.ages_thirties": "30-39",
-  "colnames.ages_fourties": "40-49",
-  "colnames.ages_fifties": "50-59",
-  "colnames.ages_sixties": "60-69",
-  "colnames.ages_seventies": "70-79",
-  "colnames.ages_eighties": "80-89",
-  "colnames.ages_nineties": "90-99",
+  "colnames.ages_nodata": "%No Data",
+  "colnames.ages_teens": "%<20",
+  "colnames.ages_twenties": "%20-29",
+  "colnames.ages_thirties": "%30-39",
+  "colnames.ages_fourties": "%40-49",
+  "colnames.ages_fifties": "%50-59",
+  "colnames.ages_sixties": "%60-69",
+  "colnames.ages_seventies": "%70-79",
+  "colnames.ages_eighties": "%80-89",
+  "colnames.ages_nineties": "%90-99",
 
   "colnames.genders": "Gender Info",
-  "colnames.genders_nodata": "No Data",
-  "colnames.genders_male": "Male",
-  "colnames.genders_female": "Female",
-  "colnames.genders_other": "Other",
+  "colnames.genders_nodata": "%No Data/All",
+  "colnames.genders_male": "%Male/All",
+  "colnames.genders_female": "%Female/All",
+  "colnames.genders_other": "%Other/All",
 
   "colnames.reportedSentences": "Reported",
 
-  "colnames.size": "File Size",
+  "colnames.size": "File Size (MB)",
   "colnames.checksum": "Checksum",
 
   "calculated.valid_hrs_percentage": "%Validated Hrs.",
@@ -75,6 +79,14 @@
   "calculated.reported_percentage": "%Reported",
   "calculated.avg_recs_per_user": "Avg.Recs/User",
   "calculated.avg_hrs_per_user": "Avg.Hrs/User",
+
+  "calculated.est_train_hrs": "~Train Hrs.",
+  "calculated.est_dev_hrs": "~Dev Hrs.",
+  "calculated.est_test_hrs": "~Test Hrs.",
+
+  "calculated.fm_ratio": "Female/Male Ratio",
+  "calculated.male_percentage": "%Male/Dem",
+  "calculated.female_percentage": "%Female/Dem",
 
   "xxx": "xxx"
 }

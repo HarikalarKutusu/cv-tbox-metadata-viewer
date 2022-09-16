@@ -19,10 +19,12 @@ export type StoreType = {
   setLanguageData: (df: DataFrame) => void;
 
   // metadata
-  // metaData: DataFrame | undefined;
-  // setMetaData: (df: DataFrame) => void;
   metaData: DT_ROW_TYPE[] | undefined;
   setMetaData: (df: DT_ROW_TYPE[]) => void;
+
+  // Table View
+  tableView: string;
+  setTableView: (view: string) => void;
 
   // selected version filter
 
@@ -31,7 +33,7 @@ export type StoreType = {
   // language working set
 
   // version working set
-  
+
 };
 
 const useStore = create<StoreType>((set) => ({
@@ -50,6 +52,10 @@ const useStore = create<StoreType>((set) => ({
   // metadata
   metaData: undefined,
   setMetaData: (df) => set((state) => ({ ...state, metaData: df })),
+
+  // Table View
+  tableView: 'main',
+  setTableView: (view: string) => set((state) => ({ ...state, tableView: view })),
 }));
 
 export { useStore };

@@ -14,7 +14,7 @@ export const INTL_LOCALES = {
 
 export type LanguageCodesType = "en" | "tr";
 export const LANGUAGES: LanguageCodesType[] = ["en", "tr"];
-export const DEFAULT_UI_LOCALE: LanguageCodesType = "tr";
+export const DEFAULT_UI_LOCALE: LanguageCodesType = "en";
 
 // // Short list to be used in selector
 // export type LanguageListType = {

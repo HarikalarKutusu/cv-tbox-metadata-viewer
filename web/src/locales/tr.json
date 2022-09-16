@@ -3,7 +3,7 @@
     "app.subtitle": "CV-ToolBox paketinin bir parçasıdır",
     "app.copyright": "CV-ToolBox (c) Harikalar Kutusu, özgür yazılımdır",
 
-    "ui.languageselector.title": "Select your voice & interface language",
+    "ui.languageselector.title": "Kullanıcı arayüz dilinizi seçiniz",
 
     "ui.filter.language": "Filter languages",
     "ui.filter.version": "Filter versions",
@@ -13,15 +13,23 @@
   
     "ui.action.reset": "Tabloyu sıfırla",
 
+    "menu.views.title": "Tablolar",
     "menu.views.summary": "Özet",
+    "menu.views.calculated": "Hesaplanmış",
     "menu.views.buckets-all": "Tüm Gruplamalar",
     "menu.views.buckets-main": "Ana Gruplar",
     "menu.views.buckets-model": "Model Bölümlemeleri",
+    "menu.views.users": "Kullanıcı başı değerler",
     "menu.views.ages": "Yaşlar",
     "menu.views.genders": "Cinsiyetler",
     "menu.views.other": "Diğer Bilgi",
-    "menu.graphs": "",
 
+    "menu.graphs.title": "Grafikler",
+
+    "pagination.perpage": "Sayfa başına",
+    "pagination.rangeseparator": "/",
+    "pagination.selectallrows": "Tümü",
+  
     "colnames.version": "Sürüm",
     "colnames.date": "Tarih",
     "colnames.locale": "Dil",
@@ -44,26 +52,26 @@
     "colnames.buckets_reported": "Raporlanma",
   
     "colnames.ages": "Yaşlar",
-    "colnames.ages_nodata": "Veri yok",
-    "colnames.ages_teens": "<20",
-    "colnames.ages_twenties": "20-29",
-    "colnames.ages_thirties": "30-39",
-    "colnames.ages_fourties": "40-49",
-    "colnames.ages_fifties": "50-59",
-    "colnames.ages_sixties": "60-69",
-    "colnames.ages_seventies": "70-79",
-    "colnames.ages_eighties": "80-89",
-    "colnames.ages_nineties": "90-99",
-    
+    "colnames.ages_nodata": "%Veri yok",
+    "colnames.ages_teens": "%<20",
+    "colnames.ages_twenties": "%20-29",
+    "colnames.ages_thirties": "%30-39",
+    "colnames.ages_fourties": "%40-49",
+    "colnames.ages_fifties": "%50-59",
+    "colnames.ages_sixties": "%60-69",
+    "colnames.ages_seventies": "%70-79",
+    "colnames.ages_eighties": "%80-89",
+    "colnames.ages_nineties": "%90-99",
+      
     "colnames.genders": "Cinsiyet",
-    "colnames.genders_nodata": "Veri yok",
+    "colnames.genders_nodata": "%Veri yok/Tümü",
     "colnames.genders_male": "Erkek",
     "colnames.genders_female": "Kadın",
     "colnames.genders_other": "Diğer",
   
     "colnames.reportedSentences": "Raporlanmış",
   
-    "colnames.size": "Dosya büyüklüğü",
+    "colnames.size": "Dosya büyüklüğü (MB)",
     "colnames.checksum": "Sağlama toplamı",
   
     "calculated.valid_hrs_percentage": "Onaylı Saat%",
@@ -72,7 +80,13 @@
     "calculated.avg_recs_per_user": "Ort.Kayıt/Kişi",
     "calculated.avg_hrs_per_user": "Ort.Saat/Kişi",
 
-    "select.languages": "Üzerinde çalışacağınız dilleri seçiniz",
-    "select.versions": "Üzerinde çalışacağınız sürümleri seçiniz"
+    "calculated.est_train_hrs": "~Eğitim Saati",
+    "calculated.est_dev_hrs": "~Geliştirme Saati",
+    "calculated.est_test_hrs": "~Test Saati",
+  
+    "calculated.fm_ratio": "Kadın/Erkek Oranı",
+    "calculated.male_percentage": "%Erken/Dem",
+    "calculated.female_percentage": "%Kadın/Dem",
 
+    "xxx": "xxx"
 }

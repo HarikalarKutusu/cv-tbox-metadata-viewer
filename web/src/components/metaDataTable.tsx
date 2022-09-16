@@ -40,11 +40,12 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
   const { initDone } = useStore();
   const { metaData, setMetaData } = useStore();
+  const { tableView } = useStore();
   const { langCode } = useStore();
 
-  const view = props.view ? props.view : "main";
+  // const view = props.view ? props.view : "main";
 
-  const [viewColumns, viewTitle] = getMetaDataTableView(view, langCode);
+  const [viewColumns, viewTitle] = getMetaDataTableView(tableView, langCode);
 
   const paginationComponentOptions = {
     rowsPerPageText: intl.get('pagination.perpage'),
@@ -105,9 +106,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
       // fixedHeader
       // fixedHeaderScrollHeight="300px"
       persistTableHead
-      subHeader
+      // subHeader
       // subHeaderWrap
-      subHeaderAlign={Alignment.RIGHT}
+      // subHeaderAlign={Alignment.RIGHT}
       // subHeaderComponent={Filter}
       // sortIcon={sortIcon}
       selectableRows
