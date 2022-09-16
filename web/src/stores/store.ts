@@ -3,7 +3,7 @@
 import create from "zustand";
 import { DataFrame } from "dataframe-js";
 import { DT_ROW_TYPE } from "./../helpers/dataTableHelper"
-import { LanguageCodesType, DEFAULT_LANGUAGE } from "./../helpers/localeHelper";
+import { LanguageCodesType, DEFAULT_UI_LOCALE } from "./../helpers/localeHelper";
 
 export type StoreType = {
   // Init Done
@@ -24,9 +24,14 @@ export type StoreType = {
   metaData: DT_ROW_TYPE[] | undefined;
   setMetaData: (df: DT_ROW_TYPE[]) => void;
 
+  // selected version filter
+
+  // selected language filter
+
   // language working set
 
   // version working set
+  
 };
 
 const useStore = create<StoreType>((set) => ({
@@ -35,7 +40,7 @@ const useStore = create<StoreType>((set) => ({
   setInitDone: (status) => set((state) => ({ ...state, initDone: status })),
 
   // language
-  langCode: DEFAULT_LANGUAGE,
+  langCode: DEFAULT_UI_LOCALE,
   setLangCode: (langCode) => set((state) => ({ ...state, langCode: langCode })),
 
   // language data

@@ -3,7 +3,20 @@
   "app.subtitle": "Part of CV-ToolBox",
   "app.copyright": "CV-ToolBox is (c) Harikalar Kutusu, it is free to use",
 
-  "ui.languageselector.title": "Select your voice & interface language",
+  "ui.languageselector.title": "Select your interface language",
+
+  "ui.filter.language": "Filter languages",
+  "ui.filter.version": "Filter versions",
+
+  "ui.select.languages": "Select languages to work on",
+  "ui.select.versions": "Select versions to work on",
+
+  "ui.action.reset": "Reset table",
+
+  "pagination.perpage": "Show per page",
+  "pagination.rangeseparator": "of",
+  "pagination.selectallrows": "All",
+
 
   "colnames.version": "Version",
   "colnames.date": "Rel. Date",
@@ -49,6 +62,10 @@
   "colnames.size": "File Size",
   "colnames.checksum": "Checksum",
 
-  "select.languages": "Select languages to work on",
-  "select.versions": "Select versions to work on"
+  "calculated.valid_hrs_percentage": "%Validated Hrs.",
+  "calculated.invalid_recs_percentage": "%Invalidated Recs",
+  "calculated.reported_percentage": "%Reported",
+  "calculated.recs_per_user": "Avg.Recs/User",
+
+  "xxx": ""
 }
