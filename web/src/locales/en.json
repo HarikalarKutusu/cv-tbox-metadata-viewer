@@ -13,10 +13,18 @@
 
   "ui.action.reset": "Reset table",
 
+  "menu.views.summary": "Summary",
+  "menu.views.buckets-all": "All buckets",
+  "menu.views.buckets-main": "Major buckets",
+  "menu.views.buckets-model": "Model splits",
+  "menu.views.ages": "Ages",
+  "menu.views.genders": "Genders",
+  "menu.views.other": "Other Info",
+  "menu.graphs": "",
+
   "pagination.perpage": "Show per page",
   "pagination.rangeseparator": "of",
   "pagination.selectallrows": "All",
-
 
   "colnames.version": "Version",
   "colnames.date": "Rel. Date",
@@ -65,7 +73,8 @@
   "calculated.valid_hrs_percentage": "%Validated Hrs.",
   "calculated.invalid_recs_percentage": "%Invalidated Recs",
   "calculated.reported_percentage": "%Reported",
-  "calculated.recs_per_user": "Avg.Recs/User",
+  "calculated.avg_recs_per_user": "Avg.Recs/User",
+  "calculated.avg_hrs_per_user": "Avg.Hrs/User",
 
-  "xxx": ""
+  "xxx": "xxx"
 }

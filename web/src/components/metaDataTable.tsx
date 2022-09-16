@@ -44,7 +44,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
   const view = props.view ? props.view : "main";
 
-  const viewColumns = getMetaDataTableView(view, langCode);
+  const [viewColumns, viewTitle] = getMetaDataTableView(view, langCode);
 
   const paginationComponentOptions = {
     rowsPerPageText: intl.get('pagination.perpage'),
@@ -101,7 +101,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       paginationComponentOptions={paginationComponentOptions}
       direction={Direction.AUTO}
       highlightOnHover
-      title="Common Voice Metadata"
+      title={viewTitle}
       // fixedHeader
       // fixedHeaderScrollHeight="300px"
       persistTableHead

@@ -90,7 +90,10 @@ const numericVersionSort = (rowA: DT_ROW_TYPE, rowB: DT_ROW_TYPE) => {
 
 // }
 
-export function getMetaDataTableView(viewname: string, langCode: string) {
+export function getMetaDataTableView(
+  viewname: string,
+  langCode: string,
+): [TableColumn<DT_ROW_TYPE>[], string] {
   console.log("getMetaDataTableView");
   // const { langCode } = useStore();
 
@@ -163,7 +166,7 @@ export function getMetaDataTableView(viewname: string, langCode: string) {
     name: intl.get("colnames.avgDurationSecs"),
     sortable: true,
     right: true,
-    selector: (row) => row.avgDurationSecs,
+    selector: (row) => row.avgDurationSecs / 1000,
     cell: (row) => row.avgDurationSecs.toLocaleString(langCode),
   };
 
@@ -356,20 +359,28 @@ export function getMetaDataTableView(viewname: string, langCode: string) {
     selector: (row) =>
       Number(((100 * row.buckets_reported) / row.clips).toFixed(2)),
   };
-  const calcRecsPerUser: TableColumn<DT_ROW_TYPE> = {
-    id: "recsPerUser",
-    name: intl.get("calculated.recs_per_user"),
+  const calcAvgRecsPerUser: TableColumn<DT_ROW_TYPE> = {
+    id: "avgRecsPerUser",
+    name: intl.get("calculated.avg_recs_per_user"),
+    sortable: true,
+    right: true,
+    selector: (row) => Number(((100 * row.clips) / row.users).toFixed(2)),
+  };
+  const calcAvgHrsPerUser: TableColumn<DT_ROW_TYPE> = {
+    id: "avgHrsPerUser",
+    name: intl.get("calculated.avg_hrs_per_user"),
     sortable: true,
     right: true,
     selector: (row) =>
-      Number(((100 * row.clips) / row.users).toFixed(2)),
+      Number(((100 * row.duration) / row.users / (1000 * 60 * 60)).toFixed(2)),
   };
 
-  let res: TableColumn<DT_ROW_TYPE>[];
+  let viewCols: TableColumn<DT_ROW_TYPE>[];
+  let viewTitle: string = "";
 
   switch (viewname) {
     case "main":
-      res = [
+      viewCols = [
         colVersion,
         colDate,
         colLocale,
@@ -377,14 +388,17 @@ export function getMetaDataTableView(viewname: string, langCode: string) {
         colUsers,
         colTotalHrs,
         colValidHrs,
+        colAvgDurationSecs,
         calcValidHrsPercentage,
         calcInvalidRecsPercentage,
         calcReportedPercentage,
-        calcRecsPerUser,
+        calcAvgRecsPerUser,
+        calcAvgHrsPerUser,
       ];
+      viewTitle = intl.get("menu.views.summary");
       break;
     case "buckets-all":
-      res = [
+      viewCols = [
         colVersion,
         colLocale,
         colClips,
@@ -396,33 +410,38 @@ export function getMetaDataTableView(viewname: string, langCode: string) {
         colBucketsTest,
         colBucketsReported,
       ];
+      viewTitle = intl.get("menu.views.buckets-all");
       break;
     case "buckets-main":
-      res = [
+      viewCols = [
         colVersion,
         colLocale,
         colBucketsValidated,
         colBucketsInValidated,
         colBucketsOther,
       ];
+      viewTitle = intl.get("menu.views.buckets-main");
       break;
     case "buckets-model":
-      res = [
+      viewCols = [
         colVersion,
         colLocale,
         colBucketsTrain,
         colBucketsDev,
         colBucketsTest,
       ];
+      viewTitle = intl.get("menu.views.buckets-model");
       break;
-    case "buckets-reported":
-      res = [colVersion, colLocale, colBucketsReported];
-      break;
-    case "average-duration":
-      res = [colVersion, colLocale, colAvgDurationSecs];
-      break;
+    // case "buckets-reported":
+    //   viewCols = [colVersion, colLocale, colBucketsReported];
+    //   viewTitle = intl.get('menu.views.buckets-reported');
+    //   break;
+    // case "average-duration":
+    //   viewCols = [colVersion, colLocale, colAvgDurationSecs];
+    //   viewTitle = intl.get('menu.views.summary');
+    //   break;
     case "ages":
-      res = [
+      viewCols = [
         colVersion,
         colLocale,
         colAgesTeens,
@@ -436,9 +455,10 @@ export function getMetaDataTableView(viewname: string, langCode: string) {
         colAgesNineties,
         colAgesNodata,
       ];
+      viewTitle = intl.get("menu.views.ages");
       break;
     case "genders":
-      res = [
+      viewCols = [
         colVersion,
         colLocale,
         colGendersMale,
@@ -446,13 +466,15 @@ export function getMetaDataTableView(viewname: string, langCode: string) {
         colGendersOther,
         colGendersNodata,
       ];
+      viewTitle = intl.get("menu.views.genders");
       break;
     case "other":
-      res = [colVersion, colLocale, colSize, colChecksum];
+      viewCols = [colVersion, colLocale, colSize, colChecksum];
+      viewTitle = intl.get("menu.views.other");
       break;
     default:
-      res = [];
+      viewCols = [];
   }
 
-  return res;
+  return [viewCols, viewTitle];
 }
