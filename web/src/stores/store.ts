@@ -20,7 +20,11 @@ export type StoreType = {
 
   // metadata
   metaData: DT_ROW_TYPE[] | undefined;
-  setMetaData: (df: DT_ROW_TYPE[]) => void;
+  setMetaData: (dt: DT_ROW_TYPE[]) => void;
+
+  // cv Aggregated data per version
+  cvAggregated: DT_ROW_TYPE[] | undefined;
+  setCvAggregated: (dt: DT_ROW_TYPE[]) => void;
 
   // Table View
   tableView: string;
@@ -47,11 +51,15 @@ const useStore = create<StoreType>((set) => ({
 
   // language data
   languageData: undefined,
-  setLanguageData: (df) => set((state) => ({ ...state, languageData: df })),
+  setLanguageData: (dt) => set((state) => ({ ...state, languageData: dt })),
 
   // metadata
   metaData: undefined,
-  setMetaData: (df) => set((state) => ({ ...state, metaData: df })),
+  setMetaData: (dt) => set((state) => ({ ...state, metaData: dt })),
+
+  // metadata
+  cvAggregated: undefined,
+  setCvAggregated: (dt) => set((state) => ({ ...state, metaData: dt })),
 
   // Table View
   tableView: 'main',

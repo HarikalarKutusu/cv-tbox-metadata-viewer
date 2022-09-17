@@ -15,7 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
@@ -42,10 +42,6 @@ import TransgenderIcon from "@mui/icons-material/Transgender";
 // Other (tech info)
 import BuildIcon from "@mui/icons-material/Build";
 
-// import BarChartIcon from "@mui/icons-material/BarChart";
-// import LayersIcon from "@mui/icons-material/Layers";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-
 // App Components
 import { useStore } from "./../../stores/store";
 import { LanguageSelector } from "./../languageSelector";
@@ -65,44 +61,44 @@ const menuItemsGraphs = (
     </ListSubheader>
     <ListItemButton>
       <ListItemIcon>
-        <AssignmentIcon />
+        <SummarizeIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="TODO" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <AssignmentIcon />
+        <SummarizeIcon />
       </ListItemIcon>
-      <ListItemText primary="Last quarter" />
+      <ListItemText primary="TODO" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <AssignmentIcon />
+        <SummarizeIcon />
       </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
+      <ListItemText primary="TODO" />
     </ListItemButton>
   </React.Fragment>
 );
 
 // Copyright
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+// function Copyright(props: any) {
+//   return (
+//     <Typography
+//       variant="body2"
+//       color="text.secondary"
+//       align="center"
+//       {...props}
+//     >
+//       {"Copyright © "}
+//       <Link color="inherit" href="https://mui.com/">
+//         Your Website
+//       </Link>{" "}
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
 
 const drawerWidth: number = 240;
 
@@ -163,7 +159,7 @@ export function AppUI() {
   };
 
   const { initDone } = useStore();
-  const { tableView, setTableView } = useStore();
+  const { setTableView } = useStore();
 
   const MenuItemsTable = () => {
     return (
@@ -344,7 +340,7 @@ export function AppUI() {
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
+            {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
       </Box>

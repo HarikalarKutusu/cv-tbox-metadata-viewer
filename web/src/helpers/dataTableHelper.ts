@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from "react";
 import intl from "react-intl-universal";
-import { useStore } from "../stores/store";
 
-import { DataFrame, GroupedDataFrame } from "dataframe-js";
+import { TableColumn } from "react-data-table-component";
 
-import DataTable, {
-  TableColumn,
-  TableProps,
-  Direction,
-  Alignment,
-  Media,
-} from "react-data-table-component";
-import { __rows__ } from "dataframe-js/symbol";
-
-const selectProps = {
-  indeterminate: (isIndeterminate: boolean) => isIndeterminate,
-};
+// const selectProps = {
+//   indeterminate: (isIndeterminate: boolean) => isIndeterminate,
+// };
 
 export type DT_ROW_TYPE = {
   version: string;
@@ -60,20 +49,6 @@ export type DT_ROW_TYPE = {
   checksum: string;
 };
 
-// const numericSort = (rows: DT_ROW_TYPE[], selector: any, direction: any) => {
-//   return rows.sort ((rowA: DT_ROW_TYPE, rowB: DT_ROW_TYPE) => {
-//     const a = parseFloat(rowA.version)
-//     const b = parseFloat(rowA.version)
-//     let res = 0;
-//     if (a > b) {
-//       res = 1
-//     } else if (a < b) {
-//       res = -1
-//     }
-//     return direction === 'desc' ? res * -1 : res;
-//   })
-// };
-
 const numericVersionSort = (rowA: DT_ROW_TYPE, rowB: DT_ROW_TYPE) => {
   const a = parseFloat(rowA.version);
   const b = parseFloat(rowB.version);
@@ -86,23 +61,16 @@ const numericVersionSort = (rowA: DT_ROW_TYPE, rowB: DT_ROW_TYPE) => {
   return res;
 };
 
-// const localeFormattedNumber = (row: DT_ROW_TYPE)  => {
-
-// }
-
 export function getMetaDataTableView(
   viewname: string,
   langCode: string,
 ): [TableColumn<DT_ROW_TYPE>[], string] {
-  console.log("getMetaDataTableView");
-  // const { langCode } = useStore();
-
   const colVersion: TableColumn<DT_ROW_TYPE> = {
     id: "version",
     name: intl.get("colnames.version"),
     sortable: true,
     center: true,
-    width: '100px',
+    width: "100px",
     selector: (row) => row.version,
     sortFunction: numericVersionSort,
   };
@@ -118,7 +86,7 @@ export function getMetaDataTableView(
     name: intl.get("colnames.locale"),
     sortable: true,
     center: true,
-    width: '100px',
+    width: "100px",
     selector: (row) => row.locale,
   };
   const colClips: TableColumn<DT_ROW_TYPE> = {
@@ -234,7 +202,7 @@ export function getMetaDataTableView(
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_nodata).toFixed(2)),
- };
+  };
   const colAgesTeens: TableColumn<DT_ROW_TYPE> = {
     id: "agesTeens",
     name: intl.get("colnames.ages_teens"),
@@ -334,7 +302,8 @@ export function getMetaDataTableView(
     sortable: true,
     right: true,
     selector: (row) => Number((row.size / 1024 / 1024).toFixed(0)),
-    cell: row => Number((row.size / 1024 / 1024).toFixed(0)).toLocaleString(langCode),
+    cell: (row) =>
+      Number((row.size / 1024 / 1024).toFixed(0)).toLocaleString(langCode),
   };
   const colChecksum: TableColumn<DT_ROW_TYPE> = {
     id: "checksum",
@@ -383,27 +352,30 @@ export function getMetaDataTableView(
     selector: (row) =>
       Number(((100 * row.duration) / row.users / (1000 * 60 * 60)).toFixed(2)),
   };
-  
+
   const calcEstTrainHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estTrainHrs",
     name: intl.get("calculated.est_train_hrs"),
     sortable: true,
     right: true,
-    selector: (row) => (row.validHrs * row.buckets_train / row.buckets_validated).toFixed(2)
+    selector: (row) =>
+      ((row.validHrs * row.buckets_train) / row.buckets_validated).toFixed(2),
   };
   const calcEstDevHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estDevHrs",
     name: intl.get("calculated.est_dev_hrs"),
     sortable: true,
     right: true,
-    selector: (row) => (row.validHrs * row.buckets_dev / row.buckets_validated).toFixed(2)
+    selector: (row) =>
+      ((row.validHrs * row.buckets_dev) / row.buckets_validated).toFixed(2),
   };
   const calcEstTestHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estTestHrs",
     name: intl.get("calculated.est_test_hrs"),
     sortable: true,
     right: true,
-    selector: (row) => (row.validHrs * row.buckets_test / row.buckets_validated).toFixed(2)
+    selector: (row) =>
+      ((row.validHrs * row.buckets_test) / row.buckets_validated).toFixed(2),
   };
 
   const calcFMRatio: TableColumn<DT_ROW_TYPE> = {
@@ -420,7 +392,7 @@ export function getMetaDataTableView(
     sortable: true,
     right: true,
     selector: (row) =>
-      Number(( 100 * row.genders_male / (1 - row.genders_nodata)).toFixed(2)),
+      Number(((100 * row.genders_male) / (1 - row.genders_nodata)).toFixed(2)),
   };
   const calcFemalePercentage: TableColumn<DT_ROW_TYPE> = {
     id: "femalePercentage",
@@ -428,7 +400,9 @@ export function getMetaDataTableView(
     sortable: true,
     right: true,
     selector: (row) =>
-      Number(( 100 * row.genders_female / (1 - row.genders_nodata)).toFixed(2)),
+      Number(
+        ((100 * row.genders_female) / (1 - row.genders_nodata)).toFixed(2),
+      ),
   };
 
   let viewCols: TableColumn<DT_ROW_TYPE>[];
@@ -500,7 +474,7 @@ export function getMetaDataTableView(
       break;
     // case "buckets-reported":
     //   viewCols = [colVersion, colLocale, colBucketsReported];
-    //   viewTitle = intl.get('menu.views.buckets-reported'); 
+    //   viewTitle = intl.get('menu.views.buckets-reported');
     //   break;
     // case "average-duration":
     //   viewCols = [colVersion, colLocale, colAvgDurationSecs];

@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import intl from "react-intl-universal";
 // MUI
-import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import ListItemText from "@mui/material/ListItemText";
 import InputLabel from "@mui/material/InputLabel";

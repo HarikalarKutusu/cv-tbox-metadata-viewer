@@ -73,7 +73,7 @@ export const getEnabledUILanguages = () => {
 
 // Initialize - returns the selected default language or browser language
 export const uiLocaleInit = (reqLocale?: LanguageCodesType) => {
-  console.log("uiLocaleInit");
+  // console.log("uiLocaleInit");
 
   let resLang: string = DEFAULT_UI_LOCALE; // assume default
   if (!reqLocale) { // No specific locale requested, decide from browser and/or default
