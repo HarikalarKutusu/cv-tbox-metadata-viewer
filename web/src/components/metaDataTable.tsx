@@ -35,9 +35,11 @@ export type MetadataTableProps = {
 
 export const MetadataTable = (props: MetadataTableProps) => {
   const { initDone } = useStore();
+  const { langCode } = useStore();
   const { metaData, setMetaData } = useStore();
   const { tableView } = useStore();
-  const { langCode } = useStore();
+  const { versionFilter } = useStore();
+  const { languageFilter } = useStore();
 
   // const view = props.view ? props.view : "main";
 
@@ -49,6 +51,17 @@ export const MetadataTable = (props: MetadataTableProps) => {
     selectAllRowsItem: true,
     selectAllRowsItemText: intl.get("pagination.selectallrows"),
   };
+
+  const applyFilters = (data: DT_ROW_TYPE[]) => {
+    let res: DT_ROW_TYPE[] = data;
+    if (versionFilter.length > 0) {
+      res = res.filter(row => versionFilter.includes(row.version))
+    }
+    if (languageFilter.length > 0) {
+      res = res.filter(row => languageFilter.includes(row.locale))
+    }
+    return res
+  }
 
   useEffect(() => {
     // make sure data is ready
@@ -65,7 +78,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
   ) : (
     <DataTable
       columns={viewColumns}
-      data={metaData}
+      data={applyFilters(metaData)}
       progressPending={!metaData}
       responsive
       dense

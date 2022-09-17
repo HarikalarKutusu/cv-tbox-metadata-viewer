@@ -49,6 +49,7 @@ export const LanguageSelector = (props: any) => {
         <Select
           labelId="ui-language-select"
           id="ui-language-select"
+          title={intl.get("ui.languageselector.title")}
           value={langCode}
           onChange={handleLanguageChange}
           autoWidth

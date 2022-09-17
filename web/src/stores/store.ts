@@ -31,13 +31,12 @@ export type StoreType = {
   setTableView: (view: string) => void;
 
   // selected version filter
+  versionFilter: string[];
+  setVersionFilter: (lst: string[]) => void;
 
   // selected language filter
-
-  // language working set
-
-  // version working set
-
+  languageFilter: string[];
+  setLanguageFilter: (lst: string[]) => void;
 };
 
 const useStore = create<StoreType>((set) => ({
@@ -64,6 +63,14 @@ const useStore = create<StoreType>((set) => ({
   // Table View
   tableView: 'main',
   setTableView: (view: string) => set((state) => ({ ...state, tableView: view })),
+
+  // selected version filter
+  versionFilter: [],
+  setVersionFilter: (lst: string[]) => set((state) => ({ ...state, versionFilter: lst })),
+
+  // selected language filter
+  languageFilter: [],
+  setLanguageFilter: (lst: string[]) => set((state) => ({ ...state, languageFilter: lst })),
 }));
 
 export { useStore };

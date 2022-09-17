@@ -47,6 +47,7 @@ import { useStore } from "./../../stores/store";
 import { LanguageSelector } from "./../languageSelector";
 import { MetadataTable } from "./../metaDataTable";
 import { FilterSelectors } from "../filterSelectors";
+import { GraphBuilder } from "../graphBuilder";
 
 //
 // UI
@@ -245,7 +246,7 @@ export function AppUI() {
             </IconButton>
             <Typography
               component="h1"
-              variant="h4"
+              variant="h6"
               color="inherit"
               noWrap
               align="left"
@@ -253,7 +254,7 @@ export function AppUI() {
             >
               {intl.get("app.title")}
             </Typography>
-            <Typography
+            {/* <Typography
               component="h1"
               variant="h6"
               color="inherit"
@@ -262,7 +263,7 @@ export function AppUI() {
               sx={{ flexGrow: 1 }}
             >
               {intl.get("ui.filter_table.label")}
-            </Typography>
+            </Typography> */}
             <FilterSelectors />
             <LanguageSelector />
           </Toolbar>
@@ -328,10 +329,9 @@ export function AppUI() {
                   <Deposits />
                 </Paper>
               </Grid> */}
-              {/* Recent Orders */}
+              {/* Table */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  {/* <Orders /> */}
                   <MetadataTable
                     view="main"
                     defaultSortField="version"
@@ -339,6 +339,13 @@ export function AppUI() {
                   />
                 </Paper>
               </Grid>
+              {/* Graph */}
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  <GraphBuilder />
+                </Paper>
+              </Grid>
+
             </Grid>
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
