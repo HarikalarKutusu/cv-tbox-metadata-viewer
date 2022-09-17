@@ -34,7 +34,7 @@ import RuleIcon from "@mui/icons-material/Rule";
 // training
 import PsychologyIcon from "@mui/icons-material/Psychology";
 // users
-import GroupIcon from '@mui/icons-material/Group';
+import GroupIcon from "@mui/icons-material/Group";
 // ages
 import ElderlyWomanIcon from "@mui/icons-material/ElderlyWoman";
 // gender
@@ -47,9 +47,10 @@ import BuildIcon from "@mui/icons-material/Build";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
 // App Components
+import { useStore } from "./../../stores/store";
 import { LanguageSelector } from "./../languageSelector";
 import { MetadataTable } from "./../metaDataTable";
-import { useStore } from "./../../stores/store";
+import { FilterSelectors } from "../filterSelectors";
 
 //
 // UI
@@ -221,8 +222,6 @@ export function AppUI() {
       </React.Fragment>
     );
   };
-  
-
 
   return !initDone ? (
     <></>
@@ -250,19 +249,26 @@ export function AppUI() {
             </IconButton>
             <Typography
               component="h1"
-              variant="h6"
+              variant="h4"
               color="inherit"
               noWrap
+              align="left"
               sx={{ flexGrow: 1 }}
             >
               {intl.get("app.title")}
             </Typography>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              align="right"
+              sx={{ flexGrow: 1 }}
+            >
+              {intl.get("ui.filter_table.label")}
+            </Typography>
+            <FilterSelectors />
             <LanguageSelector />
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

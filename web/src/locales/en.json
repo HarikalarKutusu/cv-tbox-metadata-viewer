@@ -3,10 +3,14 @@
   "app.subtitle": "Part of CV-ToolBox",
   "app.copyright": "CV-ToolBox is (c) Harikalar Kutusu, it is free to use",
 
+  "ui.languageselector.label": "UI Language",
   "ui.languageselector.title": "Select your user interface language",
 
-  "ui.filter.language": "Filter languages",
-  "ui.filter.version": "Filter versions",
+  "ui.filter_table.label": "Filter Table:",
+  "ui.filter_version.label": "Versions",
+  "ui.filter_version.title": "Select one or more versions to filter the table",
+  "ui.filter_language.label": "Languages",
+  "ui.filter_language.title": "Select one or more language to filter the table",
 
   "ui.select.languages": "Select languages to work on",
   "ui.select.versions": "Select versions to work on",

@@ -3,7 +3,14 @@
     "app.subtitle": "CV-ToolBox paketinin bir parçasıdır",
     "app.copyright": "CV-ToolBox (c) Harikalar Kutusu, özgür yazılımdır",
 
+    "ui.languageselector.label": "Arayüz Dili",
     "ui.languageselector.title": "Kullanıcı arayüz dilinizi seçiniz",
+
+    "ui.filter_table.label": "Tabloyu filtrele:",
+    "ui.filter_version.label": "Sürümler",
+    "ui.filter_version.title": "Tabloyu filtrelemek için bir ya da daha fazla sürüm seçiniz",
+    "ui.filter_language.label": "Dil",
+    "ui.filter_language.title": "Tabloyu filtrelemek için bir ya da daha fazla dil seçiniz",
 
     "ui.filter.language": "Filter languages",
     "ui.filter.version": "Filter versions",

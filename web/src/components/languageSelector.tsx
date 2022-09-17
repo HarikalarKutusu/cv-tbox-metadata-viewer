@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import intl from "react-intl-universal";
-import { getMetaDataTableView } from "../helpers/dataTableHelper";
-
+// MUI
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+// APP
 import {
   getEnabledUILanguages,
   uiLocaleInit,
@@ -16,16 +20,19 @@ export const LanguageSelector = (props: any) => {
   // Store
   const { initDone, setInitDone } = useStore();
   const { langCode, setLangCode } = useStore();
-  const { metaData, setMetaData } = useStore();
   // get list
   const enabledLanguages = getEnabledUILanguages();
 
-  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+//   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+//     const newLangCode = e.target.value as LanguageCodesType;
+//     setLangCode(newLangCode);
+//     uiLocaleInit(newLangCode);
+//   };
+
+  const handleLanguageChange = (e: SelectChangeEvent) => {
     const newLangCode = e.target.value as LanguageCodesType;
     setLangCode(newLangCode);
     uiLocaleInit(newLangCode);
-    // TODO re-render table to get new language strings
-    // setMetaData(getMetaDataTableView('main'))
   };
 
   useEffect(() => {
@@ -48,20 +55,32 @@ export const LanguageSelector = (props: any) => {
   return !initDone ? (
     <></>
   ) : (
-    <select
-      title={intl.get("ui.languageselector.title")}
-      id="langSelector"
-      className="language-selector"
-      value={langCode}
-      onChange={(e) => handleLanguageChange(e)}
-    >
-      {enabledLanguages.map((lang) => {
-        return (
-          <option key={lang.code} value={lang.code} className="language-option">
-            {lang.code}-{lang.nativeName}
-          </option>
-        );
-      })}
-    </select>
+      <div>
+        <FormControl sx={{ m: 1, minWidth: 80 }}>
+          <InputLabel id="ui-language-select">
+            {intl.get("ui.languageselector.label")}
+          </InputLabel>
+          <Select
+            labelId="ui-language-select"
+            id="ui-language-select"
+            value={langCode}
+            onChange={handleLanguageChange}
+            autoWidth
+            label={intl.get("ui.languageselector.label")}
+          >
+            {enabledLanguages.map((lang) => {
+              return (
+                <MenuItem
+                  key={lang.code}
+                  value={lang.code}
+                  className="ui-language-select-option"
+                >
+                  {lang.code}-{lang.nativeName}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </div>
   );
 };
