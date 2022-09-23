@@ -21,7 +21,7 @@
   "menu.views.calculated": "Calculated",
   "menu.views.buckets-all": "All buckets",
   "menu.views.buckets-main": "Major buckets",
-  "menu.views.buckets-model": "Model splits",
+  "menu.views.buckets-model": "Default splits",
   "menu.views.users": "Per User Values",
   "menu.views.ages": "Age Distribution",
   "menu.views.genders": "Gender Distribution",
@@ -77,19 +77,24 @@
   "colnames.size": "File Size (MB)",
   "colnames.checksum": "Checksum",
 
+  "calculated.valid_recs_percentage": "%Valid Recs",
+  "calculated.invalid_recs_percentage": "%Invalid Recs",
+  "calculated.other_recs_percentage": "%Other Recs",
+
   "calculated.valid_hrs_percentage": "%Validated Hrs.",
-  "calculated.invalid_recs_percentage": "%Invalidated Recs",
   "calculated.reported_percentage": "%Reported",
   "calculated.avg_recs_per_user": "Avg.Recs/User",
   "calculated.avg_hrs_per_user": "Avg.Hrs/User",
+
+  "calculated.percentage_used": "%Used",
 
   "calculated.est_train_hrs": "~Train Hrs.",
   "calculated.est_dev_hrs": "~Dev Hrs.",
   "calculated.est_test_hrs": "~Test Hrs.",
 
   "calculated.fm_ratio": "Female/Male Ratio",
-  "calculated.male_percentage": "%Male/Dem",
-  "calculated.female_percentage": "%Female/Dem",
+  "calculated.male_percentage": "%Male/Data",
+  "calculated.female_percentage": "%Female/Data",
 
   "xxx": "xxx"
 }

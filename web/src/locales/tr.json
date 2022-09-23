@@ -25,7 +25,7 @@
     "menu.views.calculated": "Hesaplanmış",
     "menu.views.buckets-all": "Tüm Gruplamalar",
     "menu.views.buckets-main": "Ana Gruplar",
-    "menu.views.buckets-model": "Model Bölümlemeleri",
+    "menu.views.buckets-model": "Varsayılan Bölümlemeler",
     "menu.views.users": "Kullanıcı başı değerler",
     "menu.views.ages": "Yaşlar",
     "menu.views.genders": "Cinsiyetler",
@@ -81,9 +81,12 @@
     "colnames.size": "Dosya büyüklüğü (MB)",
     "colnames.checksum": "Sağlama toplamı",
   
+    "calculated.valid_recs_percentage": "%Onaylı Kayıt",
+    "calculated.invalid_recs_percentage": "%Geçersiz Kayıt",
+    "calculated.other_recs_percentage": "%Diğer Kayıt",
+
     "calculated.valid_hrs_percentage": "Onaylı Saat%",
-    "calculated.invalid_recs_percentage": "Geçersiz Kayıt%",
-    "calculated.reported_percentage": "Raporlanmış%",
+    "calculated.reported_percentage": "%Raporlanmış",
     "calculated.avg_recs_per_user": "Ort.Kayıt/Kişi",
     "calculated.avg_hrs_per_user": "Ort.Saat/Kişi",
 
@@ -92,8 +95,8 @@
     "calculated.est_test_hrs": "~Test Saati",
   
     "calculated.fm_ratio": "Kadın/Erkek Oranı",
-    "calculated.male_percentage": "%Erken/Dem",
-    "calculated.female_percentage": "%Kadın/Dem",
+    "calculated.male_percentage": "%Erkek/Data",
+    "calculated.female_percentage": "%Kadın/Data",
 
     "xxx": "xxx"
 }
