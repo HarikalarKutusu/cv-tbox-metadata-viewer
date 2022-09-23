@@ -301,6 +301,7 @@ export function getMetaDataTableView(
     name: intl.get("colnames.size"),
     sortable: true,
     right: true,
+    width: "150px",
     selector: (row) => Number((row.size / 1024 / 1024).toFixed(0)),
     cell: (row) =>
       Number((row.size / 1024 / 1024).toFixed(0)).toLocaleString(langCode),
@@ -308,18 +309,18 @@ export function getMetaDataTableView(
   const colChecksum: TableColumn<DT_ROW_TYPE> = {
     id: "checksum",
     name: intl.get("colnames.checksum"),
-    sortable: true,
-    right: true,
+    sortable: false,
+    // right: true,
     selector: (row) => row.checksum,
   };
 
   // Calculated Columns
-  const calcValidHrsPercentage: TableColumn<DT_ROW_TYPE> = {
-    id: "validatedHrsPercentage",
-    name: intl.get("calculated.valid_hrs_percentage"),
+  const calcValidRecsPercentage: TableColumn<DT_ROW_TYPE> = {
+    id: "validRecsPercentage",
+    name: intl.get("calculated.valid_recs_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => Number(((100 * row.validHrs) / row.totalHrs).toFixed(2)),
+    selector: (row) => Number(((100 * row.buckets_validated) / row.clips).toFixed(2)),
   };
   const calcInvalidRecsPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "invalidRecsPercentage",
@@ -328,6 +329,22 @@ export function getMetaDataTableView(
     right: true,
     selector: (row) =>
       Number(((100 * row.buckets_invalidated) / row.clips).toFixed(2)),
+  };
+  const calcOtherRecsPercentage: TableColumn<DT_ROW_TYPE> = {
+    id: "otherRecsPercentage",
+    name: intl.get("calculated.other_recs_percentage"),
+    sortable: true,
+    right: true,
+    selector: (row) =>
+      Number(((100 * row.buckets_other) / row.clips).toFixed(2)),
+  };
+
+  const calcValidHrsPercentage: TableColumn<DT_ROW_TYPE> = {
+    id: "validatedHrsPercentage",
+    name: intl.get("calculated.valid_hrs_percentage"),
+    sortable: true,
+    right: true,
+    selector: (row) => Number(((100 * row.validHrs) / row.totalHrs).toFixed(2)),
   };
   const calcReportedPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "reportedPercentage",
@@ -353,6 +370,15 @@ export function getMetaDataTableView(
       Number(((100 * row.duration) / row.users / (1000 * 60 * 60)).toFixed(2)),
   };
 
+
+  const calcPercentageUsed: TableColumn<DT_ROW_TYPE> = {
+    id: "percentageUsed",
+    name: intl.get("calculated.percentage_used"),
+    sortable: true,
+    right: true,
+    selector: (row) =>
+      Number(100 * ((row.buckets_train + row.buckets_dev + row.buckets_test) / row.buckets_validated)).toFixed(2),
+  };
   const calcEstTrainHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estTrainHrs",
     name: intl.get("calculated.est_train_hrs"),
@@ -456,6 +482,9 @@ export function getMetaDataTableView(
         colBucketsValidated,
         colBucketsInValidated,
         colBucketsOther,
+        calcValidRecsPercentage,
+        calcInvalidRecsPercentage,
+        calcOtherRecsPercentage,
       ];
       viewTitle = intl.get("menu.views.buckets-main");
       break;
@@ -469,6 +498,7 @@ export function getMetaDataTableView(
         calcEstTrainHrs,
         calcEstDevHrs,
         calcEstTestHrs,
+        calcPercentageUsed,
       ];
       viewTitle = intl.get("menu.views.buckets-model");
       break;
