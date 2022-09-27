@@ -16,8 +16,6 @@
 
   "ui.action.reset": "Reset table",
 
-  "menu.views.title": "Tables",
-
   "menu.views.alldata": "Basic Data",
   "menu.views.calculated": "Calculated",
   "menu.views.buckets-all": "All buckets",
@@ -28,8 +26,6 @@
   "menu.views.genders": "Gender Distribution",
   "menu.views.other": "Other Info",
   "menu.views.totals": "CV Totals",
-
-  "menu.graphs.title": "Graphs",
 
   "pagination.perpage": "Show per page",
   "pagination.rangeseparator": "of",
@@ -104,6 +100,8 @@
   "colnames.total_totalHrs": "Total Hours",
   "colnames.total_validHrs": "Valid Hours",
   "calculated.valid_percentage": "%Valid/Total",
+
+  "warn.to_view_graphs": "To view graphs, please select a single locale.",
 
   "xxx": "xxx"
 }

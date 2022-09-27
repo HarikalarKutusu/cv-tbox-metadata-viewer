@@ -26,7 +26,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 
 // CV Totals
-import FunctionsIcon from '@mui/icons-material/Functions';
+import FunctionsIcon from "@mui/icons-material/Functions";
 // summary
 import SummarizeIcon from "@mui/icons-material/Summarize";
 // calculated
@@ -49,39 +49,11 @@ import { useStore } from "./../../stores/store";
 import { LanguageSelector } from "./../languageSelector";
 import { MetadataTable, TotalsTable } from "./../metaDataTable";
 import { FilterSelectors } from "../filterSelectors";
-import { GraphBuilder } from "../graphBuilder";
+import { GraphBuilder, CVCharts } from "../graphBuilder";
 
 //
 // UI
 //
-
-// Menu Items
-
-const menuItemsGraphs = (
-  <React.Fragment>
-    <ListSubheader component="div" inset>
-      {intl.get("menu.graphs.title")}
-    </ListSubheader>
-    <ListItemButton>
-      <ListItemIcon>
-        <SummarizeIcon />
-      </ListItemIcon>
-      <ListItemText primary="TODO" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <SummarizeIcon />
-      </ListItemIcon>
-      <ListItemText primary="TODO" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <SummarizeIcon />
-      </ListItemIcon>
-      <ListItemText primary="TODO" />
-    </ListItemButton>
-  </React.Fragment>
-);
 
 // Copyright
 
@@ -164,12 +136,11 @@ export function AppUI() {
   const { initDone } = useStore();
   const { tableView, setTableView } = useStore();
 
+  // Menu Items
+
   const MenuItemsTable = () => {
     return (
       <>
-        <ListSubheader component="div" inset>
-          {intl.get("menu.views.title")}
-        </ListSubheader>
         <ListItemButton onClick={() => setTableView("main")}>
           <ListItemIcon>
             <SummarizeIcon />
@@ -272,7 +243,7 @@ export function AppUI() {
             >
               {intl.get("ui.filter_table.label")}
             </Typography> */}
-            { tableView !== 'totals' && <FilterSelectors />}
+            {tableView !== "totals" && <FilterSelectors />}
             <LanguageSelector />
           </Toolbar>
         </AppBar>
@@ -292,8 +263,6 @@ export function AppUI() {
           <Divider />
           <List component="nav">
             <MenuItemsTable />
-            <Divider sx={{ my: 1 }} />
-            {menuItemsGraphs}
           </List>
         </Drawer>
         <Box
@@ -309,29 +278,40 @@ export function AppUI() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={1}>
-              {/* Table */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  { tableView !== 'totals' ?
-                  <MetadataTable
-                    view="main"
-                    defaultSortField="version"
-                    defaultSortAsc={false}
-                  />
-                  :
-                  <TotalsTable />
-                  }
-                </Paper>
-              </Grid>
-              {/* Graph */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <GraphBuilder />
-                </Paper>
-              </Grid>
-
+          <Container maxWidth={false} sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={2}>
+              {/* Table & gRAPHS */}
+              {tableView !== "totals" ? (
+                <>
+                  <Grid item xs={12}>
+                    <Paper
+                      sx={{ p: 2, display: "flex", flexDirection: "column" }}
+                    >
+                      <MetadataTable
+                        view="main"
+                        defaultSortField="version"
+                        defaultSortAsc={false}
+                      />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <GraphBuilder />
+                  </Grid>
+                </>
+              ) : (
+                <>
+                  <Grid item xs={12}>
+                    <Paper
+                      sx={{ p: 2, display: "flex", flexDirection: "column" }}
+                    >
+                      <TotalsTable />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <CVCharts />
+                  </Grid>
+                </>
+              )}
             </Grid>
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
