@@ -87,9 +87,10 @@ export const MetadataTable = (props: MetadataTableProps) => {
         Math.round(10000 * (row.validHrs / row.totalHrs)) / 100;
       newRow.reportedPercentage =
         Math.round(10000 * (row.buckets_reported / row.clips)) / 100;
-      newRow.avgRecsPerUser = Math.round(10000 * (row.clips / row.users)) / 100;
+
+      newRow.avgRecsPerUser = Math.round(100 * (row.clips / row.users)) / 100;
       newRow.avgSecsPerUser =
-        Math.round(10000 * (row.duration / 1000 / row.users)) / 100;
+        Math.round(100 * (row.duration / 1000 / row.users)) / 100;
       newRow.percentageUsed =
         Math.round(
           10000 *
