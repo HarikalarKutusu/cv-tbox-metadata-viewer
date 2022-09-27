@@ -16,7 +16,7 @@
 
   "ui.action.reset": "Reset table",
 
-  "menu.views.alldata": "Basic Data",
+  "menu.views.alldata": "Fundamental Data",
   "menu.views.calculated": "Calculated",
   "menu.views.buckets-all": "All buckets",
   "menu.views.buckets-main": "Major buckets",

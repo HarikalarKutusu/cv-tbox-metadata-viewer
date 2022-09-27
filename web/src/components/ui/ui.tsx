@@ -49,7 +49,7 @@ import { useStore } from "./../../stores/store";
 import { LanguageSelector } from "./../languageSelector";
 import { MetadataTable, TotalsTable } from "./../metaDataTable";
 import { FilterSelectors } from "../filterSelectors";
-import { GraphBuilder, CVCharts } from "../graphBuilder";
+import { GraphBuilder } from "../graphBuilder";
 
 //
 // UI
@@ -308,7 +308,7 @@ export function AppUI() {
                     </Paper>
                   </Grid>
                   <Grid item xs={12}>
-                    <CVCharts />
+                    <GraphBuilder />
                   </Grid>
                 </>
               )}

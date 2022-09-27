@@ -27,15 +27,27 @@ export const GraphBuilder = () => {
   let gEnable: boolean = false;
   let gData: CV_METADATATABLE_TYPE | TOTALS_TABLE_TYPE | undefined = [];
   let viewGraphs: GRAPH_VIEW_TYPE[] = [];
-  if (languageFilter.length === 1) {
+  let gLocales: string[] = [];
+
+  // It firstly depends on if table view is "totals"
+  if (tableView === "totals") {
+    gEnable = true;
+    gData = cvTotals;
+    viewGraphs = GRAPH_DATA.filter((row) => row.view == tableView);
+    // TODO : Support multiple, up to 5? We need to change graph type thou...
+  } else if (metaData && languageFilter.length > 0 && languageFilter.length <= 1) {
     gEnable = true;
     // get subsets
     viewGraphs = GRAPH_DATA.filter((row) => row.view == tableView);
-    const gLocale = languageFilter[0];
-    if (tableView === "totals") {
-      gData = cvTotals;
-    } else if (metaData) {
-      gData = metaData.filter((row) => row.locale === gLocale);
+    gLocales = languageFilter;
+    if (versionFilter.length === 0) {
+      gData = metaData.filter((row) => gLocales.includes(row.locale));
+    } else {
+      gData = metaData.filter(
+        (row) =>
+          gLocales.includes(row.locale) &&
+          versionFilter.includes(row.version),
+      );
     }
   }
 
@@ -74,67 +86,67 @@ export const GraphBuilder = () => {
   );
 };
 
-export const CVCharts = () => {
-  const { cvTotals } = useStore();
+// export const CVCharts = () => {
+//   const { cvTotals } = useStore();
 
-  return (
-    <Container maxWidth={false} style={{ padding: 0 }}>
-      <Grid container spacing={1}>
-        <Grid item xs={12} sm={12} md={6}>
-          <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
-            <div style={{ width: "100%", height: "300px" }}>
-              <AppBarChart
-                data={cvTotals}
-                xKey="version"
-                yKeys={["total_locales"]}
-                seriesNames={[intl.get("colnames.total_locales")]}
-              />
-            </div>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
-            <div style={{ width: "100%", height: "300px" }}>
-              <AppBarChart
-                data={cvTotals}
-                xKey="version"
-                yKeys={["total_users"]}
-                seriesNames={[intl.get("colnames.total_users")]}
-              />
-            </div>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
-            <div style={{ width: "100%", height: "300px" }}>
-              <AppBarChart
-                data={cvTotals}
-                xKey="version"
-                yKeys={["total_clips"]}
-                seriesNames={[intl.get("colnames.total_clips")]}
-              />
-            </div>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
-            <div style={{ width: "100%", height: "300px" }}>
-              <AppBarChart
-                data={cvTotals}
-                xKey="version"
-                yKeys={["total_totalHrs", "total_validHrs"]}
-                seriesNames={[
-                  intl.get("colnames.total_totalHrs"),
-                  intl.get("colnames.total_validHrs"),
-                ]}
-              />
-            </div>
-          </Paper>
-        </Grid>
-      </Grid>
-    </Container>
-  );
-};
+//   return (
+//     <Container maxWidth={false} style={{ padding: 0 }}>
+//       <Grid container spacing={1}>
+//         <Grid item xs={12} sm={12} md={6}>
+//           <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
+//             <div style={{ width: "100%", height: "300px" }}>
+//               <AppBarChart
+//                 data={cvTotals}
+//                 xKey="version"
+//                 yKeys={["total_locales"]}
+//                 seriesNames={[intl.get("colnames.total_locales")]}
+//               />
+//             </div>
+//           </Paper>
+//         </Grid>
+//         <Grid item xs={12} sm={12} md={6}>
+//           <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
+//             <div style={{ width: "100%", height: "300px" }}>
+//               <AppBarChart
+//                 data={cvTotals}
+//                 xKey="version"
+//                 yKeys={["total_users"]}
+//                 seriesNames={[intl.get("colnames.total_users")]}
+//               />
+//             </div>
+//           </Paper>
+//         </Grid>
+//         <Grid item xs={12} sm={12} md={6}>
+//           <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
+//             <div style={{ width: "100%", height: "300px" }}>
+//               <AppBarChart
+//                 data={cvTotals}
+//                 xKey="version"
+//                 yKeys={["total_clips"]}
+//                 seriesNames={[intl.get("colnames.total_clips")]}
+//               />
+//             </div>
+//           </Paper>
+//         </Grid>
+//         <Grid item xs={12} sm={12} md={6}>
+//           <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
+//             <div style={{ width: "100%", height: "300px" }}>
+//               <AppBarChart
+//                 data={cvTotals}
+//                 xKey="version"
+//                 yKeys={["total_totalHrs", "total_validHrs"]}
+//                 seriesNames={[
+//                   intl.get("colnames.total_totalHrs"),
+//                   intl.get("colnames.total_validHrs"),
+//                 ]}
+//               />
+//             </div>
+//           </Paper>
+//         </Grid>
+//       </Grid>
+//     </Container>
+//   );
+// };
 
 // export const xxxCVCharts = () => {
 //   const { cvTotals } = useStore();

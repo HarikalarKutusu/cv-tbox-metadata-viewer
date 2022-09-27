@@ -467,6 +467,7 @@ export function getMetaDataTableView(
         colUsers,
         colTotalHrs,
         colValidHrs,
+        calcValidHrsPercentage,
       ];
       viewTitle = intl.get("menu.views.alldata");
       break;

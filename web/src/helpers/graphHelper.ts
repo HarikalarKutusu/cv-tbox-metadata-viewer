@@ -56,7 +56,6 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     yKeys: ["total_totalHrs", "total_validHrs"],
     seriesNames: ["colnames.total_totalHrs", "colnames.total_validHrs"],
   },
-
   // view = main
   {
     view: "main",
