@@ -9,7 +9,7 @@
   "ui.filter_version.label": "Version Filter",
   "ui.filter_version.title": "Select one or more versions to filter the table",
   "ui.filter_language.label": "Language Filter",
-  "ui.filter_language.title": "Select one or more language to filter the table",
+  "ui.filter_language.title": "Select one or more languages to filter the table",
 
   "ui.select.languages": "Select languages to work on",
   "ui.select.versions": "Select versions to work on",

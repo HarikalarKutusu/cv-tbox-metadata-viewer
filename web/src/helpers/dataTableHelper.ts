@@ -48,6 +48,23 @@ export type DT_ROW_TYPE = {
 
   size: number;
   checksum: string;
+
+  // Calculated Values added just after importing
+  validRecsPercentage?: number;
+  invalidRecsPercentage?: number;
+  otherRecsPercentage?: number;
+  validatedHrsPercentage?: number;
+  reportedPercentage?: number;
+  avgRecsPerUser?: number;
+  avgSecsPerUser?: number;
+  percentageUsed?: number;
+  estTrainHrs?: number;
+  estDevHrs?: number;
+  estTestHrs?: number;
+  fmRatio?: number;
+  malePercentage?: number;
+  femalePercentage?: number;
+
 };
 
 export type CV_METADATATABLE_TYPE = DT_ROW_TYPE[];
@@ -344,23 +361,30 @@ export function getMetaDataTableView(
     name: intl.get("calculated.valid_recs_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => Number(((100 * row.buckets_validated) / row.clips).toFixed(2)),
+    selector: (row) => row.validRecsPercentage!,
+    cell: (row) => row.validRecsPercentage!.toFixed(2),
+    // selector: (row) =>
+    //   Number(((100 * row.buckets_validated) / row.clips).toFixed(2)),
   };
   const calcInvalidRecsPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "invalidRecsPercentage",
     name: intl.get("calculated.invalid_recs_percentage"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      Number(((100 * row.buckets_invalidated) / row.clips).toFixed(2)),
+    selector: (row) => row.invalidRecsPercentage!,
+    cell: (row) => row.invalidRecsPercentage!.toFixed(2),
+    // selector: (row) =>
+    //   Number(((100 * row.buckets_invalidated) / row.clips).toFixed(2)),
   };
   const calcOtherRecsPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "otherRecsPercentage",
     name: intl.get("calculated.other_recs_percentage"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      Number(((100 * row.buckets_other) / row.clips).toFixed(2)),
+    selector: (row) => row.otherRecsPercentage!,
+    cell: (row) => row.otherRecsPercentage!.toFixed(2),
+    // selector: (row) =>
+    //   Number(((100 * row.buckets_other) / row.clips).toFixed(2)),
   };
 
   const calcValidHrsPercentage: TableColumn<DT_ROW_TYPE> = {
@@ -368,29 +392,37 @@ export function getMetaDataTableView(
     name: intl.get("calculated.valid_hrs_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => Number(((100 * row.validHrs) / row.totalHrs).toFixed(2)),
+    selector: (row) => row.validatedHrsPercentage!,
+    cell: (row) => row.validatedHrsPercentage!.toFixed(2),
+    // selector: (row) => Number(((100 * row.validHrs) / row.totalHrs).toFixed(2)),
   };
   const calcReportedPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "reportedPercentage",
     name: intl.get("calculated.reported_percentage"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      Number(((100 * row.buckets_reported) / row.clips).toFixed(2)),
+    selector: (row) => row.reportedPercentage!,
+    cell: (row) => row.reportedPercentage!.toFixed(2),
+    // selector: (row) =>
+    //   Number(((100 * row.buckets_reported) / row.clips).toFixed(2)),
   };
   const calcAvgRecsPerUser: TableColumn<DT_ROW_TYPE> = {
     id: "avgRecsPerUser",
     name: intl.get("calculated.avg_recs_per_user"),
     sortable: true,
     right: true,
-    selector: (row) => Number((row.clips / row.users).toFixed(2)),
+    selector: (row) => row.avgRecsPerUser!,
+    cell: (row) => row.avgRecsPerUser!.toFixed(2),
+    // selector: (row) => Number((row.clips / row.users).toFixed(2)),
   };
   const calcAvgSecsPerUser: TableColumn<DT_ROW_TYPE> = {
     id: "avgSecsPerUser",
     name: intl.get("calculated.avg_secs_per_user"),
     sortable: true,
     right: true,
-    selector: (row) => (row.duration / row.users / 1000).toFixed(2),
+    selector: (row) => row.avgSecsPerUser!,
+    cell: (row) => row.avgSecsPerUser!.toFixed(2),
+    // selector: (row) => (row.duration / row.users / 1000).toFixed(2),
   };
 
 
@@ -399,32 +431,40 @@ export function getMetaDataTableView(
     name: intl.get("calculated.percentage_used"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      Number(100 * ((row.buckets_train + row.buckets_dev + row.buckets_test) / row.buckets_validated)).toFixed(2),
+    selector: (row) => row.percentageUsed!,
+    cell: (row) => row.percentageUsed!.toFixed(2),
+    // selector: (row) =>
+    //   Number(100 * ((row.buckets_train + row.buckets_dev + row.buckets_test) / row.buckets_validated)).toFixed(2),
   };
   const calcEstTrainHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estTrainHrs",
     name: intl.get("calculated.est_train_hrs"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      ((row.validHrs * row.buckets_train) / row.buckets_validated).toFixed(2),
+    selector: (row) => row.estTrainHrs!,
+    cell: (row) => row.estTrainHrs!.toFixed(2),
+    // selector: (row) =>
+    //   ((row.validHrs * row.buckets_train) / row.buckets_validated).toFixed(2),
   };
   const calcEstDevHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estDevHrs",
     name: intl.get("calculated.est_dev_hrs"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      ((row.validHrs * row.buckets_dev) / row.buckets_validated).toFixed(2),
+    selector: (row) => row.estDevHrs!,
+    cell: (row) => row.estDevHrs!.toFixed(2),
+    // selector: (row) =>
+    //   ((row.validHrs * row.buckets_dev) / row.buckets_validated).toFixed(2),
   };
   const calcEstTestHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estTestHrs",
     name: intl.get("calculated.est_test_hrs"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      ((row.validHrs * row.buckets_test) / row.buckets_validated).toFixed(2),
+    selector: (row) => row.estTestHrs!,
+    cell: (row) => row.estTestHrs!.toFixed(2),
+    // selector: (row) =>
+    //   ((row.validHrs * row.buckets_test) / row.buckets_validated).toFixed(2),
   };
 
   const calcFMRatio: TableColumn<DT_ROW_TYPE> = {
@@ -432,26 +472,32 @@ export function getMetaDataTableView(
     name: intl.get("calculated.fm_ratio"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      Number((row.genders_female / row.genders_male).toFixed(2)),
+    selector: (row) => row.fmRatio!,
+    cell: (row) => row.fmRatio!.toFixed(2),
+    // selector: (row) =>
+    //   Number((row.genders_female / row.genders_male).toFixed(2)),
   };
   const calcMalePercentage: TableColumn<DT_ROW_TYPE> = {
     id: "malePercentage",
     name: intl.get("calculated.male_percentage"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      Number(((100 * row.genders_male) / (1 - row.genders_nodata)).toFixed(2)),
+    selector: (row) => row.malePercentage!,
+    cell: (row) => row.malePercentage!.toFixed(2),
+    // selector: (row) =>
+    //   Number(((100 * row.genders_male) / (1 - row.genders_nodata)).toFixed(2)),
   };
   const calcFemalePercentage: TableColumn<DT_ROW_TYPE> = {
     id: "femalePercentage",
     name: intl.get("calculated.female_percentage"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      Number(
-        ((100 * row.genders_female) / (1 - row.genders_nodata)).toFixed(2),
-      ),
+    selector: (row) => row.femalePercentage!,
+    cell: (row) => row.femalePercentage!.toFixed(2),
+    // selector: (row) =>
+    //   Number(
+    //     ((100 * row.genders_female) / (1 - row.genders_nodata)).toFixed(2),
+    //   ),
   };
 
   let viewCols: TableColumn<DT_ROW_TYPE>[];

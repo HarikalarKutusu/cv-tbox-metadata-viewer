@@ -14,8 +14,12 @@ import DataTable, {
 } from "react-data-table-component";
 
 import {
-  getMetaDataTableView, getTotalsTableView,
-  CV_METADATATABLE_TYPE, TOTALS_TABLE_TYPE, TOTALS_ROW_TYPE
+  getMetaDataTableView,
+  getTotalsTableView,
+  CV_METADATATABLE_TYPE,
+  TOTALS_TABLE_TYPE,
+  TOTALS_ROW_TYPE,
+  DT_ROW_TYPE,
 } from "../helpers/dataTableHelper";
 
 import METADATA_RAW from "./../assets/data/$metadata.json";
@@ -59,20 +63,73 @@ export const MetadataTable = (props: MetadataTableProps) => {
   const applyFilters = (data: CV_METADATATABLE_TYPE) => {
     let res: CV_METADATATABLE_TYPE = data;
     if (versionFilter.length > 0) {
-      res = res.filter(row => versionFilter.includes(row.version))
+      res = res.filter((row) => versionFilter.includes(row.version));
     }
     if (languageFilter.length > 0) {
-      res = res.filter(row => languageFilter.includes(row.locale))
+      res = res.filter((row) => languageFilter.includes(row.locale));
     }
-    return res
-  }
+    return res;
+  };
+
+  const calcCalculatedFields = (data: CV_METADATATABLE_TYPE) => {
+    const newData: CV_METADATATABLE_TYPE = [];
+    data.forEach((row) => {
+      // initialize with loaded data
+      const newRow: DT_ROW_TYPE = row;
+      // calculated fields (round them for visibity)
+      newRow.validRecsPercentage =
+        Math.round(10000 * (row.buckets_validated / row.clips)) / 100;
+      newRow.invalidRecsPercentage =
+        Math.round(10000 * (row.buckets_invalidated / row.clips)) / 100;
+      newRow.otherRecsPercentage =
+        Math.round(10000 * (row.buckets_other / row.clips)) / 100;
+      newRow.validatedHrsPercentage =
+        Math.round(10000 * (row.validHrs / row.totalHrs)) / 100;
+      newRow.reportedPercentage =
+        Math.round(10000 * (row.buckets_reported / row.clips)) / 100;
+      newRow.avgRecsPerUser = Math.round(10000 * (row.clips / row.users)) / 100;
+      newRow.avgSecsPerUser =
+        Math.round(10000 * (row.duration / 1000 / row.users)) / 100;
+      newRow.percentageUsed =
+        Math.round(
+          10000 *
+            ((row.buckets_train + row.buckets_dev + row.buckets_test) /
+              row.buckets_validated),
+        ) / 100;
+      newRow.estTrainHrs =
+        Math.round(
+          100 * row.validHrs * (row.buckets_train / row.buckets_validated),
+        ) / 100;
+      newRow.estDevHrs =
+        Math.round(
+          100 * row.validHrs * (row.buckets_dev / row.buckets_validated),
+        ) / 100;
+      newRow.estTestHrs =
+        Math.round(
+          100 * row.validHrs * (row.buckets_test / row.buckets_validated),
+        ) / 100;
+      newRow.fmRatio =
+        Math.round(100 * (row.genders_female / row.genders_male)) / 100;
+      newRow.malePercentage =
+        Math.round(10000 * (row.genders_male / (1 - row.genders_nodata))) / 100;
+      newRow.femalePercentage =
+        Math.round(10000 * (row.genders_female / (1 - row.genders_nodata))) /
+        100;
+      // append to result table
+      newData.push(newRow);
+    });
+    // return new data
+    return newData;
+  };
 
   const calcCVTotals = (data: CV_METADATATABLE_TYPE) => {
-    const totals: TOTALS_TABLE_TYPE = [];                           // This will be the returned value
-    const versions = [...new Set(data.map(row => row.version))];    // get all versions
-    versions.forEach((ver) => {                                     // For each version do
-      const subset = data.filter(row => row.version === ver);       // get all recs for that version
-      const res: TOTALS_ROW_TYPE = {                                // Init record
+    const totals: TOTALS_TABLE_TYPE = []; // This will be the returned value
+    const versions = [...new Set(data.map((row) => row.version))]; // get all versions
+    versions.forEach((ver) => {
+      // For each version do
+      const subset = data.filter((row) => row.version === ver); // get all recs for that version
+      const res: TOTALS_ROW_TYPE = {
+        // Init record
         version: ver,
         date: subset[0].date,
         total_locales: subset.length,
@@ -80,27 +137,38 @@ export const MetadataTable = (props: MetadataTableProps) => {
         total_users: 0,
         total_duration: 0,
         total_totalHrs: 0,
-        total_validHrs: 0
+        total_validHrs: 0,
       };
       // now fill other values with reducers
-      res.total_clips     = subset.reduce((sum, row) => {return sum + row.clips}, 0);
-      res.total_users     = subset.reduce((sum, row) => {return sum + row.users}, 0);
-      res.total_duration  = subset.reduce((sum, row) => {return sum + row.duration}, 0);
-      res.total_totalHrs  = subset.reduce((sum, row) => {return sum + row.totalHrs}, 0);
-      res.total_validHrs  = subset.reduce((sum, row) => {return sum + row.validHrs}, 0);
+      res.total_clips = subset.reduce((sum, row) => {
+        return sum + row.clips;
+      }, 0);
+      res.total_users = subset.reduce((sum, row) => {
+        return sum + row.users;
+      }, 0);
+      res.total_duration = subset.reduce((sum, row) => {
+        return sum + row.duration;
+      }, 0);
+      res.total_totalHrs = subset.reduce((sum, row) => {
+        return sum + row.totalHrs;
+      }, 0);
+      res.total_validHrs = subset.reduce((sum, row) => {
+        return sum + row.validHrs;
+      }, 0);
       // put row to table
       totals.push(res);
-    })
+    });
     // console.log(totals);
     return totals;
-  }
+  };
 
   useEffect(() => {
     // make sure data is ready
     if (!metaData) {
       const rawdata = METADATA_RAW.data as CV_METADATATABLE_TYPE;
-      const totals = calcCVTotals(rawdata)
-      setMetaData(rawdata);
+      const calcdata = calcCalculatedFields(rawdata);
+      const totals = calcCVTotals(calcdata);
+      setMetaData(calcdata);
       setCVTotals(totals);
     } else {
       // console.log("!!! METADATA READY !!!");
@@ -153,7 +221,6 @@ export const MetadataTable = (props: MetadataTableProps) => {
     />
   );
 };
-
 
 // TOTALS TABLE
 
