@@ -8,6 +8,17 @@ import DataTable, {
   Media,
 } from "react-data-table-component";
 
+export const CV_TOTALS_COLS = [
+  "version",
+  "date",
+  "total_locales",
+  "total_clips",
+  "total_users",
+  "total_duration",
+  "total_totalHrs",
+  "total_validHrs",
+];
+
 export const METADATA_COLS = [
   "version",
   "date",
@@ -47,10 +58,10 @@ export const METADATA_COLS = [
 
 export const METADATA_VIEWS = [
   "main",
-  "buckets-all",
+  // "buckets-all",
   "buckets-main",
   "buckets-model",
-  "buckets-reported",
+  // "buckets-reported",
   "ages",
   "genders",
   "genders-fm-ratio",

@@ -25,6 +25,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 
+// CV Totals
+import FunctionsIcon from '@mui/icons-material/Functions';
 // summary
 import SummarizeIcon from "@mui/icons-material/Summarize";
 // calculated
@@ -45,7 +47,7 @@ import BuildIcon from "@mui/icons-material/Build";
 // App Components
 import { useStore } from "./../../stores/store";
 import { LanguageSelector } from "./../languageSelector";
-import { MetadataTable } from "./../metaDataTable";
+import { MetadataTable, TotalsTable } from "./../metaDataTable";
 import { FilterSelectors } from "../filterSelectors";
 import { GraphBuilder } from "../graphBuilder";
 
@@ -160,11 +162,11 @@ export function AppUI() {
   };
 
   const { initDone } = useStore();
-  const { setTableView } = useStore();
+  const { tableView, setTableView } = useStore();
 
   const MenuItemsTable = () => {
     return (
-      <React.Fragment>
+      <>
         <ListSubheader component="div" inset>
           {intl.get("menu.views.title")}
         </ListSubheader>
@@ -172,7 +174,7 @@ export function AppUI() {
           <ListItemIcon>
             <SummarizeIcon />
           </ListItemIcon>
-          <ListItemText primary={intl.get("menu.views.summary")} />
+          <ListItemText primary={intl.get("menu.views.alldata")} />
         </ListItemButton>
         <ListItemButton onClick={() => setTableView("calculated")}>
           <ListItemIcon>
@@ -216,7 +218,13 @@ export function AppUI() {
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.other")} />
         </ListItemButton>
-      </React.Fragment>
+        <ListItemButton onClick={() => setTableView("totals")}>
+          <ListItemIcon>
+            <FunctionsIcon />
+          </ListItemIcon>
+          <ListItemText primary={intl.get("menu.views.totals")} />
+        </ListItemButton>
+      </>
     );
   };
 
@@ -264,7 +272,7 @@ export function AppUI() {
             >
               {intl.get("ui.filter_table.label")}
             </Typography> */}
-            <FilterSelectors />
+            { tableView !== 'totals' && <FilterSelectors />}
             <LanguageSelector />
           </Toolbar>
         </AppBar>
@@ -302,41 +310,19 @@ export function AppUI() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {/* Chart */}
-              {/* <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid> */}
-              {/* Recent Deposits */}
-              {/* <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid> */}
+            <Grid container spacing={1}>
               {/* Table */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  { tableView !== 'totals' ?
                   <MetadataTable
                     view="main"
                     defaultSortField="version"
                     defaultSortAsc={false}
                   />
+                  :
+                  <TotalsTable />
+                  }
                 </Paper>
               </Grid>
               {/* Graph */}

@@ -1,6 +1,7 @@
 import intl from "react-intl-universal";
 
 import { TableColumn } from "react-data-table-component";
+import { CV_TOTALS_COLS } from "./metadataHelper";
 
 // const selectProps = {
 //   indeterminate: (isIndeterminate: boolean) => isIndeterminate,
@@ -49,7 +50,28 @@ export type DT_ROW_TYPE = {
   checksum: string;
 };
 
-const numericVersionSort = (rowA: DT_ROW_TYPE, rowB: DT_ROW_TYPE) => {
+export type CV_METADATATABLE_TYPE = DT_ROW_TYPE[];
+
+
+// TOTALS
+
+export type TOTALS_ROW_TYPE = {
+  version: string;
+  date: string;
+  total_locales: number,
+  total_clips: number,
+  total_users: number,
+  total_duration: number,
+  total_totalHrs: number,
+  total_validHrs: number,
+};
+
+export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];
+
+
+// NUMERIC SORTER COMMON TO METADATA AND TOTALS
+
+const numericVersionSort = (rowA: DT_ROW_TYPE | TOTALS_ROW_TYPE, rowB: DT_ROW_TYPE | TOTALS_ROW_TYPE) => {
   const a = parseFloat(rowA.version);
   const b = parseFloat(rowB.version);
   let res = 0;
@@ -60,6 +82,8 @@ const numericVersionSort = (rowA: DT_ROW_TYPE, rowB: DT_ROW_TYPE) => {
   }
   return res;
 };
+
+// METADATA
 
 export function getMetaDataTableView(
   viewname: string,
@@ -111,7 +135,7 @@ export function getMetaDataTableView(
     sortable: true,
     right: true,
     selector: (row) => row.totalHrs,
-    cell: (row) => row.totalHrs.toLocaleString(langCode),
+    cell: (row) => row.totalHrs.toLocaleString(langCode, {minimumFractionDigits: 2, maximumFractionDigits: 2}),
   };
   const colValidHrs: TableColumn<DT_ROW_TYPE> = {
     id: "validHrs",
@@ -119,7 +143,7 @@ export function getMetaDataTableView(
     sortable: true,
     right: true,
     selector: (row) => row.validHrs,
-    cell: (row) => row.validHrs.toLocaleString(langCode),
+    cell: (row) => row.validHrs.toLocaleString(langCode, {minimumFractionDigits: 2, maximumFractionDigits: 2}),
   };
 
   const colValidDurationSecs: TableColumn<DT_ROW_TYPE> = {
@@ -135,8 +159,8 @@ export function getMetaDataTableView(
     name: intl.get("colnames.avgDurationSecs"),
     sortable: true,
     right: true,
-    selector: (row) => row.avgDurationSecs / 1000,
-    cell: (row) => row.avgDurationSecs.toLocaleString(langCode),
+    selector: (row) => Number(row.avgDurationSecs),
+    cell: (row) => row.avgDurationSecs.toLocaleString(langCode, {minimumFractionDigits: 3, maximumFractionDigits: 3}),
   };
 
   const colBucketsValidated: TableColumn<DT_ROW_TYPE> = {
@@ -359,15 +383,14 @@ export function getMetaDataTableView(
     name: intl.get("calculated.avg_recs_per_user"),
     sortable: true,
     right: true,
-    selector: (row) => Number(((100 * row.clips) / row.users).toFixed(2)),
+    selector: (row) => Number((row.clips / row.users).toFixed(2)),
   };
-  const calcAvgHrsPerUser: TableColumn<DT_ROW_TYPE> = {
-    id: "avgHrsPerUser",
-    name: intl.get("calculated.avg_hrs_per_user"),
+  const calcAvgSecsPerUser: TableColumn<DT_ROW_TYPE> = {
+    id: "avgSecsPerUser",
+    name: intl.get("calculated.avg_secs_per_user"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      Number(((100 * row.duration) / row.users / (1000 * 60 * 60)).toFixed(2)),
+    selector: (row) => (row.duration / row.users / 1000).toFixed(2),
   };
 
 
@@ -445,7 +468,7 @@ export function getMetaDataTableView(
         colTotalHrs,
         colValidHrs,
       ];
-      viewTitle = intl.get("menu.views.summary");
+      viewTitle = intl.get("menu.views.alldata");
       break;
     case "calculated":
       viewCols = [
@@ -508,7 +531,7 @@ export function getMetaDataTableView(
     //   break;
     // case "average-duration":
     //   viewCols = [colVersion, colLocale, colAvgDurationSecs];
-    //   viewTitle = intl.get('menu.views.summary');
+    //   viewTitle = intl.get('menu.views.alldata');
     //   break;
     case "users":
       viewCols = [
@@ -516,7 +539,7 @@ export function getMetaDataTableView(
         colLocale,
         colUsers,
         calcAvgRecsPerUser,
-        calcAvgHrsPerUser,
+        calcAvgSecsPerUser,
         calcFMRatio,
       ];
       viewTitle = intl.get("menu.views.users");
@@ -560,5 +583,94 @@ export function getMetaDataTableView(
       viewCols = [];
   }
 
+  return [viewCols, viewTitle];
+}
+
+// TOTALS TABLE
+
+export function getTotalsTableView(
+  langCode: string,
+): [TableColumn<TOTALS_ROW_TYPE>[], string] {
+  const colVersion: TableColumn<TOTALS_ROW_TYPE> = {
+    id: "version",
+    name: intl.get("colnames.version"),
+    sortable: true,
+    center: true,
+    width: "100px",
+    selector: (row) => row.version,
+    sortFunction: numericVersionSort,
+  };
+  const colDate: TableColumn<TOTALS_ROW_TYPE> = {
+    id: "date",
+    name: intl.get("colnames.date"),
+    sortable: true,
+    center: true,
+    selector: (row) => row.date,
+  };
+  const colLocale: TableColumn<TOTALS_ROW_TYPE> = {
+    id: "total_locales",
+    name: intl.get("colnames.total_locales"),
+    sortable: true,
+    center: true,
+    // width: "100px",
+    selector: (row) => row.total_locales,
+  };
+  const colClips: TableColumn<TOTALS_ROW_TYPE> = {
+    id: "total_clips",
+    name: intl.get("colnames.total_clips"),
+    sortable: true,
+    right: true,
+    selector: (row) => row.total_clips,
+    cell: (row) => row.total_clips.toLocaleString(langCode),
+  };
+  const colUsers: TableColumn<TOTALS_ROW_TYPE> = {
+    id: "total_users",
+    name: intl.get("colnames.total_users"),
+    sortable: true,
+    right: true,
+    selector: (row) => row.total_users,
+    cell: (row) => row.total_users.toLocaleString(langCode),
+  };
+  const colTotalHrs: TableColumn<TOTALS_ROW_TYPE> = {
+    id: "total_totalHrs",
+    name: intl.get("colnames.total_totalHrs"),
+    sortable: true,
+    right: true,
+    selector: (row) => row.total_totalHrs,
+    cell: (row) => Math.round(row.total_totalHrs).toLocaleString(langCode),
+  };
+  const colValidHrs: TableColumn<TOTALS_ROW_TYPE> = {
+    id: "total_validHrs",
+    name: intl.get("colnames.total_validHrs"),
+    sortable: true,
+    right: true,
+    selector: (row) => row.total_validHrs,
+    cell: (row) => Math.round(row.total_validHrs).toLocaleString(langCode),
+  };
+
+  // Calculated Columns
+  const calcValidPercentage: TableColumn<TOTALS_ROW_TYPE> = {
+    id: "total_validPercentage",
+    name: intl.get("calculated.valid_percentage"),
+    sortable: true,
+    right: true,
+    selector: (row) => ((100 * row.total_validHrs) / row.total_totalHrs).toFixed(2),
+  };
+
+  let viewCols: TableColumn<TOTALS_ROW_TYPE>[];
+  let viewTitle: string = "";
+
+  viewCols = [
+    colVersion,
+    colDate,
+    colLocale,
+    colClips,
+    colUsers,
+    colTotalHrs,
+    colValidHrs,
+    calcValidPercentage,
+  ];
+  viewTitle = intl.get("menu.views.totals");
+  // console.log(viewCols, viewTitle)
   return [viewCols, viewTitle];
 }

@@ -21,7 +21,8 @@
     "ui.action.reset": "Tabloyu sıfırla",
 
     "menu.views.title": "Tablolar",
-    "menu.views.summary": "Özet",
+    
+    "menu.views.alldata": "Temel Veriler",
     "menu.views.calculated": "Hesaplanmış",
     "menu.views.buckets-all": "Tüm Gruplamalar",
     "menu.views.buckets-main": "Ana Gruplar",
@@ -30,6 +31,7 @@
     "menu.views.ages": "Yaşlar",
     "menu.views.genders": "Cinsiyetler",
     "menu.views.other": "Diğer Bilgi",
+    "menu.views.totals": "CV Toplamları",
 
     "menu.graphs.title": "Grafikler",
 
@@ -88,7 +90,7 @@
     "calculated.valid_hrs_percentage": "Onaylı Saat%",
     "calculated.reported_percentage": "%Raporlanmış",
     "calculated.avg_recs_per_user": "Ort.Kayıt/Kişi",
-    "calculated.avg_hrs_per_user": "Ort.Saat/Kişi",
+    "calculated.avg_secs_per_user": "Ort.Sn/Kişi",
 
     "calculated.est_train_hrs": "~Eğitim Saati",
     "calculated.est_dev_hrs": "~Geliştirme Saati",

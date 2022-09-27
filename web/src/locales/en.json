@@ -17,7 +17,8 @@
   "ui.action.reset": "Reset table",
 
   "menu.views.title": "Tables",
-  "menu.views.summary": "Summary",
+
+  "menu.views.alldata": "Basic Data",
   "menu.views.calculated": "Calculated",
   "menu.views.buckets-all": "All buckets",
   "menu.views.buckets-main": "Major buckets",
@@ -26,6 +27,7 @@
   "menu.views.ages": "Age Distribution",
   "menu.views.genders": "Gender Distribution",
   "menu.views.other": "Other Info",
+  "menu.views.totals": "CV Totals",
 
   "menu.graphs.title": "Graphs",
 
@@ -84,7 +86,7 @@
   "calculated.valid_hrs_percentage": "%Validated Hrs.",
   "calculated.reported_percentage": "%Reported",
   "calculated.avg_recs_per_user": "Avg.Recs/User",
-  "calculated.avg_hrs_per_user": "Avg.Hrs/User",
+  "calculated.avg_secs_per_user": "Avg.Sec/User",
 
   "calculated.percentage_used": "%Used",
 
@@ -95,6 +97,13 @@
   "calculated.fm_ratio": "Female/Male Ratio",
   "calculated.male_percentage": "%Male/Data",
   "calculated.female_percentage": "%Female/Data",
+
+  "colnames.total_locales": "Total Locales",
+  "colnames.total_clips": "Total Clips",
+  "colnames.total_users": "Total Users",
+  "colnames.total_totalHrs": "Total Hours",
+  "colnames.total_validHrs": "Valid Hours",
+  "calculated.valid_percentage": "%Valid/Total",
 
   "xxx": "xxx"
 }

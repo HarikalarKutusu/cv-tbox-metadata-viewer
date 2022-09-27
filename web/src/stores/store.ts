@@ -2,7 +2,7 @@
 
 import create from "zustand";
 import { DataFrame } from "dataframe-js";
-import { DT_ROW_TYPE } from "./../helpers/dataTableHelper"
+import { CV_METADATATABLE_TYPE, TOTALS_TABLE_TYPE } from "./../helpers/dataTableHelper"
 import { LanguageCodesType, DEFAULT_UI_LOCALE } from "./../helpers/localeHelper";
 
 export type StoreType = {
@@ -19,12 +19,12 @@ export type StoreType = {
   setLanguageData: (df: DataFrame) => void;
 
   // metadata
-  metaData: DT_ROW_TYPE[] | undefined;
-  setMetaData: (dt: DT_ROW_TYPE[]) => void;
+  metaData: CV_METADATATABLE_TYPE | undefined;
+  setMetaData: (dt: CV_METADATATABLE_TYPE) => void;
 
   // cv Aggregated data per version
-  cvAggregated: DT_ROW_TYPE[] | undefined;
-  setCvAggregated: (dt: DT_ROW_TYPE[]) => void;
+  cvTotals: TOTALS_TABLE_TYPE | undefined;
+  setCVTotals: (dt: TOTALS_TABLE_TYPE) => void;
 
   // Table View
   tableView: string;
@@ -57,8 +57,8 @@ const useStore = create<StoreType>((set) => ({
   setMetaData: (dt) => set((state) => ({ ...state, metaData: dt })),
 
   // metadata
-  cvAggregated: undefined,
-  setCvAggregated: (dt) => set((state) => ({ ...state, metaData: dt })),
+  cvTotals: undefined,
+  setCVTotals: (dt) => set((state) => ({ ...state, cvTotals: dt })),
 
   // Table View
   tableView: 'main',
