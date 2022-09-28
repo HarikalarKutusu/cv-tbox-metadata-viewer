@@ -1,8 +1,8 @@
 import AutoSizer from "react-virtualized-auto-sizer";
 
 import {
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,18 +11,26 @@ import {
   Legend,
 } from "recharts";
 
+// import {
+//   LineProps,
+//   XAxisProps,
+//   YAxisProps,
+//   CartesianGridProps,
+//   ReferenceLineProps,
+// } from "recharts";
+
 import { GRAPH_COLORS } from "../../helpers/graphHelper";
 import { useStore } from "../../stores/store";
 
-export const AppBarChart = (props: any) => {
-  const { data, xKey, yKeys, seriesNames, stacked } = props;
+export const AppLineChart = (props: any) => {
+  const { data, xKey, yKeys, seriesNames } = props;
   const { langCode } = useStore();
   let i = 0;
 
   return (
     <AutoSizer>
       {({ width, height }) => (
-        <BarChart
+        <LineChart
           width={width}
           height={height}
           data={data}
@@ -36,6 +44,7 @@ export const AppBarChart = (props: any) => {
             }}
           />
           <YAxis
+            dataKey={yKeys[0]}
             style={{
               fontSize: "0.8rem",
               fontFamily: "Arial",
@@ -55,25 +64,16 @@ export const AppBarChart = (props: any) => {
             }}
           />
           <Legend />
-          {yKeys.length > 1 && stacked
-            ? yKeys.map((yKey: string) => (
-                <Bar
-                  name={seriesNames[i]}
-                  key={xKey + "-" + yKey}
-                  stackId="a"
-                  dataKey={yKey}
-                  fill={GRAPH_COLORS[i++]}
-                />
-              ))
-            : yKeys.map((yKey: string) => (
-                <Bar
-                  name={seriesNames[i]}
-                  key={xKey + "-" + yKey}
-                  dataKey={yKey}
-                  fill={GRAPH_COLORS[i++]}
-                />
-              ))}
-        </BarChart>
+          {yKeys.map((yKey: string) => (
+            <Line
+              name={seriesNames[i]}
+              key={xKey + "-" + yKey}
+              dataKey={yKey}
+              // fill={GRAPH_COLORS[i]}
+              stroke={GRAPH_COLORS[i++]}
+            />
+          ))}
+        </LineChart>
       )}
     </AutoSizer>
   );

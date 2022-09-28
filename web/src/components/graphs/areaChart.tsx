@@ -1,8 +1,8 @@
 import AutoSizer from "react-virtualized-auto-sizer";
 
 import {
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,10 +11,18 @@ import {
   Legend,
 } from "recharts";
 
+// import {
+//   AreaProps,
+//   XAxisProps,
+//   YAxisProps,
+//   CartesianGridProps,
+//   ReferenceLineProps,
+// } from "recharts";
+
 import { GRAPH_COLORS } from "../../helpers/graphHelper";
 import { useStore } from "../../stores/store";
 
-export const AppBarChart = (props: any) => {
+export const AppAreaChart = (props: any) => {
   const { data, xKey, yKeys, seriesNames, stacked } = props;
   const { langCode } = useStore();
   let i = 0;
@@ -22,7 +30,7 @@ export const AppBarChart = (props: any) => {
   return (
     <AutoSizer>
       {({ width, height }) => (
-        <BarChart
+        <AreaChart
           width={width}
           height={height}
           data={data}
@@ -36,6 +44,7 @@ export const AppBarChart = (props: any) => {
             }}
           />
           <YAxis
+            dataKey={yKeys[0]}
             style={{
               fontSize: "0.8rem",
               fontFamily: "Arial",
@@ -57,23 +66,25 @@ export const AppBarChart = (props: any) => {
           <Legend />
           {yKeys.length > 1 && stacked
             ? yKeys.map((yKey: string) => (
-                <Bar
+                <Area
                   name={seriesNames[i]}
                   key={xKey + "-" + yKey}
                   stackId="a"
                   dataKey={yKey}
-                  fill={GRAPH_COLORS[i++]}
+                  fill={GRAPH_COLORS[i]}
+                  stroke={GRAPH_COLORS[i++]}
                 />
               ))
             : yKeys.map((yKey: string) => (
-                <Bar
+                <Area
                   name={seriesNames[i]}
                   key={xKey + "-" + yKey}
                   dataKey={yKey}
-                  fill={GRAPH_COLORS[i++]}
+                  fill={GRAPH_COLORS[i]}
+                  stroke={GRAPH_COLORS[i++]}
                 />
               ))}
-        </BarChart>
+        </AreaChart>
       )}
     </AutoSizer>
   );

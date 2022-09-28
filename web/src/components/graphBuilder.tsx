@@ -14,6 +14,8 @@ import { useStore } from "./../stores/store";
 // App Charts
 import { GRAPH_DATA, GRAPH_VIEW_TYPE } from "../helpers/graphHelper";
 import { AppBarChart } from "./graphs/barChart";
+import { AppAreaChart } from "./graphs/areaChart";
+import { AppLineChart } from "./graphs/lineChart";
 
 //
 // Graph Builder
@@ -35,7 +37,11 @@ export const GraphBuilder = () => {
     gData = cvTotals;
     viewGraphs = GRAPH_DATA.filter((row) => row.view == tableView);
     // TODO : Support multiple, up to 5? We need to change graph type thou...
-  } else if (metaData && languageFilter.length > 0 && languageFilter.length <= 1) {
+  } else if (
+    metaData &&
+    languageFilter.length > 0 &&
+    languageFilter.length <= 1
+  ) {
     gEnable = true;
     // get subsets
     viewGraphs = GRAPH_DATA.filter((row) => row.view == tableView);
@@ -45,8 +51,7 @@ export const GraphBuilder = () => {
     } else {
       gData = metaData.filter(
         (row) =>
-          gLocales.includes(row.locale) &&
-          versionFilter.includes(row.version),
+          gLocales.includes(row.locale) && versionFilter.includes(row.version),
       );
     }
   }
@@ -70,12 +75,41 @@ export const GraphBuilder = () => {
             <Grid item xs={12} sm={12} md={6} key={index}>
               <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
                 <div style={{ width: "100%", height: "300px" }}>
-                  <AppBarChart
-                    data={gData}
-                    xKey={gd.xKey}
-                    yKeys={gd.yKeys}
-                    seriesNames={getSeriesNames(gd.seriesNames)}
-                  />
+                  {/* BAR CHART */}
+                  {gd.type === "bar" ? (
+                    <AppBarChart
+                      data={gData}
+                      xKey={gd.xKey}
+                      yKeys={gd.yKeys}
+                      stacked={gd.stacked}
+                      seriesNames={getSeriesNames(gd.seriesNames)}
+                    />
+                  ) : (
+                    <>
+                      {gd.type === "area" ? (
+                        <AppAreaChart
+                          data={gData}
+                          xKey={gd.xKey}
+                          yKeys={gd.yKeys}
+                          stacked={gd.stacked}
+                          seriesNames={getSeriesNames(gd.seriesNames)}
+                        />
+                      ) : (
+                        <>
+                          {gd.type === "line" ? (
+                            <AppLineChart
+                              data={gData}
+                              xKey={gd.xKey}
+                              yKeys={gd.yKeys}
+                              seriesNames={getSeriesNames(gd.seriesNames)}
+                            />
+                          ) : (
+                            <></>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
                 </div>
               </Paper>
             </Grid>

@@ -1,6 +1,17 @@
 // export const GRAPH_VIEWS_TYPE = 'days' || 'versions';
 
-export const GRAPH_COLORS = ["#1f77b4", "#ff7f0e", "#2ca02c"];
+export const GRAPH_COLORS = [
+  "#4e79a7",
+  "#f28e2c",
+  "#e15759",
+  "#76b7b2",
+  "#59a14f",
+  "#edc949",
+  "#af7aa1",
+  "#ff9da7",
+  "#9c755f",
+  "#bab0ab",
+];
 
 export type CHART_TYPES =
   | "area"
@@ -17,6 +28,7 @@ export type GRAPH_VIEW_TYPE = {
   view: string;
   data: "totals" | "metadata";
   type: CHART_TYPES;
+  stacked?: boolean;
   xKey: string;
   yKeys: string[];
   seriesNames: string[];
@@ -138,7 +150,8 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
   {
     view: "buckets-main",
     data: "metadata",
-    type: "bar",
+    type: "area",
+    stacked: true,
     xKey: "version",
     yKeys: [
       "validRecsPercentage",
@@ -168,6 +181,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     view: "buckets-model",
     data: "metadata",
     type: "bar",
+    stacked: true,
     xKey: "version",
     yKeys: ["estTrainHrs", "estDevHrs", "estTestHrs"],
     seriesNames: [
@@ -179,7 +193,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
   {
     view: "buckets-model",
     data: "metadata",
-    type: "bar",
+    type: "area",
     xKey: "version",
     yKeys: ["percentageUsed"],
     seriesNames: ["calculated.percentage_used"],
@@ -196,7 +210,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
   {
     view: "users",
     data: "metadata",
-    type: "bar",
+    type: "line",
     xKey: "version",
     yKeys: ["avgRecsPerUser"],
     seriesNames: ["calculated.avg_recs_per_user"],
@@ -204,9 +218,72 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
   {
     view: "users",
     data: "metadata",
-    type: "bar",
+    type: "line",
     xKey: "version",
     yKeys: ["avgSecsPerUser"],
     seriesNames: ["calculated.avg_secs_per_user"],
+  },
+  // view = ages
+  {
+    view: "ages",
+    data: "metadata",
+    type: "bar",
+    stacked: true,
+    xKey: "version",
+    yKeys: [
+      "ages_teens",
+      "ages_twenties",
+      "ages_thirties",
+      "ages_fourties",
+      "ages_fifties",
+      "ages_sixties",
+      "ages_seventies",
+      "ages_eighties",
+      "ages_nineties",
+      // "ages_nodata",
+    ],
+    seriesNames: [
+      "colnames.ages_teens",
+      "colnames.ages_twenties",
+      "colnames.ages_thirties",
+      "colnames.ages_fourties",
+      "colnames.ages_fifties",
+      "colnames.ages_sixties",
+      "colnames.ages_seventies",
+      "colnames.ages_eighties",
+      "colnames.ages_nineties",
+      // "colnames.ages_nodata",
+    ],
+  },
+  // view = genders
+  {
+    view: "genders",
+    data: "metadata",
+    type: "bar",
+    stacked: true,
+    xKey: "version",
+    yKeys: ["genders_male", "genders_female", "genders_other"],
+    seriesNames: [
+      "colnames.genders_male",
+      "colnames.genders_female",
+      "colnames.genders_other",
+    ],
+  },
+  {
+    view: "genders",
+    data: "metadata",
+    type: "area",
+    stacked: true,
+    xKey: "version",
+    yKeys: ["malePercentage", "femalePercentage"],
+    seriesNames: ["calculated.male_percentage", "calculated.female_percentage"],
+  },
+  {
+    view: "genders",
+    data: "metadata",
+    type: "line",
+    xKey: "version",
+    yKeys: ["fmRatio"],
+    seriesNames: ["calculated.fm_ratio"],
   },
 ];
