@@ -19,6 +19,8 @@
   "ui.select.versions": "İlgilendiğiniz sürümleri seçiniz",
 
   "ui.action.reset": "Tabloyu sıfırla",
+  "ui.action.open-menu": "Menüyü Aç",
+  "ui.action.close-menu": "Menüyü Kapat",
 
   "menu.views.alldata": "Temel Veriler",
   "menu.views.calculated": "Hesaplanmış",

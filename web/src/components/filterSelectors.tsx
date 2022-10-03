@@ -78,7 +78,7 @@ export const FilterSelectors = () => {
           <CalendarMonthIcon />
         </ListItemIcon>
         <FormControl sx={{ m: 1, minWidth: 150 }}>
-          <InputLabel id="ui-version-filter-select">
+          <InputLabel id="ui-version-filter-select-label">
             {intl.get("ui.filter_version.label")}
           </InputLabel>
           <Select
@@ -110,7 +110,7 @@ export const FilterSelectors = () => {
           <LanguageIcon />
         </ListItemIcon>
         <FormControl sx={{ m: 0, minWidth: 150 }}>
-          <InputLabel id="ui-language-filter-select">
+          <InputLabel id="ui-language-filter-select-label">
             {intl.get("ui.filter_language.label")}
           </InputLabel>
           <Select

@@ -136,7 +136,7 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 export function AppUI() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -203,8 +203,6 @@ export function AppUI() {
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.totals")} />
         </ListItemButton>
-        <Divider />
-        <FilterSelectors />
       </>
     );
   };
@@ -224,7 +222,8 @@ export function AppUI() {
             <IconButton
               edge="start"
               color="inherit"
-              aria-label="open drawer"
+              title={intl.get("ui.action.open-menu")}
+              aria-label={intl.get("ui.action.open-menu")}
               onClick={toggleDrawer}
               sx={{
                 marginRight: "36px",
@@ -266,13 +265,21 @@ export function AppUI() {
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
+            <IconButton
+              title={intl.get("ui.action.close-menu")}
+              aria-label={intl.get("ui.action.close-menu")}
+              onClick={toggleDrawer}
+            >
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
           <Divider />
           <List component="nav">
             <MenuItemsTable />
+          </List>
+          <Divider />
+          <List component="nav">
+            <FilterSelectors />
           </List>
         </Drawer>
         <Box
@@ -326,7 +333,7 @@ export function AppUI() {
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
-{/* 
+        {/* 
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{

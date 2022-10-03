@@ -43,7 +43,7 @@ export const LanguageSelector = (props: any) => {
   ) : (
     <div>
       <FormControl sx={{ m: 1, minWidth: 80 }}>
-        <InputLabel id="ui-language-select">
+        <InputLabel id="ui-language-select-label">
           {intl.get("ui.languageselector.label")}
         </InputLabel>
         <Select
@@ -61,6 +61,7 @@ export const LanguageSelector = (props: any) => {
                 key={lang.code}
                 value={lang.code}
                 className="ui-language-select-option"
+                aria-label={lang.code}
               >
                 {lang.code}-{lang.nativeName}
               </MenuItem>

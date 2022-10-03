@@ -15,6 +15,8 @@
   "ui.select.versions": "Select versions to work on",
 
   "ui.action.reset": "Reset table",
+  "ui.action.open-menu": "Open Menu",
+  "ui.action.close-menu": "Close Menu",
 
   "menu.views.alldata": "Fundamental Data",
   "menu.views.calculated": "Calculated",
