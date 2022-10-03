@@ -1,11 +1,12 @@
+// React
 import { useEffect } from "react";
+// i10n
 import intl from "react-intl-universal";
 
+// DataTable
+import DataTable, { Direction } from "react-data-table-component";
 
-import DataTable, {
-  Direction,
-} from "react-data-table-component";
-
+// App
 import {
   getMetaDataTableView,
   getTotalsTableView,
@@ -15,7 +16,6 @@ import {
   DT_ROW_TYPE,
 } from "../helpers/dataTableHelper";
 
-// App
 import { useStore } from "../stores/store";
 
 // Data

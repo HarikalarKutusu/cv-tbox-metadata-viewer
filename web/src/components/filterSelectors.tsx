@@ -1,14 +1,18 @@
+// i10n
 import intl from "react-intl-universal";
 // MUI
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import ListItemText from "@mui/material/ListItemText";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Checkbox from "@mui/material/Checkbox";
+import {
+  ListItem,
+  ListItemIcon,
+  OutlinedInput,
+  ListItemText,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Checkbox,
+} from '@mui/material';
+import { SelectChangeEvent } from "@mui/material/Select";
 
 // Version Filter
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -17,6 +21,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 
 // App
 import { useStore } from "../stores/store";
+
 
 export const FilterSelectors = () => {
   const { metaData } = useStore();

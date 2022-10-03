@@ -1,3 +1,4 @@
+// i10n
 import intl from "react-intl-universal";
 // common locale data
 import "intl/locale-data/jsonp/en";

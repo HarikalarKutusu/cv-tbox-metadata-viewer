@@ -1,6 +1,8 @@
+// i10n
 import intl from "react-intl-universal";
-
+// DataTable
 import { TableColumn } from "react-data-table-component";
+// APP
 // import { CV_TOTALS_COLS } from "./metadataHelper";
 
 export type DT_ROW_TYPE = {
@@ -60,31 +62,31 @@ export type DT_ROW_TYPE = {
   fmRatio?: number;
   malePercentage?: number;
   femalePercentage?: number;
-
 };
 
 export type CV_METADATATABLE_TYPE = DT_ROW_TYPE[];
-
 
 // TOTALS
 
 export type TOTALS_ROW_TYPE = {
   version: string;
   date: string;
-  total_locales: number,
-  total_clips: number,
-  total_users: number,
-  total_duration: number,
-  total_totalHrs: number,
-  total_validHrs: number,
+  total_locales: number;
+  total_clips: number;
+  total_users: number;
+  total_duration: number;
+  total_totalHrs: number;
+  total_validHrs: number;
 };
 
 export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];
 
-
 // NUMERIC SORTER COMMON TO METADATA AND TOTALS
 
-const numericVersionSort = (rowA: DT_ROW_TYPE | TOTALS_ROW_TYPE, rowB: DT_ROW_TYPE | TOTALS_ROW_TYPE) => {
+const numericVersionSort = (
+  rowA: DT_ROW_TYPE | TOTALS_ROW_TYPE,
+  rowB: DT_ROW_TYPE | TOTALS_ROW_TYPE,
+) => {
   const a = parseFloat(rowA.version);
   const b = parseFloat(rowB.version);
   let res = 0;
@@ -111,13 +113,13 @@ export function getMetaDataTableView(
     selector: (row) => row.version,
     sortFunction: numericVersionSort,
   };
-  const colDate: TableColumn<DT_ROW_TYPE> = {
-    id: "date",
-    name: intl.get("colnames.date"),
-    sortable: true,
-    center: true,
-    selector: (row) => row.date,
-  };
+  // const colDate: TableColumn<DT_ROW_TYPE> = {
+  //   id: "date",
+  //   name: intl.get("colnames.date"),
+  //   sortable: true,
+  //   center: true,
+  //   selector: (row) => row.date,
+  // };
   const colLocale: TableColumn<DT_ROW_TYPE> = {
     id: "locale",
     name: intl.get("colnames.locale"),
@@ -148,7 +150,11 @@ export function getMetaDataTableView(
     sortable: true,
     right: true,
     selector: (row) => row.totalHrs,
-    cell: (row) => row.totalHrs.toLocaleString(langCode, {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+    cell: (row) =>
+      row.totalHrs.toLocaleString(langCode, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
   };
   const colValidHrs: TableColumn<DT_ROW_TYPE> = {
     id: "validHrs",
@@ -156,24 +162,32 @@ export function getMetaDataTableView(
     sortable: true,
     right: true,
     selector: (row) => row.validHrs,
-    cell: (row) => row.validHrs.toLocaleString(langCode, {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+    cell: (row) =>
+      row.validHrs.toLocaleString(langCode, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
   };
 
-  const colValidDurationSecs: TableColumn<DT_ROW_TYPE> = {
-    id: "validDurationSecs",
-    name: intl.get("colnames.validDurationSecs"),
-    right: true,
-    sortable: true,
-    selector: (row) => row.validDurationSecs,
-    cell: (row) => row.validDurationSecs.toLocaleString(langCode),
-  };
+  // const colValidDurationSecs: TableColumn<DT_ROW_TYPE> = {
+  //   id: "validDurationSecs",
+  //   name: intl.get("colnames.validDurationSecs"),
+  //   right: true,
+  //   sortable: true,
+  //   selector: (row) => row.validDurationSecs,
+  //   cell: (row) => row.validDurationSecs.toLocaleString(langCode),
+  // };
   const colAvgDurationSecs: TableColumn<DT_ROW_TYPE> = {
     id: "avgDurationSecs",
     name: intl.get("colnames.avgDurationSecs"),
     sortable: true,
     right: true,
     selector: (row) => Number(row.avgDurationSecs),
-    cell: (row) => row.avgDurationSecs.toLocaleString(langCode, {minimumFractionDigits: 3, maximumFractionDigits: 3}),
+    cell: (row) =>
+      row.avgDurationSecs.toLocaleString(langCode, {
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 3,
+      }),
   };
 
   const colBucketsValidated: TableColumn<DT_ROW_TYPE> = {
@@ -224,14 +238,14 @@ export function getMetaDataTableView(
     selector: (row) => row.buckets_test,
     cell: (row) => row.buckets_test.toLocaleString(langCode),
   };
-  const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
-    id: "bucketsReported",
-    name: intl.get("colnames.buckets_reported"),
-    sortable: true,
-    right: true,
-    selector: (row) => row.buckets_reported,
-    cell: (row) => row.buckets_reported.toLocaleString(langCode),
-  };
+  // const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
+  //   id: "bucketsReported",
+  //   name: intl.get("colnames.buckets_reported"),
+  //   sortable: true,
+  //   right: true,
+  //   selector: (row) => row.buckets_reported,
+  //   cell: (row) => row.buckets_reported.toLocaleString(langCode),
+  // };
 
   const colAgesNodata: TableColumn<DT_ROW_TYPE> = {
     id: "agesNodata",
@@ -420,7 +434,6 @@ export function getMetaDataTableView(
     cell: (row) => row.avgSecsPerUser!.toFixed(2),
     // selector: (row) => (row.duration / row.users / 1000).toFixed(2),
   };
-
 
   const calcPercentageUsed: TableColumn<DT_ROW_TYPE> = {
     id: "percentageUsed",
@@ -697,7 +710,8 @@ export function getTotalsTableView(
     name: intl.get("calculated.valid_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => ((100 * row.total_validHrs) / row.total_totalHrs).toFixed(2),
+    selector: (row) =>
+      ((100 * row.total_validHrs) / row.total_totalHrs).toFixed(2),
   };
 
   let viewCols: TableColumn<TOTALS_ROW_TYPE>[];

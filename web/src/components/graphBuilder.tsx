@@ -1,9 +1,5 @@
+// i10n
 import intl from "react-intl-universal";
-
-// MUI
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 
 // App
 import {
@@ -18,6 +14,8 @@ import { GRAPH_DATA, GRAPH_VIEW_TYPE } from "../helpers/graphHelper";
 import { AppBarChart } from "./graphs/barChart";
 import { AppAreaChart } from "./graphs/areaChart";
 import { AppLineChart } from "./graphs/lineChart";
+
+import { Container, Grid, Paper } from '@mui/material';
 
 //
 // Graph Builder

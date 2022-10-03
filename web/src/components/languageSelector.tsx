@@ -1,10 +1,10 @@
+// React
 import { useEffect } from "react";
+// i10n
 import intl from "react-intl-universal";
 // MUI
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material/Select";
 // APP
 import {
   getEnabledUILanguages,
