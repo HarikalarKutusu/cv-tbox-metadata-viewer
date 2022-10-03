@@ -11,6 +11,7 @@ import {
   FormControl,
   Select,
   Checkbox,
+  ListItemButton,
 } from '@mui/material';
 import { SelectChangeEvent } from "@mui/material/Select";
 
@@ -73,11 +74,14 @@ export const FilterSelectors = () => {
     <></>
   ) : (
     <>
-      <ListItem>
+      <ListItemButton
+        title={intl.get("ui.filter_version.label")}
+        aria-label={intl.get("ui.filter_version.label")}
+      >
         <ListItemIcon>
           <CalendarMonthIcon />
         </ListItemIcon>
-        <FormControl sx={{ m: 1, minWidth: 150 }}>
+        <FormControl sx={{ m: 0, minWidth: 150 }}>
           <InputLabel id="ui-version-filter-select-label">
             {intl.get("ui.filter_version.label")}
           </InputLabel>
@@ -104,8 +108,11 @@ export const FilterSelectors = () => {
             })}
           </Select>
         </FormControl>
-      </ListItem>
-      <ListItem>
+      </ListItemButton>
+      <ListItemButton
+        title={intl.get("ui.filter_language.label")}
+        aria-label={intl.get("ui.filter_language.label")}
+      >
         <ListItemIcon>
           <LanguageIcon />
         </ListItemIcon>
@@ -136,7 +143,7 @@ export const FilterSelectors = () => {
             })}
           </Select>
         </FormControl>
-      </ListItem>
+      </ListItemButton>
     </>
   );
 };

@@ -149,55 +149,91 @@ export function AppUI() {
   const MenuItemsTable = () => {
     return (
       <>
-        <ListItemButton onClick={() => setTableView("main")}>
+        <ListItemButton
+          onClick={() => setTableView("main")}
+          title={intl.get("menu.views.alldata")}
+          aria-label={intl.get("menu.views.alldata")}
+        >
           <ListItemIcon>
             <SummarizeIcon />
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.alldata")} />
         </ListItemButton>
-        <ListItemButton onClick={() => setTableView("calculated")}>
+        <ListItemButton
+          onClick={() => setTableView("calculated")}
+          title={intl.get("menu.views.calculated")}
+          aria-label={intl.get("menu.views.calculated")}
+        >
           <ListItemIcon>
             <CalculateIcon />
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.calculated")} />
         </ListItemButton>
-        <ListItemButton onClick={() => setTableView("buckets-main")}>
+        <ListItemButton
+          onClick={() => setTableView("buckets-main")}
+          title={intl.get("menu.views.buckets-main")}
+          aria-label={intl.get("menu.views.buckets-main")}
+        >
           <ListItemIcon>
             <RuleIcon />
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.buckets-main")} />
         </ListItemButton>
-        <ListItemButton onClick={() => setTableView("buckets-model")}>
+        <ListItemButton
+          onClick={() => setTableView("buckets-model")}
+          title={intl.get("menu.views.buckets-model")}
+          aria-label={intl.get("menu.views.buckets-model")}
+        >
           <ListItemIcon>
             <PsychologyIcon />
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.buckets-model")} />
         </ListItemButton>
-        <ListItemButton onClick={() => setTableView("users")}>
+        <ListItemButton
+          onClick={() => setTableView("users")}
+          title={intl.get("menu.views.users")}
+          aria-label={intl.get("menu.views.users")}
+        >
           <ListItemIcon>
             <GroupIcon />
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.users")} />
         </ListItemButton>
-        <ListItemButton onClick={() => setTableView("ages")}>
+        <ListItemButton
+          onClick={() => setTableView("ages")}
+          title={intl.get("menu.views.ages")}
+          aria-label={intl.get("menu.views.ages")}
+        >
           <ListItemIcon>
             <ElderlyWomanIcon />
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.ages")} />
         </ListItemButton>
-        <ListItemButton onClick={() => setTableView("genders")}>
+        <ListItemButton
+          onClick={() => setTableView("genders")}
+          title={intl.get("menu.views.genders")}
+          aria-label={intl.get("menu.views.genders")}
+        >
           <ListItemIcon>
             <TransgenderIcon />
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.genders")} />
         </ListItemButton>
-        <ListItemButton onClick={() => setTableView("other")}>
+        <ListItemButton
+          onClick={() => setTableView("other")}
+          title={intl.get("menu.views.other")}
+          aria-label={intl.get("menu.views.other")}
+        >
           <ListItemIcon>
             <BuildIcon />
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.other")} />
         </ListItemButton>
-        <ListItemButton onClick={() => setTableView("totals")}>
+        <ListItemButton
+          onClick={() => setTableView("totals")}
+          title={intl.get("menu.views.totals")}
+          aria-label={intl.get("menu.views.totals")}
+        >
           <ListItemIcon>
             <FunctionsIcon />
           </ListItemIcon>
