@@ -2,8 +2,6 @@
 import intl from "react-intl-universal";
 // MUI
 import {
-  ListItem,
-  ListItemIcon,
   OutlinedInput,
   ListItemText,
   InputLabel,
@@ -11,20 +9,14 @@ import {
   FormControl,
   Select,
   Checkbox,
-  ListItemButton,
-} from '@mui/material';
+  Stack,
+} from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
-
-// Version Filter
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-// Language Filter
-import LanguageIcon from "@mui/icons-material/Language";
 
 // App
 import { useStore } from "../stores/store";
 
-
-export const FilterSelectors = () => {
+const FilterSelectors = () => {
   const { metaData } = useStore();
   const { versionFilter, setVersionFilter } = useStore();
   const { languageFilter, setLanguageFilter } = useStore();
@@ -73,77 +65,71 @@ export const FilterSelectors = () => {
   return !metaData ? (
     <></>
   ) : (
-    <>
-      <ListItemButton
-        title={intl.get("ui.filter_version.label")}
-        aria-label={intl.get("ui.filter_version.label")}
-      >
-        <ListItemIcon>
-          <CalendarMonthIcon />
-        </ListItemIcon>
-        <FormControl sx={{ m: 0, minWidth: 150 }}>
-          <InputLabel id="ui-version-filter-select-label">
-            {intl.get("ui.filter_version.label")}
-          </InputLabel>
-          <Select
-            disabled={isDisabled}
-            labelId="ui-version-filter-select"
-            id="ui-version-filter-select"
-            title={intl.get("ui.filter_version.title")}
-            multiple
-            value={versionFilter}
-            onChange={handleVersionFilterChange}
-            input={<OutlinedInput label="Tag" />}
-            renderValue={(selected) => selected.join(", ")}
-            // MenuProps={MenuProps}
-            label={intl.get("ui.filter_version.label")}
-          >
-            {versionList.map((x) => {
-              return (
-                <MenuItem key={x} value={x}>
-                  <Checkbox checked={versionFilter.indexOf(x) > -1} />
-                  <ListItemText primary={x} />
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-      </ListItemButton>
-      <ListItemButton
-        title={intl.get("ui.filter_language.label")}
-        aria-label={intl.get("ui.filter_language.label")}
-      >
-        <ListItemIcon>
-          <LanguageIcon />
-        </ListItemIcon>
-        <FormControl sx={{ m: 0, minWidth: 150 }}>
-          <InputLabel id="ui-language-filter-select-label">
-            {intl.get("ui.filter_language.label")}
-          </InputLabel>
-          <Select
-            disabled={isDisabled}
-            labelId="ui-language-filter-select"
-            id="ui-language-filter-select"
-            title={intl.get("ui.filter_language.title")}
-            multiple
-            value={languageFilter}
-            onChange={handleLocaleFilterChange}
-            input={<OutlinedInput label="Tag" />}
-            renderValue={(selected) => selected.join(", ")}
-            // MenuProps={MenuProps}
-            label={intl.get("ui.filter_language.label")}
-          >
-            {languageList.map((x) => {
-              return (
-                <MenuItem key={x} value={x}>
-                  <Checkbox checked={languageFilter.indexOf(x) > -1} />
-                  <ListItemText primary={x} />
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-      </ListItemButton>
-    </>
+    <Stack
+      direction="row"
+      justifyContent="center"
+      alignItems="baseline"
+      spacing={2}
+      display="flex"
+    >
+      {/* Version Selector */}
+      <FormControl sx={{ m: 1, minWidth: 160 }} size="small">
+        <InputLabel id="ui-version-filter-select-label">
+          {intl.get("ui.filter_version.label")}
+        </InputLabel>
+        <Select
+          disabled={isDisabled}
+          labelId="ui-version-filter-select"
+          id="ui-version-filter-select"
+          title={intl.get("ui.filter_version.title")}
+          multiple
+          value={versionFilter}
+          input={<OutlinedInput label="Tag" />}
+          renderValue={(selected) => selected.join(", ")}
+          // MenuProps={MenuProps}
+          label={intl.get("ui.filter_version.label")}
+          onChange={handleVersionFilterChange}
+        >
+          {versionList.map((x) => {
+            return (
+              <MenuItem key={x} value={x}>
+                <Checkbox checked={versionFilter.indexOf(x) > -1} />
+                <ListItemText primary={x} />
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+      {/* Locale Selector */}
+      <FormControl sx={{ m: 1, minWidth: 160 }} size="small">
+        <InputLabel id="ui-language-filter-select-label">
+          {intl.get("ui.filter_language.label")}
+        </InputLabel>
+        <Select
+          disabled={isDisabled}
+          labelId="ui-language-filter-select"
+          id="ui-language-filter-select"
+          title={intl.get("ui.filter_language.title")}
+          multiple
+          value={languageFilter}
+          input={<OutlinedInput label="Tag" />}
+          renderValue={(selected) => selected.join(", ")}
+          // MenuProps={MenuProps}
+          label={intl.get("ui.filter_language.label")}
+          onChange={handleLocaleFilterChange}
+        >
+          {languageList.map((x) => {
+            return (
+              <MenuItem key={x} value={x}>
+                <Checkbox checked={languageFilter.indexOf(x) > -1} />
+                <ListItemText primary={x} />
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+    </Stack>
   );
 };
+
+export { FilterSelectors };

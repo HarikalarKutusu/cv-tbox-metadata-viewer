@@ -20,6 +20,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
   // ListSubheader,,
 } from "@mui/material";
 
@@ -278,17 +279,6 @@ export function AppUI() {
             >
               {intl.get("app.title")}
             </Typography>
-            {/* <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              align="right"
-              sx={{ flexGrow: 1 }}
-            >
-              {intl.get("ui.filter_table.label")}
-            </Typography> */}
-            {/* {tableView !== "totals" && <FilterSelectors />} */}
             <LanguageSelector />
           </Toolbar>
         </AppBar>
@@ -312,10 +302,6 @@ export function AppUI() {
           <Divider />
           <List component="nav">
             <MenuItemsTable />
-          </List>
-          <Divider />
-          <List component="nav">
-            <FilterSelectors />
           </List>
         </Drawer>
         <Box
@@ -369,22 +355,16 @@ export function AppUI() {
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
-        {/* 
-        <AppBar position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              bottom: "0", // keep right padding when drawer closed
-            }}
-          >
-            {tableView !== "totals" && <FilterSelectors />}
+        <AppBar
+          position="fixed"
+          color="primary"
+          sx={{ top: "auto", bottom: 0 }}
+        >
+          <Toolbar sx={{ justifyContent: "center" }}>
+            <FilterSelectors />
           </Toolbar>
         </AppBar>
-         */}
       </Box>
     </ThemeProvider>
   );
 }
-
-// export default function AppUI() {
-//   return <AppUIContent />;
-// }
