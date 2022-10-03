@@ -43,7 +43,7 @@ export const LanguageSelector = (props: any) => {
   ) : (
     <div>
       <FormControl sx={{ m: 1, minWidth: 80 }}>
-        <InputLabel id="ui-language-select-label">
+        <InputLabel id="ui-language-select-label" sx={{ color: "#fafafa" }}>
           {intl.get("ui.languageselector.label")}
         </InputLabel>
         <Select
@@ -51,9 +51,19 @@ export const LanguageSelector = (props: any) => {
           id="ui-language-select"
           title={intl.get("ui.languageselector.title")}
           value={langCode}
-          onChange={handleLanguageChange}
           autoWidth
           label={intl.get("ui.languageselector.label")}
+          onChange={handleLanguageChange}
+          sx={{
+            height: "2.5rem",
+            color: "white",
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "white",
+            },
+            "& .MuiSvgIcon-root": {
+              color: "white",
+            },
+          }}
         >
           {enabledLanguages.map((lang) => {
             return (

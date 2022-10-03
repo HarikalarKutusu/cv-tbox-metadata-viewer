@@ -20,11 +20,10 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Stack,
   // ListSubheader,,
 } from "@mui/material";
 
-import { createTheme } from "@mui/material/styles";
+// import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 
 // import Link from "@mui/material/Link";
@@ -50,13 +49,13 @@ import TransgenderIcon from "@mui/icons-material/Transgender";
 // Other (tech info)
 import BuildIcon from "@mui/icons-material/Build";
 
-// App Components
+// APP
+import { appTheme } from "./theme"
 import { useStore } from "./../../stores/store";
 import { LanguageSelector } from "./../languageSelector";
 import { MetadataTable, TotalsTable } from "./../metaDataTable";
 import { FilterSelectors } from "../filterSelectors";
 import { GraphBuilder } from "../graphBuilder";
-
 
 // import { ListItem } from "@mui/material";
 
@@ -134,7 +133,20 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const mdTheme = createTheme();
+
+
+// let appTheme = createTheme({
+//   palette: {
+//     primary: {
+//       main: "#00897b",
+//     },
+//     secondary: {
+//       main: "#ee9a9d",
+//     },
+//   },
+// });
+
+// appTheme = responsiveFontSizes(appTheme)
 
 export function AppUI() {
   const [open, setOpen] = React.useState(false);
@@ -247,7 +259,7 @@ export function AppUI() {
   return !initDone ? (
     <></>
   ) : (
-    <ThemeProvider theme={mdTheme}>
+    <ThemeProvider theme={appTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
