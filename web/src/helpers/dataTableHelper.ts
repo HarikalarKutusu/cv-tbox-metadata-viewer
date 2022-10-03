@@ -1,11 +1,7 @@
 import intl from "react-intl-universal";
 
 import { TableColumn } from "react-data-table-component";
-import { CV_TOTALS_COLS } from "./metadataHelper";
-
-// const selectProps = {
-//   indeterminate: (isIndeterminate: boolean) => isIndeterminate,
-// };
+// import { CV_TOTALS_COLS } from "./metadataHelper";
 
 export type DT_ROW_TYPE = {
   version: string;

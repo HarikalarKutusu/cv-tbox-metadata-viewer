@@ -23,7 +23,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from "@mui/material/ListSubheader";
+// import ListSubheader from "@mui/material/ListSubheader";
 
 // CV Totals
 import FunctionsIcon from "@mui/icons-material/Functions";
@@ -50,6 +50,7 @@ import { LanguageSelector } from "./../languageSelector";
 import { MetadataTable, TotalsTable } from "./../metaDataTable";
 import { FilterSelectors } from "../filterSelectors";
 import { GraphBuilder } from "../graphBuilder";
+// import { ListItem } from "@mui/material";
 
 //
 // UI
@@ -195,6 +196,8 @@ export function AppUI() {
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.totals")} />
         </ListItemButton>
+        <Divider />
+        <FilterSelectors />
       </>
     );
   };
@@ -243,7 +246,7 @@ export function AppUI() {
             >
               {intl.get("ui.filter_table.label")}
             </Typography> */}
-            {tableView !== "totals" && <FilterSelectors />}
+            {/* {tableView !== "totals" && <FilterSelectors />} */}
             <LanguageSelector />
           </Toolbar>
         </AppBar>
@@ -316,6 +319,17 @@ export function AppUI() {
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
+{/* 
+        <AppBar position="absolute" open={open}>
+          <Toolbar
+            sx={{
+              bottom: "0", // keep right padding when drawer closed
+            }}
+          >
+            {tableView !== "totals" && <FilterSelectors />}
+          </Toolbar>
+        </AppBar>
+         */}
       </Box>
     </ThemeProvider>
   );

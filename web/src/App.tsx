@@ -13,7 +13,6 @@ function App() {
   // Store
   const { initDone, setInitDone } = useStore();
   const { setLangCode } = useStore();
-  // const { metaData, setMetaData } = useStore();
 
   useEffect(() => {
     // UI Language
@@ -26,7 +25,6 @@ function App() {
       });
     }
   }, [initDone, setInitDone, setLangCode]);
-//  }, [initDone, setInitDone, setLangCode, metaData, setMetaData]);
 
   return !initDone ? (
     <></>

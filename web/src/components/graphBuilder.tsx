@@ -1,7 +1,9 @@
 import intl from "react-intl-universal";
 
 // MUI
-import { Container, Grid, Paper } from "@mui/material";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 
 // App
 import {
@@ -119,85 +121,3 @@ export const GraphBuilder = () => {
     </Container>
   );
 };
-
-// export const CVCharts = () => {
-//   const { cvTotals } = useStore();
-
-//   return (
-//     <Container maxWidth={false} style={{ padding: 0 }}>
-//       <Grid container spacing={1}>
-//         <Grid item xs={12} sm={12} md={6}>
-//           <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
-//             <div style={{ width: "100%", height: "300px" }}>
-//               <AppBarChart
-//                 data={cvTotals}
-//                 xKey="version"
-//                 yKeys={["total_locales"]}
-//                 seriesNames={[intl.get("colnames.total_locales")]}
-//               />
-//             </div>
-//           </Paper>
-//         </Grid>
-//         <Grid item xs={12} sm={12} md={6}>
-//           <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
-//             <div style={{ width: "100%", height: "300px" }}>
-//               <AppBarChart
-//                 data={cvTotals}
-//                 xKey="version"
-//                 yKeys={["total_users"]}
-//                 seriesNames={[intl.get("colnames.total_users")]}
-//               />
-//             </div>
-//           </Paper>
-//         </Grid>
-//         <Grid item xs={12} sm={12} md={6}>
-//           <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
-//             <div style={{ width: "100%", height: "300px" }}>
-//               <AppBarChart
-//                 data={cvTotals}
-//                 xKey="version"
-//                 yKeys={["total_clips"]}
-//                 seriesNames={[intl.get("colnames.total_clips")]}
-//               />
-//             </div>
-//           </Paper>
-//         </Grid>
-//         <Grid item xs={12} sm={12} md={6}>
-//           <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
-//             <div style={{ width: "100%", height: "300px" }}>
-//               <AppBarChart
-//                 data={cvTotals}
-//                 xKey="version"
-//                 yKeys={["total_totalHrs", "total_validHrs"]}
-//                 seriesNames={[
-//                   intl.get("colnames.total_totalHrs"),
-//                   intl.get("colnames.total_validHrs"),
-//                 ]}
-//               />
-//             </div>
-//           </Paper>
-//         </Grid>
-//       </Grid>
-//     </Container>
-//   );
-// };
-
-// export const xxxCVCharts = () => {
-//   const { cvTotals } = useStore();
-
-//   return (
-//     <div style={{width: '100%', height: '600px'}} >
-//       <Grid container spacing={1}>
-//         <Grid item xs={12}>
-//           <AppBarChart
-//             data={cvTotals}
-//             xKey="version"
-//             yKeys={["total_locales"]}
-//             seriesNames={["Total Locales"]}
-//           />
-//         </Grid>
-//       </Grid>
-//     </div>
-//   )
-
-// }

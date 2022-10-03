@@ -1,5 +1,3 @@
-// export const GRAPH_VIEWS_TYPE = 'days' || 'versions';
-
 export const GRAPH_COLORS = [
   "#4e79a7",
   "#f28e2c",

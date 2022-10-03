@@ -1,16 +1,9 @@
 import { useEffect } from "react";
 import intl from "react-intl-universal";
 
-import { useStore } from "../stores/store";
-
-import { DataFrame } from "dataframe-js";
 
 import DataTable, {
-  // TableColumn,
-  // TableProps,
   Direction,
-  // Alignment,
-  // Media,
 } from "react-data-table-component";
 
 import {
@@ -22,12 +15,11 @@ import {
   DT_ROW_TYPE,
 } from "../helpers/dataTableHelper";
 
+// App
+import { useStore } from "../stores/store";
+
+// Data
 import METADATA_RAW from "./../assets/data/$metadata.json";
-
-// import Checkbox from "@mui/material/Checkbox";
-// import ArrowDownward from "@mui/icons-material/ArrowDownward";
-
-// const sortIcon = <ArrowDownward />;
 
 //
 // JSX

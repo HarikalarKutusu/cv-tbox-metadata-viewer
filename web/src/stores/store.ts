@@ -1,9 +1,15 @@
 // State management / store using zustand
-
 import create from "zustand";
-import { DataFrame } from "dataframe-js";
-import { CV_METADATATABLE_TYPE, TOTALS_TABLE_TYPE } from "./../helpers/dataTableHelper"
-import { LanguageCodesType, DEFAULT_UI_LOCALE } from "./../helpers/localeHelper";
+
+// App
+import {
+  CV_METADATATABLE_TYPE,
+  TOTALS_TABLE_TYPE,
+} from "./../helpers/dataTableHelper";
+import {
+  LanguageCodesType,
+  DEFAULT_UI_LOCALE,
+} from "./../helpers/localeHelper";
 
 export type StoreType = {
   // Init Done
@@ -13,10 +19,6 @@ export type StoreType = {
   // UI language
   langCode: LanguageCodesType;
   setLangCode: (langCode: LanguageCodesType) => void;
-
-  // language data
-  languageData: DataFrame | undefined;
-  setLanguageData: (df: DataFrame) => void;
 
   // metadata
   metaData: CV_METADATATABLE_TYPE | undefined;
@@ -48,10 +50,6 @@ const useStore = create<StoreType>((set) => ({
   langCode: DEFAULT_UI_LOCALE,
   setLangCode: (langCode) => set((state) => ({ ...state, langCode: langCode })),
 
-  // language data
-  languageData: undefined,
-  setLanguageData: (dt) => set((state) => ({ ...state, languageData: dt })),
-
   // metadata
   metaData: undefined,
   setMetaData: (dt) => set((state) => ({ ...state, metaData: dt })),
@@ -61,16 +59,19 @@ const useStore = create<StoreType>((set) => ({
   setCVTotals: (dt) => set((state) => ({ ...state, cvTotals: dt })),
 
   // Table View
-  tableView: 'main',
-  setTableView: (view: string) => set((state) => ({ ...state, tableView: view })),
+  tableView: "main",
+  setTableView: (view: string) =>
+    set((state) => ({ ...state, tableView: view })),
 
   // selected version filter
   versionFilter: [],
-  setVersionFilter: (lst: string[]) => set((state) => ({ ...state, versionFilter: lst })),
+  setVersionFilter: (lst: string[]) =>
+    set((state) => ({ ...state, versionFilter: lst })),
 
   // selected language filter
   languageFilter: [],
-  setLanguageFilter: (lst: string[]) => set((state) => ({ ...state, languageFilter: lst })),
+  setLanguageFilter: (lst: string[]) =>
+    set((state) => ({ ...state, languageFilter: lst })),
 }));
 
 export { useStore };

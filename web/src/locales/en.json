@@ -101,7 +101,5 @@
   "colnames.total_validHrs": "Valid Hours",
   "calculated.valid_percentage": "%Valid/Total",
 
-  "warn.to_view_graphs": "To view graphs, please select a single locale.",
-
-  "xxx": "xxx"
+  "warn.to_view_graphs": "To view graphs, please select a single locale."
 }

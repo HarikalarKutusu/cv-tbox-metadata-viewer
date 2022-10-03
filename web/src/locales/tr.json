@@ -96,7 +96,5 @@
   "calculated.male_percentage": "%Erkek/Data",
   "calculated.female_percentage": "%Kadın/Data",
 
-  "warn.to_view_graphs": "To view graphs, please select a single locale.",
-
-  "xxx": "xxx"
+  "warn.to_view_graphs": "To view graphs, please select a single locale."
 }
