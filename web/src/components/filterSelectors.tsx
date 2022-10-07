@@ -11,8 +11,6 @@ import {
   Checkbox,
   Stack,
   ThemeProvider,
-  SxProps,
-  makeStyles,
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 
@@ -79,7 +77,7 @@ const FilterSelectors = () => {
         color="inherit"
       >
         {/* Version Selector */}
-        <FormControl sx={{ m: 1, minWidth: 160 }} size="small">
+        <FormControl sx={{ m: 1, minWidth: 160, maxWidth: 160 }} size="small">
           <InputLabel
             id="ui-version-filter-select-label"
             sx={{ color: "#fafafa" }}
@@ -120,7 +118,7 @@ const FilterSelectors = () => {
           </Select>
         </FormControl>
         {/* Locale Selector */}
-        <FormControl sx={{ m: 1, minWidth: 160 }} size="small">
+        <FormControl sx={{ m: 1, minWidth: 160, maxWidth: 160 }} size="small">
           <InputLabel
             id="ui-language-filter-select-label"
             sx={{ color: "#fafafa" }}

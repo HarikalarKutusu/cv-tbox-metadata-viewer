@@ -265,7 +265,7 @@ export function AppUI() {
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: "24px", // keep right padding when drawer closed
+              pr: "12px", // keep right padding when drawer closed
             }}
           >
             <IconButton
@@ -324,12 +324,12 @@ export function AppUI() {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: "100vh",
+            height: "97vh",
             overflow: "auto",
           }}
         >
           <Toolbar />
-          <Container maxWidth={false} sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth={false} sx={{ mt: 4, mb: 10 }}>
             <Grid container spacing={2}>
               {/* Table & gRAPHS */}
               {tableView !== "totals" ? (

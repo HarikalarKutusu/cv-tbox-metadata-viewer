@@ -15,7 +15,7 @@ import { AppBarChart } from "./graphs/barChart";
 import { AppAreaChart } from "./graphs/areaChart";
 import { AppLineChart } from "./graphs/lineChart";
 
-import { Container, Grid, Paper } from '@mui/material';
+import { Alert, Container, Grid, Paper } from '@mui/material';
 
 //
 // Graph Builder
@@ -65,7 +65,9 @@ export const GraphBuilder = () => {
   return !metaData ? (
     <></>
   ) : !gEnable ? (
-    <div style={{ color: "#cc3333" }}>{intl.get("warn.to_view_graphs")}</div>
+    <Alert severity="warning">
+      {intl.get("warn.to_view_graphs")}
+    </Alert>
   ) : (
     <Container maxWidth={false} style={{ padding: 0 }}>
       <Grid container spacing={1}>
