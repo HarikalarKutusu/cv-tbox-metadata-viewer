@@ -80,7 +80,7 @@ const FilterSelectors = () => {
         <FormControl sx={{ m: 1, minWidth: 160, maxWidth: 160 }} size="small">
           <InputLabel
             id="ui-version-filter-select-label"
-            sx={{ color: "#fafafa" }}
+            sx={{ color: isDisabled ? "#000000" : "#fafafa" }}
           >
             {intl.get("ui.filter_version.label")}
           </InputLabel>
@@ -103,7 +103,7 @@ const FilterSelectors = () => {
                 borderColor: "white",
               },
               "& .MuiSvgIcon-root": {
-                color: "white",
+                color: isDisabled ? "#000000" : "#fafafa",
               },
             }}
           >
@@ -121,7 +121,7 @@ const FilterSelectors = () => {
         <FormControl sx={{ m: 1, minWidth: 160, maxWidth: 160 }} size="small">
           <InputLabel
             id="ui-language-filter-select-label"
-            sx={{ color: "#fafafa" }}
+            sx={{ color: isDisabled ? "#000000" : "#fafafa" }}
           >
             {intl.get("ui.filter_language.label")}
           </InputLabel>
@@ -144,7 +144,7 @@ const FilterSelectors = () => {
                 borderColor: "white",
               },
               "& .MuiSvgIcon-root": {
-                color: "white",
+                color: isDisabled ? "#000000" : "#fafafa",
               },
             }}
           >
