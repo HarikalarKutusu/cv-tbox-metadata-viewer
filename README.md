@@ -18,7 +18,7 @@ With this utility you can:
 
 ## Working Version
 
-A working version is here for your use: 
+A working version is here for your use: [https://cv-metadata-viewer.netlify.app/]
 
 ## TODO
 
@@ -27,4 +27,4 @@ A working version is here for your use:
 - A graph creator for your own graphs
 - Some query/annotation tools, e.g. "what languages have between 100-200 hours of validated data".
 
-The whole list can be found under the project in github. Please send an issue to request more.
+The whole list can be found under the project in github. Please send an issue or feature request to request more.
