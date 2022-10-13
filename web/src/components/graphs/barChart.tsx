@@ -1,3 +1,4 @@
+// import { memo } from "react";
 import AutoSizer from "react-virtualized-auto-sizer";
 
 import {
@@ -14,7 +15,7 @@ import {
 import { GRAPH_COLORS } from "../../helpers/graphHelper";
 import { useStore } from "../../stores/store";
 
-export const AppBarChart = (props: any) => {
+const AppBarChart = (props: any) => {
   const { data, xKey, yKeys, seriesNames, stacked } = props;
   const { langCode } = useStore();
   let i = 0;
@@ -62,7 +63,7 @@ export const AppBarChart = (props: any) => {
                   key={xKey + "-" + yKey}
                   stackId="a"
                   dataKey={yKey}
-                  fill={GRAPH_COLORS[i++]}
+                  fill={GRAPH_COLORS[i++ % GRAPH_COLORS.length]}
                 />
               ))
             : yKeys.map((yKey: string) => (
@@ -70,7 +71,7 @@ export const AppBarChart = (props: any) => {
                   name={seriesNames[i]}
                   key={xKey + "-" + yKey}
                   dataKey={yKey}
-                  fill={GRAPH_COLORS[i++]}
+                  fill={GRAPH_COLORS[i++ % GRAPH_COLORS.length]}
                 />
               ))}
         </BarChart>
@@ -78,3 +79,7 @@ export const AppBarChart = (props: any) => {
     </AutoSizer>
   );
 };
+
+// export const MemoAppBarChart = memo(AppBarChart);
+
+export { AppBarChart };
