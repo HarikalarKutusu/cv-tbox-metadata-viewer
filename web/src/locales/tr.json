@@ -6,14 +6,10 @@
   "ui.languageselector.label": "Arayüz Dili",
   "ui.languageselector.title": "Kullanıcı arayüz dilinizi seçiniz",
 
-  "ui.filter_table.label": "Tabloyu filtrele:",
   "ui.filter_version.label": "Sürümler",
   "ui.filter_version.title": "Tabloyu filtrelemek için bir ya da daha fazla sürüm seçiniz",
   "ui.filter_language.label": "Dil",
   "ui.filter_language.title": "Tabloyu filtrelemek için bir ya da daha fazla dil seçiniz",
-
-  "ui.filter.language": "Filter languages",
-  "ui.filter.version": "Filter versions",
 
   "ui.select.languages": "İlgilendiğiniz dilleri seçiniz",
   "ui.select.versions": "İlgilendiğiniz sürümleri seçiniz",
@@ -98,5 +94,12 @@
   "calculated.male_percentage": "%Erkek/Data",
   "calculated.female_percentage": "%Kadın/Data",
 
-  "warn.to_view_graphs": "To view graphs, please select a single locale."
+  "colnames.total_locales": "Toplam Dil",
+  "colnames.total_clips": "Toplam Kayıt",
+  "colnames.total_users": "Toplam Ses",
+  "colnames.total_totalHrs": "Toplam Saat",
+  "colnames.total_validHrs": "Geçerli Saat",
+  "calculated.valid_percentage": "%Geçerli/Toplam",
+
+  "warn.to_view_graphs": "Grafikleri görmek için lütfen aşağıdaki filtreden tek bir dil seçiniz."
 }
