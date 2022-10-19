@@ -19,6 +19,8 @@ With this utility you can:
 - See how a language is doing across versions and/or wrt to other languages.
 - See overall totals of the Common Voice project
 
+If you need more detailed data on a particular dataset, you can use the sister app [Common Voice Dataset Analyzer](https://cv-dataset-analyzer.netlify.app/).
+
 ## Working Version
 
 A working (beta) version is here for your use: (https://cv-metadata-viewer.netlify.app/)
