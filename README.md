@@ -2,6 +2,9 @@
 
 WepApp for examining Common Voice metadata in timeline, using tables and graphs.
 
+
+![cv-tbox-metadata-viewer-1](https://user-images.githubusercontent.com/8849617/196776948-ca88dc68-0f85-4dc1-880b-cfe3aea00ffd.png)
+
 ## Description
 
 Metadata for Mozilla Common Voice releases are published as separate json files after each release in a separate github repository (see [Common Voice Dataset](https://github.com/common-voice/cv-dataset)). They contain basic, but important aggregated information which dataset engineers, community managers or trainers frequently reference. On the other, hand accessing this information on a github repo and finding what you are looking for, in multiple large json files is very time consuming, especially if you work on multiple languages, multiple versions and want to compare them.
