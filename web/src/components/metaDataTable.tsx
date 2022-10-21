@@ -178,19 +178,24 @@ export const MetadataTable = (props: MetadataTableProps) => {
       responsive
       dense
       pagination
-      paginationPerPage={20}
+      paginationPerPage={15}
       paginationComponentOptions={paginationComponentOptions}
       direction={Direction.AUTO}
       highlightOnHover
       title={viewTitle}
+      persistTableHead
+      defaultSortFieldId={"version"}
+      defaultSortAsc={false}
+      // sortIcon={sortIcon}
+      // sortFunction={numericSort}
+      // onSort
+
       // fixedHeader
       // fixedHeaderScrollHeight="300px"
-      persistTableHead
       // subHeader
       // subHeaderWrap
       // subHeaderAlign={Alignment.RIGHT}
       // subHeaderComponent={Filter}
-      // sortIcon={sortIcon}
       // selectableRows
       // selectableRowsHig hlight
       // selectableRowsNoSelectAll
@@ -204,9 +209,6 @@ export const MetadataTable = (props: MetadataTableProps) => {
       // onRowMouseEnter
       // onRowMouseLeave
       // onColumnOrderChange
-
-      // sortFunction={numericSort}
-      // onSort
 
       // expandableRows
       // expandableRowsComponent
