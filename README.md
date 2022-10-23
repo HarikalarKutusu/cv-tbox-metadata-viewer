@@ -2,7 +2,6 @@
 
 WepApp for examining Common Voice metadata in timeline, using tables and graphs.
 
-
 ![cv-tbox-metadata-viewer-1](https://user-images.githubusercontent.com/8849617/196776948-ca88dc68-0f85-4dc1-880b-cfe3aea00ffd.png)
 
 ## Description
@@ -23,7 +22,7 @@ If you need more detailed data on a particular dataset, you can use the sister a
 
 ## Working Version
 
-A working (beta) version is here for your use: (https://cv-metadata-viewer.netlify.app/)
+A working (beta) version is here for your use: [Common Voice Metadata Viewer - Beta](https://cv-metadata-viewer.netlify.app/)
 
 ## TODO
 
