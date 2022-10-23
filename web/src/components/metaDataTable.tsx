@@ -22,6 +22,22 @@ import { useStore } from "../stores/store";
 import METADATA_RAW from "./../assets/data/$metadata.json";
 
 //
+// TABLE STYLING
+//
+
+//  Internally, customStyles will deep merges your customStyles with the default styling.
+const customStyles = {
+  headRow: {
+    style: {
+      backgroundColor: "#00897b",
+      // backgroundColor: "#ee9a9d",
+      color: "#ffffff",
+    },
+  },
+};
+
+
+//
 // JSX
 //
 
@@ -186,6 +202,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       persistTableHead
       defaultSortFieldId={"version"}
       defaultSortAsc={false}
+      customStyles={customStyles}
       // sortIcon={sortIcon}
       // sortFunction={numericSort}
       // onSort
@@ -250,9 +267,10 @@ export const TotalsTable = () => {
       direction={Direction.AUTO}
       highlightOnHover
       title={viewTitle}
+      persistTableHead
+      customStyles={customStyles}
       // fixedHeader
       // fixedHeaderScrollHeight="300px"
-      persistTableHead
       // subHeader
       // subHeaderWrap
       // subHeaderAlign={Alignment.RIGHT}
