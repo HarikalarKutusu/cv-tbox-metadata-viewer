@@ -315,6 +315,22 @@ export function AppUI() {
           <List component="nav">
             <MenuItemsTable />
           </List>
+          <div
+            style={{
+              width: "100%",
+              textAlign: "center",
+              verticalAlign: "bottom",
+              position: "absolute",
+              bottom: 40,
+              fontSize: "9px",
+            }}
+          >
+            v0.2.0 beta
+            <br />
+            data:
+            <br />
+            2022-09-25
+          </div>
         </Drawer>
         <Box
           component="main"
