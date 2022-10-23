@@ -1,7 +1,7 @@
 {
   "name": "cv-toolbox-metadata-viewer",
   "homepage": "/",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "start": "react-app-rewired start",
@@ -13,23 +13,23 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.3",
-    "@mui/material": "^5.10.5",
+    "@mui/material": "^5.10.10",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
-    "react-intl-universal": "^2.6.6",
+    "react-intl-universal": "^2.6.10",
     "react-scripts": "5.0.1",
     "react-virtualized-auto-sizer": "^1.0.7",
     "recharts": "^2.1.14",
     "typescript": "^4.8.4",
-    "zustand": "^4.1.1"
+    "zustand": "^4.1.2"
   },
   "devDependencies": {
-    "@types/jest": "^29.0.0",
-    "@types/node": "^18.7.16",
+    "@types/jest": "^29.2.0",
+    "@types/node": "^18.11.4",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
     "@types/react-virtualized-auto-sizer": "^1.0.1",
