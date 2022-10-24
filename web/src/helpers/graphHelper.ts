@@ -40,7 +40,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["total_locales"],
-    seriesNames: ["colnames.total_locales"],
+    seriesNames: ["col.total_locales"],
   },
   {
     view: "totals",
@@ -48,7 +48,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["total_users"],
-    seriesNames: ["colnames.total_users"],
+    seriesNames: ["col.total_users"],
   },
   {
     view: "totals",
@@ -56,7 +56,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["total_clips"],
-    seriesNames: ["colnames.total_clips"],
+    seriesNames: ["col.total_clips"],
   },
   {
     view: "totals",
@@ -64,7 +64,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["total_totalHrs", "total_validHrs"],
-    seriesNames: ["colnames.total_totalHrs", "colnames.total_validHrs"],
+    seriesNames: ["col.total_totalHrs", "col.total_validHrs"],
   },
   // view = main
   {
@@ -73,7 +73,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["clips"],
-    seriesNames: ["colnames.clips"],
+    seriesNames: ["col.clips"],
   },
   {
     view: "main",
@@ -81,7 +81,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["users"],
-    seriesNames: ["colnames.users"],
+    seriesNames: ["col.users"],
   },
   {
     view: "main",
@@ -89,7 +89,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["totalHrs", "validHrs"],
-    seriesNames: ["colnames.totalHrs", "colnames.validHrs"],
+    seriesNames: ["col.totalHrs", "col.validHrs"],
   },
   {
     view: "main",
@@ -97,7 +97,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["validRecsPercentage"],
-    seriesNames: ["calculated.valid_recs_percentage"],
+    seriesNames: ["calc.valid_recs_percentage"],
   },
   // view = calculated
   {
@@ -106,7 +106,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["avgDurationSecs"],
-    seriesNames: ["colnames.avgDurationSecs"],
+    seriesNames: ["col.avgDurationSecs"],
   },
   {
     view: "calculated",
@@ -114,7 +114,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["validatedHrsPercentage"],
-    seriesNames: ["calculated.valid_hrs_percentage"],
+    seriesNames: ["calc.valid_hrs_percentage"],
   },
   {
     view: "calculated",
@@ -122,7 +122,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["invalidRecsPercentage"],
-    seriesNames: ["calculated.invalid_recs_percentage"],
+    seriesNames: ["calc.invalid_recs_percentage"],
   },
   {
     view: "calculated",
@@ -130,7 +130,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["reportedPercentage"],
-    seriesNames: ["calculated.reported_percentage"],
+    seriesNames: ["calc.reported_percentage"],
   },
   // view = buckets-main
   {
@@ -140,9 +140,9 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     xKey: "version",
     yKeys: ["buckets_validated", "buckets_invalidated", "buckets_other"],
     seriesNames: [
-      "colnames.buckets_validated",
-      "colnames.buckets_invalidated",
-      "colnames.buckets_other",
+      "col.buckets_validated",
+      "col.buckets_invalidated",
+      "col.buckets_other",
     ],
   },
   {
@@ -157,9 +157,9 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
       "otherRecsPercentage",
     ],
     seriesNames: [
-      "calculated.valid_recs_percentage",
-      "calculated.invalid_recs_percentage",
-      "calculated.other_recs_percentage",
+      "calc.valid_recs_percentage",
+      "calc.invalid_recs_percentage",
+      "calc.other_recs_percentage",
     ],
   },
   // view = buckets-model
@@ -170,9 +170,9 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     xKey: "version",
     yKeys: ["buckets_train", "buckets_dev", "buckets_test"],
     seriesNames: [
-      "colnames.buckets_train",
-      "colnames.buckets_dev",
-      "colnames.buckets_test",
+      "col.buckets_train",
+      "col.buckets_dev",
+      "col.buckets_test",
     ],
   },
   {
@@ -183,9 +183,9 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     xKey: "version",
     yKeys: ["estTrainHrs", "estDevHrs", "estTestHrs"],
     seriesNames: [
-      "calculated.est_train_hrs",
-      "calculated.est_dev_hrs",
-      "calculated.est_test_hrs",
+      "calc.est_train_hrs",
+      "calc.est_dev_hrs",
+      "calc.est_test_hrs",
     ],
   },
   {
@@ -194,7 +194,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "area",
     xKey: "version",
     yKeys: ["percentageUsed"],
-    seriesNames: ["calculated.percentage_used"],
+    seriesNames: ["calc.percentage_used"],
   },
   // view = users
   {
@@ -203,7 +203,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "bar",
     xKey: "version",
     yKeys: ["users"],
-    seriesNames: ["colnames.users"],
+    seriesNames: ["col.users"],
   },
   {
     view: "users",
@@ -211,7 +211,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "line",
     xKey: "version",
     yKeys: ["avgRecsPerUser"],
-    seriesNames: ["calculated.avg_recs_per_user"],
+    seriesNames: ["calc.avg_recs_per_user"],
   },
   {
     view: "users",
@@ -219,7 +219,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "line",
     xKey: "version",
     yKeys: ["avgSecsPerUser"],
-    seriesNames: ["calculated.avg_secs_per_user"],
+    seriesNames: ["calc.avg_secs_per_user"],
   },
   // view = ages
   {
@@ -241,16 +241,16 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
       // "ages_nodata",
     ],
     seriesNames: [
-      "colnames.ages_teens",
-      "colnames.ages_twenties",
-      "colnames.ages_thirties",
-      "colnames.ages_fourties",
-      "colnames.ages_fifties",
-      "colnames.ages_sixties",
-      "colnames.ages_seventies",
-      "colnames.ages_eighties",
-      "colnames.ages_nineties",
-      // "colnames.ages_nodata",
+      "col.ages_teens",
+      "col.ages_twenties",
+      "col.ages_thirties",
+      "col.ages_fourties",
+      "col.ages_fifties",
+      "col.ages_sixties",
+      "col.ages_seventies",
+      "col.ages_eighties",
+      "col.ages_nineties",
+      // "col.ages_nodata",
     ],
   },
   // view = genders
@@ -262,9 +262,9 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     xKey: "version",
     yKeys: ["genders_male", "genders_female", "genders_other"],
     seriesNames: [
-      "colnames.genders_male",
-      "colnames.genders_female",
-      "colnames.genders_other",
+      "col.genders_male",
+      "col.genders_female",
+      "col.genders_other",
     ],
   },
   {
@@ -274,7 +274,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     stacked: true,
     xKey: "version",
     yKeys: ["malePercentage", "femalePercentage"],
-    seriesNames: ["calculated.male_percentage", "calculated.female_percentage"],
+    seriesNames: ["calc.male_percentage", "calc.female_percentage"],
   },
   {
     view: "genders",
@@ -282,6 +282,6 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     type: "line",
     xKey: "version",
     yKeys: ["fmRatio"],
-    seriesNames: ["calculated.fm_ratio"],
+    seriesNames: ["calc.fm_ratio"],
   },
 ];
