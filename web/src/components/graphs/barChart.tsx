@@ -15,7 +15,7 @@ import {
 import { GRAPH_COLORS } from "../../helpers/graphHelper";
 import { useStore } from "../../stores/store";
 
-const AppBarChart = (props: any) => {
+export const AppBarChart = (props: any) => {
   const { data, xKey, yKeys, seriesNames, stacked } = props;
   const { langCode } = useStore();
   let i = 0;
@@ -79,7 +79,3 @@ const AppBarChart = (props: any) => {
     </AutoSizer>
   );
 };
-
-// export const MemoAppBarChart = memo(AppBarChart);
-
-export { AppBarChart };
