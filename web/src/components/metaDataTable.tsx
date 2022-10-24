@@ -22,6 +22,21 @@ import { useStore } from "../stores/store";
 import METADATA_RAW from "./../assets/data/$metadata.json";
 
 //
+// TABLE STYLING
+//
+
+//  Internally, customStyles will deep merges your customStyles with the default styling.
+const customStyles = {
+  headRow: {
+    style: {
+      backgroundColor: "#00897b",
+      // backgroundColor: "#ee9a9d",
+      color: "#ffffff",
+    },
+  },
+};
+
+//
 // JSX
 //
 
@@ -69,45 +84,64 @@ export const MetadataTable = (props: MetadataTableProps) => {
       // initialize with loaded data
       const newRow: DT_ROW_TYPE = row;
       // calculated fields (round them for visibity)
-      newRow.validRecsPercentage =
-        Math.round(10000 * (row.buckets_validated / row.clips)) / 100;
-      newRow.invalidRecsPercentage =
-        Math.round(10000 * (row.buckets_invalidated / row.clips)) / 100;
-      newRow.otherRecsPercentage =
-        Math.round(10000 * (row.buckets_other / row.clips)) / 100;
-      newRow.validatedHrsPercentage =
-        Math.round(10000 * (row.validHrs / row.totalHrs)) / 100;
-      newRow.reportedPercentage =
-        Math.round(10000 * (row.buckets_reported / row.clips)) / 100;
+      newRow.validRecsPercentage = !row.clips
+        ? 0
+        : Math.round(10000 * (row.buckets_validated / row.clips)) / 100;
+      newRow.invalidRecsPercentage = !row.clips
+        ? 0
+        : Math.round(10000 * (row.buckets_invalidated / row.clips)) / 100;
+      newRow.otherRecsPercentage = !row.clips
+        ? 0
+        : Math.round(10000 * (row.buckets_other / row.clips)) / 100;
+      newRow.validatedHrsPercentage = !row.totalHrs
+        ? 0
+        : Math.round(10000 * (row.validHrs / row.totalHrs)) / 100;
+      newRow.reportedPercentage = !row.clips
+        ? 0
+        : Math.round(10000 * (row.buckets_reported / row.clips)) / 100;
 
-      newRow.avgRecsPerUser = Math.round(100 * (row.clips / row.users)) / 100;
-      newRow.avgSecsPerUser =
-        Math.round(100 * (row.duration / 1000 / row.users)) / 100;
-      newRow.percentageUsed =
-        Math.round(
-          10000 *
-            ((row.buckets_train + row.buckets_dev + row.buckets_test) /
-              row.buckets_validated),
-        ) / 100;
-      newRow.estTrainHrs =
-        Math.round(
-          100 * row.validHrs * (row.buckets_train / row.buckets_validated),
-        ) / 100;
-      newRow.estDevHrs =
-        Math.round(
-          100 * row.validHrs * (row.buckets_dev / row.buckets_validated),
-        ) / 100;
-      newRow.estTestHrs =
-        Math.round(
-          100 * row.validHrs * (row.buckets_test / row.buckets_validated),
-        ) / 100;
-      newRow.fmRatio =
-        Math.round(100 * (row.genders_female / row.genders_male)) / 100;
+      newRow.avgRecsPerUser = !row.users
+        ? 0
+        : Math.round(100 * (row.clips / row.users)) / 100;
+      newRow.avgSecsPerUser = !row.users
+        ? 0
+        : Math.round(100 * (row.duration / 1000 / row.users)) / 100;
+      newRow.percentageUsed = !row.buckets_validated
+        ? 0
+        : Math.round(
+            10000 *
+              ((row.buckets_train + row.buckets_dev + row.buckets_test) /
+                row.buckets_validated),
+          ) / 100;
+      newRow.estTrainHrs = !row.buckets_validated
+        ? 0
+        : Math.round(
+            100 * row.validHrs * (row.buckets_train / row.buckets_validated),
+          ) / 100;
+      newRow.estDevHrs = !row.buckets_validated
+        ? 0
+        : Math.round(
+            100 * row.validHrs * (row.buckets_dev / row.buckets_validated),
+          ) / 100;
+      newRow.estTestHrs = !row.buckets_validated
+        ? 0
+        : Math.round(
+            100 * row.validHrs * (row.buckets_test / row.buckets_validated),
+          ) / 100;
+      newRow.fmRatio = !row.genders_male
+        ? 0
+        : Math.round(100 * (row.genders_female / row.genders_male)) / 100;
       newRow.malePercentage =
-        Math.round(10000 * (row.genders_male / (1 - row.genders_nodata))) / 100;
+        row.genders_nodata === 1
+          ? 0
+          : Math.round(10000 * (row.genders_male / (1 - row.genders_nodata))) /
+            100;
       newRow.femalePercentage =
-        Math.round(10000 * (row.genders_female / (1 - row.genders_nodata))) /
-        100;
+        row.genders_nodata === 1
+          ? 0
+          : Math.round(
+              10000 * (row.genders_female / (1 - row.genders_nodata)),
+            ) / 100;
       // append to result table
       newData.push(newRow);
     });
@@ -186,6 +220,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       persistTableHead
       defaultSortFieldId={"version"}
       defaultSortAsc={false}
+      customStyles={customStyles}
       // sortIcon={sortIcon}
       // sortFunction={numericSort}
       // onSort
@@ -250,9 +285,10 @@ export const TotalsTable = () => {
       direction={Direction.AUTO}
       highlightOnHover
       title={viewTitle}
+      persistTableHead
+      customStyles={customStyles}
       // fixedHeader
       // fixedHeaderScrollHeight="300px"
-      persistTableHead
       // subHeader
       // subHeaderWrap
       // subHeaderAlign={Alignment.RIGHT}

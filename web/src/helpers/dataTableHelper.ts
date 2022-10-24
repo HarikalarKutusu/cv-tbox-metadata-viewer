@@ -106,7 +106,7 @@ export function getMetaDataTableView(
 ): [TableColumn<DT_ROW_TYPE>[], string] {
   const colVersion: TableColumn<DT_ROW_TYPE> = {
     id: "version",
-    name: intl.get("colnames.version"),
+    name: intl.get("col.version"),
     sortable: true,
     center: true,
     width: "100px",
@@ -115,14 +115,14 @@ export function getMetaDataTableView(
   };
   // const colDate: TableColumn<DT_ROW_TYPE> = {
   //   id: "date",
-  //   name: intl.get("colnames.date"),
+  //   name: intl.get("col.date"),
   //   sortable: true,
   //   center: true,
   //   selector: (row) => row.date,
   // };
   const colLocale: TableColumn<DT_ROW_TYPE> = {
     id: "locale",
-    name: intl.get("colnames.locale"),
+    name: intl.get("col.locale"),
     sortable: true,
     center: true,
     width: "100px",
@@ -130,7 +130,7 @@ export function getMetaDataTableView(
   };
   const colClips: TableColumn<DT_ROW_TYPE> = {
     id: "clips",
-    name: intl.get("colnames.clips"),
+    name: intl.get("col.clips"),
     sortable: true,
     right: true,
     selector: (row) => row.clips,
@@ -138,7 +138,7 @@ export function getMetaDataTableView(
   };
   const colUsers: TableColumn<DT_ROW_TYPE> = {
     id: "users",
-    name: intl.get("colnames.users"),
+    name: intl.get("col.users"),
     sortable: true,
     right: true,
     selector: (row) => row.users,
@@ -146,7 +146,7 @@ export function getMetaDataTableView(
   };
   const colTotalHrs: TableColumn<DT_ROW_TYPE> = {
     id: "totalHrs",
-    name: intl.get("colnames.totalHrs"),
+    name: intl.get("col.totalHrs"),
     sortable: true,
     right: true,
     selector: (row) => row.totalHrs,
@@ -158,7 +158,7 @@ export function getMetaDataTableView(
   };
   const colValidHrs: TableColumn<DT_ROW_TYPE> = {
     id: "validHrs",
-    name: intl.get("colnames.validHrs"),
+    name: intl.get("col.validHrs"),
     sortable: true,
     right: true,
     selector: (row) => row.validHrs,
@@ -171,7 +171,7 @@ export function getMetaDataTableView(
 
   // const colValidDurationSecs: TableColumn<DT_ROW_TYPE> = {
   //   id: "validDurationSecs",
-  //   name: intl.get("colnames.validDurationSecs"),
+  //   name: intl.get("col.validDurationSecs"),
   //   right: true,
   //   sortable: true,
   //   selector: (row) => row.validDurationSecs,
@@ -179,7 +179,7 @@ export function getMetaDataTableView(
   // };
   const colAvgDurationSecs: TableColumn<DT_ROW_TYPE> = {
     id: "avgDurationSecs",
-    name: intl.get("colnames.avgDurationSecs"),
+    name: intl.get("col.avgDurationSecs"),
     sortable: true,
     right: true,
     selector: (row) => Number(row.avgDurationSecs),
@@ -192,7 +192,7 @@ export function getMetaDataTableView(
 
   const colBucketsValidated: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsValidated",
-    name: intl.get("colnames.buckets_validated"),
+    name: intl.get("col.buckets_validated"),
     sortable: true,
     right: true,
     selector: (row) => row.buckets_validated,
@@ -200,7 +200,7 @@ export function getMetaDataTableView(
   };
   const colBucketsInValidated: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsInValidated",
-    name: intl.get("colnames.buckets_invalidated"),
+    name: intl.get("col.buckets_invalidated"),
     sortable: true,
     right: true,
     selector: (row) => row.buckets_invalidated,
@@ -208,7 +208,7 @@ export function getMetaDataTableView(
   };
   const colBucketsOther: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsOther",
-    name: intl.get("colnames.buckets_other"),
+    name: intl.get("col.buckets_other"),
     sortable: true,
     right: true,
     selector: (row) => row.buckets_other,
@@ -216,7 +216,7 @@ export function getMetaDataTableView(
   };
   const colBucketsTrain: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsTrain",
-    name: intl.get("colnames.buckets_train"),
+    name: intl.get("col.buckets_train"),
     sortable: true,
     right: true,
     selector: (row) => row.buckets_train,
@@ -224,7 +224,7 @@ export function getMetaDataTableView(
   };
   const colBucketsDev: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsDev",
-    name: intl.get("colnames.buckets_dev"),
+    name: intl.get("col.buckets_dev"),
     sortable: true,
     right: true,
     selector: (row) => row.buckets_dev,
@@ -232,7 +232,7 @@ export function getMetaDataTableView(
   };
   const colBucketsTest: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsTest",
-    name: intl.get("colnames.buckets_test"),
+    name: intl.get("col.buckets_test"),
     sortable: true,
     right: true,
     selector: (row) => row.buckets_test,
@@ -240,7 +240,7 @@ export function getMetaDataTableView(
   };
   // const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
   //   id: "bucketsReported",
-  //   name: intl.get("colnames.buckets_reported"),
+  //   name: intl.get("col.buckets_reported"),
   //   sortable: true,
   //   right: true,
   //   selector: (row) => row.buckets_reported,
@@ -249,70 +249,70 @@ export function getMetaDataTableView(
 
   const colAgesNodata: TableColumn<DT_ROW_TYPE> = {
     id: "agesNodata",
-    name: intl.get("colnames.ages_nodata"),
+    name: intl.get("col.ages_nodata"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_nodata).toFixed(2)),
   };
   const colAgesTeens: TableColumn<DT_ROW_TYPE> = {
     id: "agesTeens",
-    name: intl.get("colnames.ages_teens"),
+    name: intl.get("col.ages_teens"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_teens).toFixed(2)),
   };
   const colAgesTwenties: TableColumn<DT_ROW_TYPE> = {
     id: "agesTwenties",
-    name: intl.get("colnames.ages_twenties"),
+    name: intl.get("col.ages_twenties"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_twenties).toFixed(2)),
   };
   const colAgesThirties: TableColumn<DT_ROW_TYPE> = {
     id: "agesThirties",
-    name: intl.get("colnames.ages_thirties"),
+    name: intl.get("col.ages_thirties"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_thirties).toFixed(2)),
   };
   const colAgesFourties: TableColumn<DT_ROW_TYPE> = {
     id: "agesFourties",
-    name: intl.get("colnames.ages_fourties"),
+    name: intl.get("col.ages_fourties"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_fourties).toFixed(2)),
   };
   const colAgesFifties: TableColumn<DT_ROW_TYPE> = {
     id: "agesFifties",
-    name: intl.get("colnames.ages_fifties"),
+    name: intl.get("col.ages_fifties"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_fifties).toFixed(2)),
   };
   const colAgesSixties: TableColumn<DT_ROW_TYPE> = {
     id: "agesSixties",
-    name: intl.get("colnames.ages_sixties"),
+    name: intl.get("col.ages_sixties"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_sixties).toFixed(2)),
   };
   const colAgesSeventies: TableColumn<DT_ROW_TYPE> = {
     id: "agesSeventies",
-    name: intl.get("colnames.ages_seventies"),
+    name: intl.get("col.ages_seventies"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_seventies).toFixed(2)),
   };
   const colAgesEighties: TableColumn<DT_ROW_TYPE> = {
     id: "agesEighties",
-    name: intl.get("colnames.ages_eighties"),
+    name: intl.get("col.ages_eighties"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_eighties).toFixed(2)),
   };
   const colAgesNineties: TableColumn<DT_ROW_TYPE> = {
     id: "agesNineties",
-    name: intl.get("colnames.ages_nineties"),
+    name: intl.get("col.ages_nineties"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.ages_nineties).toFixed(2)),
@@ -320,28 +320,28 @@ export function getMetaDataTableView(
 
   const colGendersNodata: TableColumn<DT_ROW_TYPE> = {
     id: "gendersNodata",
-    name: intl.get("colnames.genders_nodata"),
+    name: intl.get("col.genders_nodata"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.genders_nodata).toFixed(2)),
   };
   const colGendersMale: TableColumn<DT_ROW_TYPE> = {
     id: "gendersMale",
-    name: intl.get("colnames.genders_male"),
+    name: intl.get("col.genders_male"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.genders_male).toFixed(2)),
   };
   const colGendersFemale: TableColumn<DT_ROW_TYPE> = {
     id: "gendersFemale",
-    name: intl.get("colnames.genders_female"),
+    name: intl.get("col.genders_female"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.genders_female).toFixed(2)),
   };
   const colGendersOther: TableColumn<DT_ROW_TYPE> = {
     id: "gendersOther",
-    name: intl.get("colnames.genders_other"),
+    name: intl.get("col.genders_other"),
     sortable: true,
     right: true,
     selector: (row) => Number((100 * row.genders_other).toFixed(2)),
@@ -349,7 +349,7 @@ export function getMetaDataTableView(
 
   const colSize: TableColumn<DT_ROW_TYPE> = {
     id: "size",
-    name: intl.get("colnames.size"),
+    name: intl.get("col.size"),
     sortable: true,
     right: true,
     width: "150px",
@@ -359,7 +359,7 @@ export function getMetaDataTableView(
   };
   const colChecksum: TableColumn<DT_ROW_TYPE> = {
     id: "checksum",
-    name: intl.get("colnames.checksum"),
+    name: intl.get("col.checksum"),
     sortable: false,
     // right: true,
     selector: (row) => row.checksum,
@@ -368,7 +368,7 @@ export function getMetaDataTableView(
   // Calculated Columns
   const calcValidRecsPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "validRecsPercentage",
-    name: intl.get("calculated.valid_recs_percentage"),
+    name: intl.get("calc.valid_recs_percentage"),
     sortable: true,
     right: true,
     selector: (row) => row.validRecsPercentage!,
@@ -378,7 +378,7 @@ export function getMetaDataTableView(
   };
   const calcInvalidRecsPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "invalidRecsPercentage",
-    name: intl.get("calculated.invalid_recs_percentage"),
+    name: intl.get("calc.invalid_recs_percentage"),
     sortable: true,
     right: true,
     selector: (row) => row.invalidRecsPercentage!,
@@ -388,7 +388,7 @@ export function getMetaDataTableView(
   };
   const calcOtherRecsPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "otherRecsPercentage",
-    name: intl.get("calculated.other_recs_percentage"),
+    name: intl.get("calc.other_recs_percentage"),
     sortable: true,
     right: true,
     selector: (row) => row.otherRecsPercentage!,
@@ -399,7 +399,7 @@ export function getMetaDataTableView(
 
   const calcValidHrsPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "validatedHrsPercentage",
-    name: intl.get("calculated.valid_hrs_percentage"),
+    name: intl.get("calc.valid_hrs_percentage"),
     sortable: true,
     right: true,
     selector: (row) => row.validatedHrsPercentage!,
@@ -408,7 +408,7 @@ export function getMetaDataTableView(
   };
   const calcReportedPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "reportedPercentage",
-    name: intl.get("calculated.reported_percentage"),
+    name: intl.get("calc.reported_percentage"),
     sortable: true,
     right: true,
     selector: (row) => row.reportedPercentage!,
@@ -418,7 +418,7 @@ export function getMetaDataTableView(
   };
   const calcAvgRecsPerUser: TableColumn<DT_ROW_TYPE> = {
     id: "avgRecsPerUser",
-    name: intl.get("calculated.avg_recs_per_user"),
+    name: intl.get("calc.avg_recs_per_user"),
     sortable: true,
     right: true,
     selector: (row) => row.avgRecsPerUser!,
@@ -427,7 +427,7 @@ export function getMetaDataTableView(
   };
   const calcAvgSecsPerUser: TableColumn<DT_ROW_TYPE> = {
     id: "avgSecsPerUser",
-    name: intl.get("calculated.avg_secs_per_user"),
+    name: intl.get("calc.avg_secs_per_user"),
     sortable: true,
     right: true,
     selector: (row) => row.avgSecsPerUser!,
@@ -437,7 +437,7 @@ export function getMetaDataTableView(
 
   const calcPercentageUsed: TableColumn<DT_ROW_TYPE> = {
     id: "percentageUsed",
-    name: intl.get("calculated.percentage_used"),
+    name: intl.get("calc.percentage_used"),
     sortable: true,
     right: true,
     selector: (row) => row.percentageUsed!,
@@ -447,7 +447,7 @@ export function getMetaDataTableView(
   };
   const calcEstTrainHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estTrainHrs",
-    name: intl.get("calculated.est_train_hrs"),
+    name: intl.get("calc.est_train_hrs"),
     sortable: true,
     right: true,
     selector: (row) => row.estTrainHrs!,
@@ -457,7 +457,7 @@ export function getMetaDataTableView(
   };
   const calcEstDevHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estDevHrs",
-    name: intl.get("calculated.est_dev_hrs"),
+    name: intl.get("calc.est_dev_hrs"),
     sortable: true,
     right: true,
     selector: (row) => row.estDevHrs!,
@@ -467,7 +467,7 @@ export function getMetaDataTableView(
   };
   const calcEstTestHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estTestHrs",
-    name: intl.get("calculated.est_test_hrs"),
+    name: intl.get("calc.est_test_hrs"),
     sortable: true,
     right: true,
     selector: (row) => row.estTestHrs!,
@@ -478,7 +478,7 @@ export function getMetaDataTableView(
 
   const calcFMRatio: TableColumn<DT_ROW_TYPE> = {
     id: "fmRatio",
-    name: intl.get("calculated.fm_ratio"),
+    name: intl.get("calc.fm_ratio"),
     sortable: true,
     right: true,
     selector: (row) => row.fmRatio!,
@@ -488,7 +488,7 @@ export function getMetaDataTableView(
   };
   const calcMalePercentage: TableColumn<DT_ROW_TYPE> = {
     id: "malePercentage",
-    name: intl.get("calculated.male_percentage"),
+    name: intl.get("calc.male_percentage"),
     sortable: true,
     right: true,
     selector: (row) => row.malePercentage!,
@@ -498,7 +498,7 @@ export function getMetaDataTableView(
   };
   const calcFemalePercentage: TableColumn<DT_ROW_TYPE> = {
     id: "femalePercentage",
-    name: intl.get("calculated.female_percentage"),
+    name: intl.get("calc.female_percentage"),
     sortable: true,
     right: true,
     selector: (row) => row.femalePercentage!,
@@ -649,7 +649,7 @@ export function getTotalsTableView(
 ): [TableColumn<TOTALS_ROW_TYPE>[], string] {
   const colVersion: TableColumn<TOTALS_ROW_TYPE> = {
     id: "version",
-    name: intl.get("colnames.version"),
+    name: intl.get("col.version"),
     sortable: true,
     center: true,
     width: "100px",
@@ -658,14 +658,14 @@ export function getTotalsTableView(
   };
   const colDate: TableColumn<TOTALS_ROW_TYPE> = {
     id: "date",
-    name: intl.get("colnames.date"),
+    name: intl.get("col.date"),
     sortable: true,
     center: true,
     selector: (row) => row.date,
   };
   const colLocale: TableColumn<TOTALS_ROW_TYPE> = {
     id: "total_locales",
-    name: intl.get("colnames.total_locales"),
+    name: intl.get("col.total_locales"),
     sortable: true,
     center: true,
     // width: "100px",
@@ -673,7 +673,7 @@ export function getTotalsTableView(
   };
   const colClips: TableColumn<TOTALS_ROW_TYPE> = {
     id: "total_clips",
-    name: intl.get("colnames.total_clips"),
+    name: intl.get("col.total_clips"),
     sortable: true,
     right: true,
     selector: (row) => row.total_clips,
@@ -681,7 +681,7 @@ export function getTotalsTableView(
   };
   const colUsers: TableColumn<TOTALS_ROW_TYPE> = {
     id: "total_users",
-    name: intl.get("colnames.total_users"),
+    name: intl.get("col.total_users"),
     sortable: true,
     right: true,
     selector: (row) => row.total_users,
@@ -689,7 +689,7 @@ export function getTotalsTableView(
   };
   const colTotalHrs: TableColumn<TOTALS_ROW_TYPE> = {
     id: "total_totalHrs",
-    name: intl.get("colnames.total_totalHrs"),
+    name: intl.get("col.total_totalHrs"),
     sortable: true,
     right: true,
     selector: (row) => row.total_totalHrs,
@@ -697,7 +697,7 @@ export function getTotalsTableView(
   };
   const colValidHrs: TableColumn<TOTALS_ROW_TYPE> = {
     id: "total_validHrs",
-    name: intl.get("colnames.total_validHrs"),
+    name: intl.get("col.total_validHrs"),
     sortable: true,
     right: true,
     selector: (row) => row.total_validHrs,
@@ -707,7 +707,7 @@ export function getTotalsTableView(
   // Calculated Columns
   const calcValidPercentage: TableColumn<TOTALS_ROW_TYPE> = {
     id: "total_validPercentage",
-    name: intl.get("calculated.valid_percentage"),
+    name: intl.get("calc.valid_percentage"),
     sortable: true,
     right: true,
     selector: (row) =>
