@@ -24,11 +24,27 @@ If you need more detailed data on a particular dataset, you can use the sister a
 
 A working (beta) version is here for your use: [Common Voice Metadata Viewer - Beta](https://cv-metadata-viewer.netlify.app/)
 
-## TODO
+## More
 
-- Annotate and export the table
-- Annotate and export the graphs
+### Setting a development environment
+
+- Clone the repo and cd into it
+- Enter into the web directory
+- Run `npm install` to get the dependencies
+- Run `npm start` to run on local
+
+```sh
+git clone https://github.com/HarikalarKutusu/cv-tbox-metadata-viewer.git
+cd cv-tbox-metadata-viewer
+cd web
+npm install
+npm start
+```
+
+### TODO
+
+- Annotate and export tables and graphs
 - A graph creator for your own graphs
-- Some query/annotation tools, e.g. "what languages have between 100-200 hours of validated data".
+- Add higher level query tools, e.g. "what languages have between 100-200 hours of validated data".
 
-The whole list will be under the project tab in github. Please send an issue or feature request to request more.
+The whole list is under the [project](https://github.com/users/HarikalarKutusu/projects/9/views/1?filterQuery=) in github. Please [open issues or feature requests](https://github.com/HarikalarKutusu/cv-tbox-metadata-viewer/issues) or make [pull requests](https://github.com/HarikalarKutusu/cv-tbox-metadata-viewer/pulls).
