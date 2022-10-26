@@ -1,12 +1,15 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
+export const PRIMARY_COLOR = "#00897b";;
+export const SECONDARY_COLOR = "#ee9a9d";;
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#00897b",
+      main: PRIMARY_COLOR,
     },
     secondary: {
-      main: "#ee9a9d",
+      main: SECONDARY_COLOR,
     },
   },
 });

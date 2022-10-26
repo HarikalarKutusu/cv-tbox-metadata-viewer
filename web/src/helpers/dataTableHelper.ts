@@ -4,6 +4,7 @@ import intl from "react-intl-universal";
 import { TableColumn } from "react-data-table-component";
 // APP
 // import { CV_TOTALS_COLS } from "./metadataHelper";
+import { PRIMARY_COLOR } from "../components/ui/theme";
 
 //======================================
 //== Table Styling
@@ -11,7 +12,7 @@ import { TableColumn } from "react-data-table-component";
 export const TABLE_STYLE = {
   headRow: {
     style: {
-      backgroundColor: "#00897b",
+      backgroundColor: PRIMARY_COLOR,
       // backgroundColor: "#ee9a9d",
       color: "#ffffff",
     },

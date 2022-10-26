@@ -135,20 +135,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 
-
-// let appTheme = createTheme({
-//   palette: {
-//     primary: {
-//       main: "#00897b",
-//     },
-//     secondary: {
-//       main: "#ee9a9d",
-//     },
-//   },
-// });
-
-// appTheme = responsiveFontSizes(appTheme)
-
 export function AppUI() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {

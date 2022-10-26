@@ -1,7 +1,6 @@
 // MUI
 import PollIcon from "@mui/icons-material/Poll";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import WebAssetIcon from "@mui/icons-material/WebAsset";
 import CopyrightIcon from "@mui/icons-material/Copyright";
 
 // App
@@ -14,6 +13,7 @@ import {
 } from "../../helpers/appHelper";
 
 import "./appInfo.css"
+import { PRIMARY_COLOR } from "./theme";
 
 export const AppInfo = () => {
   return (
@@ -26,7 +26,7 @@ export const AppInfo = () => {
           position: "absolute",
           bottom: 40,
           fontSize: "8px",
-          color: "#999",
+          color: PRIMARY_COLOR,
         }}
       >
         <div>
@@ -43,7 +43,7 @@ export const AppInfo = () => {
               rel="noreferrer"
               className="appinfo-vcenter appinfo-link"
             >
-              <img src="/icons/mars.svg" width="24px" alt="Common Voice" />
+              <img src="/icons/mars.svg" width="24px" height="24px" alt="Common Voice" />
             </a>
             <a
               href={appGithubURL}
