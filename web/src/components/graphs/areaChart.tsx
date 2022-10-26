@@ -44,7 +44,6 @@ export const AppAreaChart = (props: any) => {
             }}
           />
           <YAxis
-            dataKey={yKeys[0]}
             style={{
               fontSize: "0.8rem",
               fontFamily: "Arial",

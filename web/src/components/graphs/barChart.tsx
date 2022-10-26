@@ -30,7 +30,6 @@ export const AppBarChart = (props: any) => {
           margin={{ top: 50, bottom: 0, left: 25, right: 10 }}
         >
           <XAxis
-            dataKey={xKey}
             style={{
               fontSize: "0.8rem",
               fontFamily: "Arial",
