@@ -32,7 +32,8 @@ export const AppInfo = () => {
         <div>
           <div className="appinfo-vcenter">
             <PollIcon />
-            {appVersion}<br />
+            {appVersion}
+            <br />
             {appDataDate}
           </div>
           <br />
@@ -42,14 +43,24 @@ export const AppInfo = () => {
               target="_blank"
               rel="noreferrer"
               className="appinfo-vcenter appinfo-link"
+              title="Common Voice"
+              aria-label="Common Voice"
             >
-              <img src="/icons/mars.svg" width="24px" height="24px" alt="Common Voice" />
+              <img
+                src="/icons/mars.svg"
+                width="24px"
+                height="24px"
+                alt="Common Voice"
+                color={PRIMARY_COLOR}
+              />
             </a>
             <a
               href={appGithubURL}
               target="_blank"
               rel="noreferrer"
               className="appinfo-vcenter appinfo-link"
+              title="github"
+              aria-label="github"
             >
               <GitHubIcon />
             </a>
@@ -58,6 +69,8 @@ export const AppInfo = () => {
               target="_blank"
               rel="noreferrer"
               className="appinfo-vcenter appinfo-link"
+              title="License"
+              aria-label="License"
             >
               <CopyrightIcon />
             </a>
