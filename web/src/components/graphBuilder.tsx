@@ -13,13 +13,11 @@ import {
   TOTALS_TABLE_TYPE,
 } from "../helpers/dataTableHelper";
 
-
 // App Charts
 import { GRAPH_DATA, GRAPH_VIEW_TYPE } from "../helpers/graphHelper";
 import { AppBarChart } from "./graphs/barChart";
 import { AppAreaChart } from "./graphs/areaChart";
 import { AppLineChart } from "./graphs/lineChart";
-
 
 //
 // Graph Builder
@@ -77,7 +75,7 @@ export const GraphBuilder = () => {
         setGData(tempGData);
       }
     } else {
-      setGEnable(false)
+      setGEnable(false);
     }
   }, [
     cvTotals,
@@ -87,6 +85,8 @@ export const GraphBuilder = () => {
     versionFilter,
     viewGraphs, // keep this for fix to intl not rendering correcty
   ]);
+
+  const lc = languageFilter[0];
 
   return !metaData || !initDone || !viewGraphs ? (
     <>...</>
@@ -109,6 +109,10 @@ export const GraphBuilder = () => {
                       yKeys={gd.yKeys}
                       stacked={gd.stacked}
                       seriesNames={getSeriesNames(gd.seriesNames)}
+                      title={
+                        gd.title ? intl.get(gd.title) : "Common Voice " + lc
+                      }
+                      subTitle={gd.subTitle ? intl.get(gd.subTitle) : undefined}
                     />
                   ) : (
                     <>
@@ -119,6 +123,12 @@ export const GraphBuilder = () => {
                           yKeys={gd.yKeys}
                           stacked={gd.stacked}
                           seriesNames={getSeriesNames(gd.seriesNames)}
+                          title={
+                            gd.title ? intl.get(gd.title) : "Common Voice " + lc
+                          }
+                          subTitle={
+                            gd.subTitle ? intl.get(gd.subTitle) : undefined
+                          }
                         />
                       ) : (
                         <>
@@ -128,6 +138,14 @@ export const GraphBuilder = () => {
                               xKey={gd.xKey}
                               yKeys={gd.yKeys}
                               seriesNames={getSeriesNames(gd.seriesNames)}
+                              title={
+                                gd.title
+                                  ? intl.get(gd.title)
+                                  : "Common Voice " + lc
+                              }
+                              subTitle={
+                                gd.subTitle ? intl.get(gd.subTitle) : undefined
+                              }
                             />
                           ) : (
                             <></>

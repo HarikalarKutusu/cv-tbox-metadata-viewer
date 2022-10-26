@@ -16,7 +16,7 @@ import { GRAPH_COLORS } from "../../helpers/graphHelper";
 import { useStore } from "../../stores/store";
 
 export const AppBarChart = (props: any) => {
-  const { data, xKey, yKeys, seriesNames, stacked } = props;
+  const { data, xKey, yKeys, seriesNames, stacked, title, subTitle } = props;
   const { langCode } = useStore();
   let i = 0;
 
@@ -27,7 +27,7 @@ export const AppBarChart = (props: any) => {
           width={width}
           height={height}
           data={data}
-          margin={{ top: 20, bottom: 0, left: 25, right: 10 }}
+          margin={{ top: 50, bottom: 0, left: 25, right: 10 }}
         >
           <XAxis
             dataKey={xKey}
@@ -55,7 +55,37 @@ export const AppBarChart = (props: any) => {
               return val.toLocaleString(langCode);
             }}
           />
-          <Legend />
+          {yKeys && yKeys.length !== 1 ? <Legend /> : <></>}
+          {title ? (
+            <text
+              x={width / 2}
+              y={10}
+              fill="#999"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fontSize="1.1rem"
+              fontWeight={500}
+            >
+              {title}
+            </text>
+          ) : (
+            <></>
+          )}
+          {subTitle ? (
+            <text
+              x={width / 2}
+              y={30}
+              fill="#666"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fontSize="0.9rem"
+              fontWeight={400}
+            >
+              {subTitle}
+            </text>
+          ) : (
+            <></>
+          )}
           {yKeys.length > 1 && stacked
             ? yKeys.map((yKey: string) => (
                 <Bar
