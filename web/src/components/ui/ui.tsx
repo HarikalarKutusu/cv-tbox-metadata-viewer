@@ -56,6 +56,7 @@ import { LanguageSelector } from "./../languageSelector";
 import { MetadataTable, TotalsTable } from "./../metaDataTable";
 import { FilterSelectors } from "../filterSelectors";
 import { GraphBuilder } from "../graphBuilder";
+import { AppInfo } from "./appInfo";
 
 // import { ListItem } from "@mui/material";
 
@@ -133,20 +134,6 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-
-
-// let appTheme = createTheme({
-//   palette: {
-//     primary: {
-//       main: "#00897b",
-//     },
-//     secondary: {
-//       main: "#ee9a9d",
-//     },
-//   },
-// });
-
-// appTheme = responsiveFontSizes(appTheme)
 
 export function AppUI() {
   const [open, setOpen] = React.useState(false);
@@ -315,22 +302,7 @@ export function AppUI() {
           <List component="nav">
             <MenuItemsTable />
           </List>
-          <div
-            style={{
-              width: "100%",
-              textAlign: "center",
-              verticalAlign: "bottom",
-              position: "absolute",
-              bottom: 40,
-              fontSize: "9px",
-            }}
-          >
-            v0.2.0 beta
-            <br />
-            data:
-            <br />
-            2022-09-25
-          </div>
+          <AppInfo />
         </Drawer>
         <Box
           component="main"

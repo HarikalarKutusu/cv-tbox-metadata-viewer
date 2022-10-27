@@ -14,27 +14,13 @@ import {
   TOTALS_TABLE_TYPE,
   TOTALS_ROW_TYPE,
   DT_ROW_TYPE,
+  TABLE_STYLE,
 } from "../helpers/dataTableHelper";
 
 import { useStore } from "../stores/store";
 
 // Data
 import METADATA_RAW from "./../assets/data/$metadata.json";
-
-//
-// TABLE STYLING
-//
-
-//  Internally, customStyles will deep merges your customStyles with the default styling.
-const customStyles = {
-  headRow: {
-    style: {
-      backgroundColor: "#00897b",
-      // backgroundColor: "#ee9a9d",
-      color: "#ffffff",
-    },
-  },
-};
 
 //
 // JSX
@@ -220,7 +206,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       persistTableHead
       defaultSortFieldId={"version"}
       defaultSortAsc={false}
-      customStyles={customStyles}
+      customStyles={TABLE_STYLE}
       // sortIcon={sortIcon}
       // sortFunction={numericSort}
       // onSort
@@ -286,7 +272,7 @@ export const TotalsTable = () => {
       highlightOnHover
       title={viewTitle}
       persistTableHead
-      customStyles={customStyles}
+      customStyles={TABLE_STYLE}
       // fixedHeader
       // fixedHeaderScrollHeight="300px"
       // subHeader
