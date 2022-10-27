@@ -58,6 +58,7 @@ export const AppBarChart = (props: any) => {
             ref={refBar}
           >
             <XAxis
+              dataKey={xKey}
               style={{
                 fontSize: "0.8rem",
                 fontFamily: "Arial",

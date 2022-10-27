@@ -27,6 +27,7 @@ export const AppAreaChart = (props: any) => {
   const { data, xKey, yKeys, seriesNames, stacked, title, subTitle } = props;
   const { langCode } = useStore();
   const [getPng, { ref: refArea, isLoading }] = useCurrentPng();
+
   let i = 0;
 
   const handleAreaDownload = useCallback(async () => {

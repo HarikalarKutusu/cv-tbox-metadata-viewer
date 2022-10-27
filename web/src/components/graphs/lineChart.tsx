@@ -27,6 +27,7 @@ export const AppLineChart = (props: any) => {
   const { data, xKey, yKeys, seriesNames, title, subTitle } = props;
   const { langCode } = useStore();
   const [getPng, { ref: refLine, isLoading }] = useCurrentPng();
+
   let i = 0;
 
   const handleLineDownload = useCallback(async () => {
@@ -56,13 +57,13 @@ export const AppLineChart = (props: any) => {
             ref={refLine}
           >
             <XAxis
+              dataKey={xKey}
               style={{
                 fontSize: "0.8rem",
                 fontFamily: "Arial",
               }}
             />
             <YAxis
-              dataKey={yKeys[0]}
               style={{
                 fontSize: "0.8rem",
                 fontFamily: "Arial",
