@@ -26,24 +26,16 @@ import { cleanFn } from "../../helpers/appHelper";
 export const AppAreaChart = (props: any) => {
   const { data, xKey, yKeys, seriesNames, stacked, title, subTitle } = props;
   const { langCode } = useStore();
-  const [getPng, { ref: refArea, isLoading }] = useCurrentPng();
+  const [getPng, { ref }] = useCurrentPng();
 
   let i = 0;
 
-  const handleAreaDownload = useCallback(async () => {
-    if (isLoading) return;
-    console.log("here");
+  const handleDownload = useCallback(async () => {
     const png = await getPng();
     if (png) {
       FileSaver.saveAs(png, cleanFn(title + "-" + subTitle + ".png"));
     }
-  }, [getPng, isLoading, subTitle, title]);
-
-  const DLIcon = () => {
-    return (
-      <DownloadForOfflineIcon color="secondary" onClick={handleAreaDownload} />
-    );
-  };
+  }, [getPng, subTitle, title]);
 
   return (
     <AutoSizer>
@@ -54,7 +46,7 @@ export const AppAreaChart = (props: any) => {
             height={height}
             data={data}
             margin={{ top: 50, bottom: 0, left: 25, right: 10 }}
-            ref={refArea}
+            ref={ref}
           >
             <XAxis
               dataKey={xKey}
@@ -134,11 +126,11 @@ export const AppAreaChart = (props: any) => {
                   />
                 ))}
           </AreaChart>
-          <div
-            style={{ position: "absolute", top: -5, left: -5 }}
-            onClick={handleAreaDownload}
-          >
-            <DLIcon />
+          <div style={{ position: "absolute", top: -5, left: -5 }}>
+            <DownloadForOfflineIcon
+              color="secondary"
+              onClick={handleDownload}
+            />
           </div>
         </div>
       )}
