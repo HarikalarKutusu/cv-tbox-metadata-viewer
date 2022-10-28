@@ -1,3 +1,5 @@
+import { CV_METADATATABLE_TYPE, DT_ROW_TYPE, TOTALS_TABLE_TYPE } from "./dataTableHelper";
+
 export const GRAPH_COLORS = [
   "#4e79a7",
   "#f28e2c",
@@ -22,6 +24,18 @@ export type CHART_TYPES =
   | "scatter"
   | "funnel";
 
+export interface IAppChartProps {
+  data: CV_METADATATABLE_TYPE | TOTALS_TABLE_TYPE;
+  xKey: string;
+  yKeys: string[];
+  seriesNames: string[];
+  stacked?: boolean;
+  title?: string;
+  subTitle?: string;
+  fillPercent?: boolean;
+  cnt: number;
+}
+
 export type GRAPH_VIEW_TYPE = {
   view: string;
   data: "totals" | "metadata";
@@ -32,6 +46,7 @@ export type GRAPH_VIEW_TYPE = {
   seriesNames: string[];
   title?: string;
   subTitle?: string;
+  fillPercent?: boolean;
 };
 
 export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
@@ -112,6 +127,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     yKeys: ["validRecsPercentage"],
     seriesNames: ["calc.valid_recs_percentage"],
     subTitle: "calc.valid_recs_percentage",
+    fillPercent: true,
   },
   // view = calculated
   {
@@ -131,6 +147,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     yKeys: ["validatedHrsPercentage"],
     seriesNames: ["calc.valid_hrs_percentage"],
     subTitle: "calc.valid_hrs_percentage",
+    fillPercent: true,
   },
   {
     view: "calculated",
@@ -181,6 +198,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
       "calc.other_recs_percentage",
     ],
     subTitle: "graph.subtitle.buckets_main_per",
+    fillPercent: true,
   },
   // view = buckets-model
   {
@@ -214,6 +232,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     yKeys: ["percentageUsed"],
     seriesNames: ["calc.percentage_used"],
     subTitle: "calc.percentage_used",
+    fillPercent: true,
   },
   // view = users
   {
@@ -275,6 +294,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
       // "col.ages_nodata",
     ],
     subTitle: "graph.subtitle.age_groups",
+    fillPercent: true,
   },
   // view = genders
   {
@@ -290,6 +310,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
       "col.genders_other",
     ],
     subTitle: "graph.subtitle.gender_groups",
+    fillPercent: true,
   },
   {
     view: "genders",
@@ -300,6 +321,7 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     yKeys: ["malePercentage", "femalePercentage"],
     seriesNames: ["calc.male_percentage", "calc.female_percentage"],
     subTitle: "graph.subtitle.gender_in_given",
+    fillPercent: true,
   },
   {
     view: "genders",

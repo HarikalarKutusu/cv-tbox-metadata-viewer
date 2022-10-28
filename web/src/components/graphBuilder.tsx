@@ -31,16 +31,9 @@ export const GraphBuilder = () => {
 
   const [gEnable, setGEnable] = useState<boolean>(false);
   const [gData, setGData] = useState<
-    CV_METADATATABLE_TYPE | TOTALS_TABLE_TYPE | undefined
-  >(undefined);
-  const [viewGraphs, setViewGraphs] = useState<GRAPH_VIEW_TYPE[] | undefined>(
-    undefined,
-  );
-
-  // let gEnable: boolean = false;
-  // let gData: CV_METADATATABLE_TYPE | TOTALS_TABLE_TYPE | undefined = [];
-  // let viewGraphs: GRAPH_VIEW_TYPE[] = [];
-  // let gLocales: string[] = [];
+    CV_METADATATABLE_TYPE | TOTALS_TABLE_TYPE
+  >();
+  const [viewGraphs, setViewGraphs] = useState<GRAPH_VIEW_TYPE[]>();
 
   const getSeriesNames = (lst: string[]) => {
     let res: string[] = [];
@@ -104,7 +97,7 @@ export const GraphBuilder = () => {
                   {/* BAR CHART */}
                   {gd.type === "bar" ? (
                     <AppBarChart
-                      data={gData}
+                      data={gData!}
                       xKey={gd.xKey}
                       yKeys={gd.yKeys}
                       stacked={gd.stacked}
@@ -113,12 +106,14 @@ export const GraphBuilder = () => {
                         gd.title ? intl.get(gd.title) : "Common Voice " + lc
                       }
                       subTitle={gd.subTitle ? intl.get(gd.subTitle) : undefined}
+                      fillPercent={gd.fillPercent}
+                      cnt={index}
                     />
                   ) : (
                     <>
                       {gd.type === "area" ? (
                         <AppAreaChart
-                          data={gData}
+                          data={gData!}
                           xKey={gd.xKey}
                           yKeys={gd.yKeys}
                           stacked={gd.stacked}
@@ -129,12 +124,14 @@ export const GraphBuilder = () => {
                           subTitle={
                             gd.subTitle ? intl.get(gd.subTitle) : undefined
                           }
+                          fillPercent={gd.fillPercent}
+                          cnt={index}
                         />
                       ) : (
                         <>
                           {gd.type === "line" ? (
                             <AppLineChart
-                              data={gData}
+                              data={gData!}
                               xKey={gd.xKey}
                               yKeys={gd.yKeys}
                               seriesNames={getSeriesNames(gd.seriesNames)}
@@ -146,6 +143,8 @@ export const GraphBuilder = () => {
                               subTitle={
                                 gd.subTitle ? intl.get(gd.subTitle) : undefined
                               }
+                              fillPercent={gd.fillPercent}
+                              cnt={index}
                             />
                           ) : (
                             <></>
