@@ -1,5 +1,5 @@
 // React
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 // MUI
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 // Charts
@@ -26,25 +26,16 @@ import { cleanFn } from "../../helpers/appHelper";
 export const AppBarChart = (props: any) => {
   const { data, xKey, yKeys, seriesNames, stacked, title, subTitle } = props;
   const { langCode } = useStore();
-  const [ barChart, setBarChart ] = useState();
-  const [getPng, { ref: refBar, isLoading }] = useCurrentPng();
+  const [getPng, { ref }] = useCurrentPng();
 
   let i = 0;
 
-  const handleBarDownload = useCallback(async () => {
-    if (isLoading) return;
-    console.log("here");
+  const handleDownload = useCallback(async () => {
     const png = await getPng();
     if (png) {
       FileSaver.saveAs(png, cleanFn(title + "-" + subTitle + ".png"));
     }
-  }, [getPng, isLoading, subTitle, title]);
-
-  const DLIcon = () => {
-    return (
-      <DownloadForOfflineIcon color="secondary" onClick={handleBarDownload} />
-    );
-  };
+  }, [getPng, subTitle, title]);
 
   return (
     <AutoSizer>
@@ -55,7 +46,7 @@ export const AppBarChart = (props: any) => {
             height={height}
             data={data}
             margin={{ top: 50, bottom: 0, left: 25, right: 10 }}
-            ref={refBar}
+            ref={ref}
           >
             <XAxis
               dataKey={xKey}
@@ -134,11 +125,8 @@ export const AppBarChart = (props: any) => {
                   />
                 ))}
           </BarChart>
-          <div
-            style={{ position: "absolute", top: -5, left: -5 }}
-            onClick={handleBarDownload}
-          >
-            <DLIcon />
+          <div style={{ position: "absolute", top: -5, left: -5 }}>
+            <DownloadForOfflineIcon color="secondary" onClick={handleDownload} />
           </div>
         </div>
       )}
