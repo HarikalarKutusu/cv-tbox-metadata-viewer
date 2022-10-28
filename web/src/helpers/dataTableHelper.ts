@@ -95,29 +95,15 @@ export type TOTALS_ROW_TYPE = {
 
 export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];
 
-// NUMERIC SORTER COMMON TO METADATA AND TOTALS
-
-const numericVersionSort = (
-  rowA: DT_ROW_TYPE | TOTALS_ROW_TYPE,
-  rowB: DT_ROW_TYPE | TOTALS_ROW_TYPE,
-) => {
-  const a = parseFloat(rowA.version);
-  const b = parseFloat(rowB.version);
-  let res = 0;
-  if (a > b) {
-    res = 1;
-  } else if (a < b) {
-    res = -1;
-  }
-  return res;
-};
-
 // METADATA
 
 export function getMetaDataTableView(
   viewname: string,
   langCode: string,
 ): [TableColumn<DT_ROW_TYPE>[], string] {
+  const dec2 = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+  const dec3 = { minimumFractionDigits: 3, maximumFractionDigits: 3 };
+
   const colVersion: TableColumn<DT_ROW_TYPE> = {
     id: "version",
     name: intl.get("col.version"),
@@ -125,7 +111,7 @@ export function getMetaDataTableView(
     center: true,
     width: "100px",
     selector: (row) => row.version,
-    sortFunction: numericVersionSort,
+    sortFunction: (a, b) => (parseFloat(a.version) > parseFloat(b.version) ? 1 : -1),
   };
   // const colDate: TableColumn<DT_ROW_TYPE> = {
   //   id: "date",
@@ -147,40 +133,34 @@ export function getMetaDataTableView(
     name: intl.get("col.clips"),
     sortable: true,
     right: true,
-    selector: (row) => row.clips,
-    cell: (row) => row.clips.toLocaleString(langCode),
+    selector: (row) => (row.clips ? row.clips.toLocaleString(langCode) : "-"),
+    sortFunction: (a, b) => (a.clips > b.clips ? 1 : -1),
   };
   const colUsers: TableColumn<DT_ROW_TYPE> = {
     id: "users",
     name: intl.get("col.users"),
     sortable: true,
     right: true,
-    selector: (row) => row.users,
-    cell: (row) => row.users.toLocaleString(langCode),
+    selector: (row) => (row.users ? row.users.toLocaleString(langCode) : "-"),
+    sortFunction: (a, b) => (a.users > b.users ? 1 : -1),
   };
   const colTotalHrs: TableColumn<DT_ROW_TYPE> = {
     id: "totalHrs",
     name: intl.get("col.totalHrs"),
     sortable: true,
     right: true,
-    selector: (row) => row.totalHrs,
-    cell: (row) =>
-      row.totalHrs.toLocaleString(langCode, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
+    selector: (row) =>
+      row.totalHrs ? row.totalHrs.toLocaleString(langCode, dec2) : "-",
+    sortFunction: (a, b) => (a.totalHrs > b.totalHrs ? 1 : -1),
   };
   const colValidHrs: TableColumn<DT_ROW_TYPE> = {
     id: "validHrs",
     name: intl.get("col.validHrs"),
     sortable: true,
     right: true,
-    selector: (row) => row.validHrs,
-    cell: (row) =>
-      row.validHrs.toLocaleString(langCode, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
+    selector: (row) =>
+      row.validHrs ? row.validHrs.toLocaleString(langCode, dec2) : "-",
+    sortFunction: (a, b) => (a.validHrs > b.validHrs ? 1 : -1),
   };
 
   // const colValidDurationSecs: TableColumn<DT_ROW_TYPE> = {
@@ -196,12 +176,11 @@ export function getMetaDataTableView(
     name: intl.get("col.avgDurationSecs"),
     sortable: true,
     right: true,
-    selector: (row) => Number(row.avgDurationSecs),
-    cell: (row) =>
-      row.avgDurationSecs.toLocaleString(langCode, {
-        minimumFractionDigits: 3,
-        maximumFractionDigits: 3,
-      }),
+    selector: (row) =>
+      row.avgDurationSecs
+        ? row.avgDurationSecs.toLocaleString(langCode, dec3)
+        : "-",
+    sortFunction: (a, b) => (a.avgDurationSecs > b.avgDurationSecs ? 1 : -1),
   };
 
   const colBucketsValidated: TableColumn<DT_ROW_TYPE> = {
@@ -209,48 +188,60 @@ export function getMetaDataTableView(
     name: intl.get("col.buckets_validated"),
     sortable: true,
     right: true,
-    selector: (row) => row.buckets_validated,
-    cell: (row) => row.buckets_validated.toLocaleString(langCode),
+    selector: (row) =>
+      row.buckets_validated
+        ? row.buckets_validated.toLocaleString(langCode)
+        : "-",
+    sortFunction: (a, b) =>
+      a.buckets_validated > b.buckets_validated ? 1 : -1,
   };
   const colBucketsInValidated: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsInValidated",
     name: intl.get("col.buckets_invalidated"),
     sortable: true,
     right: true,
-    selector: (row) => row.buckets_invalidated,
-    cell: (row) => row.buckets_invalidated.toLocaleString(langCode),
+    selector: (row) =>
+      row.buckets_invalidated
+        ? row.buckets_invalidated.toLocaleString(langCode)
+        : "-",
+    sortFunction: (a, b) =>
+      a.buckets_invalidated > b.buckets_invalidated ? 1 : -1,
   };
   const colBucketsOther: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsOther",
     name: intl.get("col.buckets_other"),
     sortable: true,
     right: true,
-    selector: (row) => row.buckets_other,
-    cell: (row) => row.buckets_other.toLocaleString(langCode),
+    selector: (row) =>
+      row.buckets_other ? row.buckets_other.toLocaleString(langCode) : "-",
+    sortFunction: (a, b) => (a.buckets_other > b.buckets_other ? 1 : -1),
   };
   const colBucketsTrain: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsTrain",
     name: intl.get("col.buckets_train"),
     sortable: true,
     right: true,
-    selector: (row) => row.buckets_train,
-    cell: (row) => row.buckets_train.toLocaleString(langCode),
+    selector: (row) =>
+      row.buckets_train ? row.buckets_train.toLocaleString(langCode) : "-",
+    sortFunction: (a, b) => (a.buckets_train > b.buckets_train ? 1 : -1),
   };
   const colBucketsDev: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsDev",
     name: intl.get("col.buckets_dev"),
     sortable: true,
     right: true,
-    selector: (row) => row.buckets_dev,
-    cell: (row) => row.buckets_dev.toLocaleString(langCode),
+    selector: (row) =>
+      row.buckets_dev ? row.buckets_dev.toLocaleString(langCode) : "-",
+    sortFunction: (a, b) => (a.buckets_dev > b.buckets_dev ? 1 : -1),
   };
   const colBucketsTest: TableColumn<DT_ROW_TYPE> = {
     id: "bucketsTest",
     name: intl.get("col.buckets_test"),
     sortable: true,
     right: true,
-    selector: (row) => row.buckets_test,
-    cell: (row) => row.buckets_test.toLocaleString(langCode),
+    selector: (row) =>
+      row.buckets_test ? row.buckets_test.toLocaleString(langCode) : "-",
+    sortFunction: (a, b) => (a.buckets_test > b.buckets_test ? 1 : -1),
   };
   // const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
   //   id: "bucketsReported",
@@ -266,70 +257,80 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_nodata"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.ages_nodata).toFixed(2)),
+    selector: (row) => (row.ages_nodata ? row.ages_nodata : "-"),
+    sortFunction: (a, b) => (a.ages_nodata > b.ages_nodata ? 1 : -1),
   };
   const colAgesTeens: TableColumn<DT_ROW_TYPE> = {
     id: "agesTeens",
     name: intl.get("col.ages_teens"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.ages_teens).toFixed(2)),
+    selector: (row) => (row.ages_teens ? row.ages_teens : "-"),
+    sortFunction: (a, b) => (a.ages_teens > b.ages_teens ? 1 : -1),
   };
   const colAgesTwenties: TableColumn<DT_ROW_TYPE> = {
     id: "agesTwenties",
     name: intl.get("col.ages_twenties"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.ages_twenties).toFixed(2)),
+    selector: (row) => (row.ages_twenties ? row.ages_twenties : "-"),
+    sortFunction: (a, b) => (a.ages_twenties > b.ages_twenties ? 1 : -1),
   };
   const colAgesThirties: TableColumn<DT_ROW_TYPE> = {
     id: "agesThirties",
     name: intl.get("col.ages_thirties"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.ages_thirties).toFixed(2)),
+    selector: (row) => (row.ages_thirties ? row.ages_thirties : "-"),
+    sortFunction: (a, b) => (a.ages_thirties > b.ages_thirties ? 1 : -1),
   };
   const colAgesFourties: TableColumn<DT_ROW_TYPE> = {
     id: "agesFourties",
     name: intl.get("col.ages_fourties"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.ages_fourties).toFixed(2)),
+    selector: (row) => (row.ages_fourties ? row.ages_fourties : "-"),
+    sortFunction: (a, b) => (a.ages_fourties > b.ages_fourties ? 1 : -1),
   };
   const colAgesFifties: TableColumn<DT_ROW_TYPE> = {
     id: "agesFifties",
     name: intl.get("col.ages_fifties"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.ages_fifties).toFixed(2)),
+    selector: (row) => (row.ages_fifties ? row.ages_fifties : "-"),
+    sortFunction: (a, b) => (a.ages_fifties > b.ages_fifties ? 1 : -1),
   };
   const colAgesSixties: TableColumn<DT_ROW_TYPE> = {
     id: "agesSixties",
     name: intl.get("col.ages_sixties"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.ages_sixties).toFixed(2)),
+    selector: (row) => (row.ages_sixties ? row.ages_sixties : "-"),
+    sortFunction: (a, b) => (a.ages_sixties > b.ages_sixties ? 1 : -1),
   };
   const colAgesSeventies: TableColumn<DT_ROW_TYPE> = {
     id: "agesSeventies",
     name: intl.get("col.ages_seventies"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.ages_seventies).toFixed(2)),
+    selector: (row) => (row.ages_seventies ? row.ages_seventies : "-"),
+    sortFunction: (a, b) => (a.ages_seventies > b.ages_seventies ? 1 : -1),
   };
   const colAgesEighties: TableColumn<DT_ROW_TYPE> = {
     id: "agesEighties",
     name: intl.get("col.ages_eighties"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.ages_eighties).toFixed(2)),
+    selector: (row) => (row.ages_eighties ? row.ages_eighties : "-"),
+    sortFunction: (a, b) => (a.ages_eighties > b.ages_eighties ? 1 : -1),
   };
   const colAgesNineties: TableColumn<DT_ROW_TYPE> = {
     id: "agesNineties",
     name: intl.get("col.ages_nineties"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.ages_nineties).toFixed(2)),
+    selector: (row) => (row.ages_nineties ? row.ages_nineties : "-"),
+    sortFunction: (a, b) => (a.ages_nineties > b.ages_nineties ? 1 : -1),
   };
 
   const colGendersNodata: TableColumn<DT_ROW_TYPE> = {
@@ -337,28 +338,32 @@ export function getMetaDataTableView(
     name: intl.get("col.genders_nodata"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.genders_nodata).toFixed(2)),
+    selector: (row) => (row.genders_nodata ? row.genders_nodata : "-"),
+    sortFunction: (a, b) => (a.genders_nodata > b.genders_nodata ? 1 : -1),
   };
   const colGendersMale: TableColumn<DT_ROW_TYPE> = {
     id: "gendersMale",
     name: intl.get("col.genders_male"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.genders_male).toFixed(2)),
+    selector: (row) => (row.genders_male ? row.genders_male : "-"),
+    sortFunction: (a, b) => (a.genders_male > b.genders_male ? 1 : -1),
   };
   const colGendersFemale: TableColumn<DT_ROW_TYPE> = {
     id: "gendersFemale",
     name: intl.get("col.genders_female"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.genders_female).toFixed(2)),
+    selector: (row) => (row.genders_female ? row.genders_female : "-"),
+    sortFunction: (a, b) => (a.genders_female > b.genders_female ? 1 : -1),
   };
   const colGendersOther: TableColumn<DT_ROW_TYPE> = {
     id: "gendersOther",
     name: intl.get("col.genders_other"),
     sortable: true,
     right: true,
-    selector: (row) => Number((100 * row.genders_other).toFixed(2)),
+    selector: (row) => (row.genders_other ? row.genders_other : "-"),
+    sortFunction: (a, b) => (a.genders_other > b.genders_other ? 1 : -1),
   };
 
   const colSize: TableColumn<DT_ROW_TYPE> = {
@@ -367,48 +372,49 @@ export function getMetaDataTableView(
     sortable: true,
     right: true,
     width: "150px",
-    selector: (row) => Number((row.size / 1024 / 1024).toFixed(0)),
-    cell: (row) =>
-      Number((row.size / 1024 / 1024).toFixed(0)).toLocaleString(langCode),
+    selector: (row) => (row.size ? row.size.toLocaleString(langCode) : "-"),
+    sortFunction: (a, b) => (a.size > b.size ? 1 : -1),
   };
   const colChecksum: TableColumn<DT_ROW_TYPE> = {
     id: "checksum",
     name: intl.get("col.checksum"),
     sortable: false,
     // right: true,
-    selector: (row) => row.checksum,
+    selector: (row) => (row.checksum ? row.checksum : "-"),
   };
 
+  //
   // Calculated Columns
+  //
   const calcValidRecsPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "validRecsPercentage",
     name: intl.get("calc.valid_recs_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => row.validRecsPercentage!,
-    cell: (row) => row.validRecsPercentage!.toFixed(2),
-    // selector: (row) =>
-    //   Number(((100 * row.buckets_validated) / row.clips).toFixed(2)),
+    selector: (row) =>
+      row.validRecsPercentage ? row.validRecsPercentage.toFixed(2) : "-",
+    sortFunction: (a, b) =>
+      a.validRecsPercentage! > b.validRecsPercentage! ? 1 : -1,
   };
   const calcInvalidRecsPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "invalidRecsPercentage",
     name: intl.get("calc.invalid_recs_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => row.invalidRecsPercentage!,
-    cell: (row) => row.invalidRecsPercentage!.toFixed(2),
-    // selector: (row) =>
-    //   Number(((100 * row.buckets_invalidated) / row.clips).toFixed(2)),
+    selector: (row) =>
+      row.invalidRecsPercentage ? row.invalidRecsPercentage.toFixed(2) : "-",
+    sortFunction: (a, b) =>
+      a.invalidRecsPercentage! > b.invalidRecsPercentage! ? 1 : -1,
   };
   const calcOtherRecsPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "otherRecsPercentage",
     name: intl.get("calc.other_recs_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => row.otherRecsPercentage!,
-    cell: (row) => row.otherRecsPercentage!.toFixed(2),
-    // selector: (row) =>
-    //   Number(((100 * row.buckets_other) / row.clips).toFixed(2)),
+    selector: (row) =>
+      row.otherRecsPercentage ? row.otherRecsPercentage.toFixed(2) : "-",
+    sortFunction: (a, b) =>
+      a.otherRecsPercentage! > b.otherRecsPercentage! ? 1 : -1,
   };
 
   const calcValidHrsPercentage: TableColumn<DT_ROW_TYPE> = {
@@ -416,37 +422,42 @@ export function getMetaDataTableView(
     name: intl.get("calc.valid_hrs_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => row.validatedHrsPercentage!,
-    cell: (row) => row.validatedHrsPercentage!.toFixed(2),
-    // selector: (row) => Number(((100 * row.validHrs) / row.totalHrs).toFixed(2)),
+    selector: (row) =>
+      row.validatedHrsPercentage ? row.validatedHrsPercentage.toFixed(2) : "-",
+    sortFunction: (a, b) =>
+      a.validatedHrsPercentage! > b.validatedHrsPercentage! ? 1 : -1,
   };
   const calcReportedPercentage: TableColumn<DT_ROW_TYPE> = {
     id: "reportedPercentage",
     name: intl.get("calc.reported_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => row.reportedPercentage!,
-    cell: (row) => row.reportedPercentage!.toFixed(2),
-    // selector: (row) =>
-    //   Number(((100 * row.buckets_reported) / row.clips).toFixed(2)),
+    selector: (row) =>
+      row.reportedPercentage ? row.reportedPercentage.toFixed(2) : "-",
+    sortFunction: (a, b) =>
+      a.reportedPercentage! > b.reportedPercentage! ? 1 : -1,
   };
   const calcAvgRecsPerUser: TableColumn<DT_ROW_TYPE> = {
     id: "avgRecsPerUser",
     name: intl.get("calc.avg_recs_per_user"),
     sortable: true,
     right: true,
-    selector: (row) => row.avgRecsPerUser!,
-    cell: (row) => row.avgRecsPerUser!.toFixed(2),
-    // selector: (row) => Number((row.clips / row.users).toFixed(2)),
+    selector: (row) =>
+      row.avgRecsPerUser
+        ? row.avgRecsPerUser.toLocaleString(langCode, dec2)
+        : "-",
+    sortFunction: (a, b) => (a.avgRecsPerUser! > b.avgRecsPerUser! ? 1 : -1),
   };
   const calcAvgSecsPerUser: TableColumn<DT_ROW_TYPE> = {
     id: "avgSecsPerUser",
     name: intl.get("calc.avg_secs_per_user"),
     sortable: true,
     right: true,
-    selector: (row) => row.avgSecsPerUser!,
-    cell: (row) => row.avgSecsPerUser!.toFixed(2),
-    // selector: (row) => (row.duration / row.users / 1000).toFixed(2),
+    selector: (row) =>
+      row.avgSecsPerUser
+        ? row.avgSecsPerUser.toLocaleString(langCode, dec2)
+        : "-",
+    sortFunction: (a, b) => (a.avgSecsPerUser! > b.avgSecsPerUser! ? 1 : -1),
   };
 
   const calcPercentageUsed: TableColumn<DT_ROW_TYPE> = {
@@ -454,40 +465,36 @@ export function getMetaDataTableView(
     name: intl.get("calc.percentage_used"),
     sortable: true,
     right: true,
-    selector: (row) => row.percentageUsed!,
-    cell: (row) => row.percentageUsed!.toFixed(2),
-    // selector: (row) =>
-    //   Number(100 * ((row.buckets_train + row.buckets_dev + row.buckets_test) / row.buckets_validated)).toFixed(2),
+    selector: (row) =>
+      row.percentageUsed ? row.percentageUsed.toFixed(2) : "-",
+    sortFunction: (a, b) => (a.percentageUsed! > b.percentageUsed! ? 1 : -1),
   };
   const calcEstTrainHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estTrainHrs",
     name: intl.get("calc.est_train_hrs"),
     sortable: true,
     right: true,
-    selector: (row) => row.estTrainHrs!,
-    cell: (row) => row.estTrainHrs!.toFixed(2),
-    // selector: (row) =>
-    //   ((row.validHrs * row.buckets_train) / row.buckets_validated).toFixed(2),
+    selector: (row) =>
+      row.estTrainHrs ? row.estTrainHrs.toLocaleString(langCode, dec2) : "-",
+    sortFunction: (a, b) => (a.estTrainHrs! > b.estTrainHrs! ? 1 : -1),
   };
   const calcEstDevHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estDevHrs",
     name: intl.get("calc.est_dev_hrs"),
     sortable: true,
     right: true,
-    selector: (row) => row.estDevHrs!,
-    cell: (row) => row.estDevHrs!.toFixed(2),
-    // selector: (row) =>
-    //   ((row.validHrs * row.buckets_dev) / row.buckets_validated).toFixed(2),
+    selector: (row) =>
+      row.estDevHrs ? row.estDevHrs.toLocaleString(langCode, dec2) : "-",
+    sortFunction: (a, b) => (a.estDevHrs! > b.estDevHrs! ? 1 : -1),
   };
   const calcEstTestHrs: TableColumn<DT_ROW_TYPE> = {
     id: "estTestHrs",
     name: intl.get("calc.est_test_hrs"),
     sortable: true,
     right: true,
-    selector: (row) => row.estTestHrs!,
-    cell: (row) => row.estTestHrs!.toFixed(2),
-    // selector: (row) =>
-    //   ((row.validHrs * row.buckets_test) / row.buckets_validated).toFixed(2),
+    selector: (row) =>
+      row.estTestHrs ? row.estTestHrs.toLocaleString(langCode, dec2) : "-",
+    sortFunction: (a, b) => (a.estTestHrs! > b.estTestHrs! ? 1 : -1),
   };
 
   const calcFMRatio: TableColumn<DT_ROW_TYPE> = {
@@ -495,32 +502,27 @@ export function getMetaDataTableView(
     name: intl.get("calc.fm_ratio"),
     sortable: true,
     right: true,
-    selector: (row) => row.fmRatio!,
-    cell: (row) => row.fmRatio!.toFixed(2),
-    // selector: (row) =>
-    //   Number((row.genders_female / row.genders_male).toFixed(2)),
+    selector: (row) => (row.fmRatio ? row.fmRatio.toFixed(2) : "-"),
+    sortFunction: (a, b) => (a.fmRatio! > b.fmRatio! ? 1 : -1),
   };
   const calcMalePercentage: TableColumn<DT_ROW_TYPE> = {
     id: "malePercentage",
     name: intl.get("calc.male_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => row.malePercentage!,
-    cell: (row) => row.malePercentage!.toFixed(2),
-    // selector: (row) =>
-    //   Number(((100 * row.genders_male) / (1 - row.genders_nodata)).toFixed(2)),
+    selector: (row) =>
+      row.malePercentage ? row.malePercentage.toFixed(2) : "-",
+    sortFunction: (a, b) => (a.malePercentage! > b.malePercentage! ? 1 : -1),
   };
   const calcFemalePercentage: TableColumn<DT_ROW_TYPE> = {
     id: "femalePercentage",
     name: intl.get("calc.female_percentage"),
     sortable: true,
     right: true,
-    selector: (row) => row.femalePercentage!,
-    cell: (row) => row.femalePercentage!.toFixed(2),
-    // selector: (row) =>
-    //   Number(
-    //     ((100 * row.genders_female) / (1 - row.genders_nodata)).toFixed(2),
-    //   ),
+    selector: (row) =>
+      row.femalePercentage ? row.femalePercentage.toFixed(2) : "-",
+    sortFunction: (a, b) =>
+      a.femalePercentage! > b.femalePercentage! ? 1 : -1,
   };
 
   let viewCols: TableColumn<DT_ROW_TYPE>[];
@@ -668,7 +670,7 @@ export function getTotalsTableView(
     center: true,
     width: "100px",
     selector: (row) => row.version,
-    sortFunction: numericVersionSort,
+    sortFunction: (a, b) => (Number(a) > Number(b) ? 1 : -1),
   };
   const colDate: TableColumn<TOTALS_ROW_TYPE> = {
     id: "date",

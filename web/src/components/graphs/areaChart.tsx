@@ -19,16 +19,24 @@ import {
 import FileSaver from "file-saver";
 import { useCurrentPng } from "recharts-to-png";
 // App
-import { GRAPH_COLORS } from "../../helpers/graphHelper";
+import { GRAPH_COLORS, IAppChartProps } from "../../helpers/graphHelper";
 import { useStore } from "../../stores/store";
 import { cleanFn } from "../../helpers/appHelper";
 
-export const AppAreaChart = (props: any) => {
-  const { data, xKey, yKeys, seriesNames, stacked, title, subTitle } = props;
+export const AppAreaChart = (props: IAppChartProps) => {
+  const {
+    data,
+    xKey,
+    yKeys,
+    seriesNames,
+    stacked,
+    title,
+    subTitle,
+    fillPercent = false,
+    cnt,
+  } = props;
   const { langCode } = useStore();
   const [getPng, { ref }] = useCurrentPng();
-
-  let i = 0;
 
   const handleDownload = useCallback(async () => {
     const png = await getPng();
@@ -63,6 +71,7 @@ export const AppAreaChart = (props: any) => {
               tickFormatter={(val) => {
                 return val.toLocaleString(langCode);
               }}
+              domain={!fillPercent ? [0, "auto"] : [0, 100]}
             />
             <CartesianGrid
               strokeDasharray="3 3"
@@ -106,23 +115,23 @@ export const AppAreaChart = (props: any) => {
               <></>
             )}
             {yKeys.length > 1 && stacked
-              ? yKeys.map((yKey: string) => (
+              ? yKeys.map((yKey: string, inx) => (
                   <Area
-                    name={seriesNames[i]}
+                    name={seriesNames[inx]}
                     key={xKey + "-" + yKey}
                     stackId="a"
                     dataKey={yKey}
-                    fill={GRAPH_COLORS[i]}
-                    stroke={GRAPH_COLORS[i++]}
+                    fill={GRAPH_COLORS[(cnt + inx) % GRAPH_COLORS.length]}
+                    stroke={GRAPH_COLORS[(cnt + inx) % GRAPH_COLORS.length]}
                   />
                 ))
-              : yKeys.map((yKey: string) => (
+              : yKeys.map((yKey: string, inx) => (
                   <Area
-                    name={seriesNames[i]}
+                    name={seriesNames[inx]}
                     key={xKey + "-" + yKey}
                     dataKey={yKey}
-                    fill={GRAPH_COLORS[i]}
-                    stroke={GRAPH_COLORS[i++]}
+                    fill={GRAPH_COLORS[(cnt + inx) % GRAPH_COLORS.length]}
+                    stroke={GRAPH_COLORS[(cnt + inx) % GRAPH_COLORS.length]}
                   />
                 ))}
           </AreaChart>

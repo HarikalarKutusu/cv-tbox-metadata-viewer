@@ -1,6 +1,6 @@
 // App related / app-wide stuff
 
-export const appVersion = "v0.3.2b";
+export const appVersion = "v0.4.0b";
 export const appDataDate = "2022-09-25";
 
 // URLs
@@ -9,6 +9,7 @@ export const appGithubURL =
   "https://github.com/HarikalarKutusu/cv-tbox-metadata-viewer";
 export const appLicenseURL =
   "https://github.com/HarikalarKutusu/cv-tbox-metadata-viewer/blob/main/LICENSE";
+export const appDatasetAnalyzerURL = "https://cv-dataset-analyzer.netlify.app/";
 
 export const cleanFn = (s: string): string => {
   const toReplace = [

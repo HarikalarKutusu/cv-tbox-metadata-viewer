@@ -20,15 +20,23 @@ import FileSaver from "file-saver";
 import { useCurrentPng } from "recharts-to-png";
 // App
 import { useStore } from "../../stores/store";
-import { GRAPH_COLORS } from "../../helpers/graphHelper";
+import { GRAPH_COLORS, IAppChartProps } from "../../helpers/graphHelper";
 import { cleanFn } from "../../helpers/appHelper";
 
-export const AppBarChart = (props: any) => {
-  const { data, xKey, yKeys, seriesNames, stacked, title, subTitle } = props;
+export const AppBarChart = (props: IAppChartProps) => {
+  const {
+    data,
+    xKey,
+    yKeys,
+    seriesNames,
+    stacked,
+    title,
+    subTitle,
+    fillPercent = false,
+    cnt,
+  } = props;
   const { langCode } = useStore();
   const [getPng, { ref }] = useCurrentPng();
-
-  let i = 0;
 
   const handleDownload = useCallback(async () => {
     const png = await getPng();
@@ -63,6 +71,7 @@ export const AppBarChart = (props: any) => {
               tickFormatter={(val) => {
                 return val.toLocaleString(langCode);
               }}
+              domain={!fillPercent ? [0, "auto"] : [0, 100]}
             />
             <CartesianGrid
               strokeDasharray="3 3"
@@ -107,26 +116,29 @@ export const AppBarChart = (props: any) => {
               <></>
             )}
             {yKeys.length > 1 && stacked
-              ? yKeys.map((yKey: string) => (
+              ? yKeys.map((yKey: string, inx) => (
                   <Bar
-                    name={seriesNames[i]}
+                    name={seriesNames[inx]}
                     key={xKey + "-" + yKey}
                     stackId="a"
                     dataKey={yKey}
-                    fill={GRAPH_COLORS[i++ % GRAPH_COLORS.length]}
+                    fill={GRAPH_COLORS[(cnt + inx) % GRAPH_COLORS.length]}
                   />
                 ))
-              : yKeys.map((yKey: string) => (
+              : yKeys.map((yKey: string, inx) => (
                   <Bar
-                    name={seriesNames[i]}
+                    name={seriesNames[inx]}
                     key={xKey + "-" + yKey}
                     dataKey={yKey}
-                    fill={GRAPH_COLORS[i++ % GRAPH_COLORS.length]}
+                    fill={GRAPH_COLORS[(cnt + inx) % GRAPH_COLORS.length]}
                   />
                 ))}
           </BarChart>
           <div style={{ position: "absolute", top: -5, left: -5 }}>
-            <DownloadForOfflineIcon color="secondary" onClick={handleDownload} />
+            <DownloadForOfflineIcon
+              color="secondary"
+              onClick={handleDownload}
+            />
           </div>
         </div>
       )}
