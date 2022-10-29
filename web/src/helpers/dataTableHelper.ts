@@ -6,6 +6,9 @@ import { TableColumn } from "react-data-table-component";
 // import { CV_TOTALS_COLS } from "./metadataHelper";
 import { PRIMARY_COLOR } from "../components/ui/theme";
 
+// Data
+import CV_LANGUAGES from "./../assets/data/$cv_languages.json";
+
 //======================================
 //== Table Styling
 //======================================
@@ -95,6 +98,25 @@ export type TOTALS_ROW_TYPE = {
 
 export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];
 
+// CV Languages Table from api
+export type CV_LANGUAGE_ROW = {
+  id: number;
+  name: string;
+  target_sentence_count: number;
+  native_name: string;
+  is_contributable: number;
+  is_translated: number;
+  text_direction: string;
+};
+
+// CV LANGUAGES (API data)
+
+export const getCVLanguageRecord = (lc: string): CV_LANGUAGE_ROW => {
+  return (CV_LANGUAGES as CV_LANGUAGE_ROW[]).filter(
+    (row) => row.name === lc,
+  )[0];
+};
+
 // METADATA
 
 export function getMetaDataTableView(
@@ -111,7 +133,8 @@ export function getMetaDataTableView(
     center: true,
     width: "100px",
     selector: (row) => row.version,
-    sortFunction: (a, b) => (parseFloat(a.version) > parseFloat(b.version) ? 1 : -1),
+    sortFunction: (a, b) =>
+      parseFloat(a.version) > parseFloat(b.version) ? 1 : -1,
   };
   // const colDate: TableColumn<DT_ROW_TYPE> = {
   //   id: "date",
@@ -525,6 +548,33 @@ export function getMetaDataTableView(
       a.femalePercentage! > b.femalePercentage! ? 1 : -1,
   };
 
+  // Data from API
+  const apiNativeName: TableColumn<DT_ROW_TYPE> = {
+    id: "api_native_name",
+    name: intl.get("api.native_name"),
+    sortable: true,
+    center: true,
+    selector: (row) => getCVLanguageRecord(row.locale).native_name,
+  };
+  const apiId: TableColumn<DT_ROW_TYPE> = {
+    id: "api_id",
+    name: intl.get("api.id"),
+    sortable: true,
+    right: true,
+    selector: (row) =>
+      getCVLanguageRecord(row.locale).id,
+  }
+  const apiTargetSentenceCount: TableColumn<DT_ROW_TYPE> = {
+    id: "target_sentence_count",
+    name: intl.get("api.target_sentence_count"),
+    sortable: true,
+    right: true,
+    selector: (row) =>
+      getCVLanguageRecord(row.locale).target_sentence_count.toLocaleString(
+        langCode,
+      ),
+  };
+
   let viewCols: TableColumn<DT_ROW_TYPE>[];
   let viewTitle: string = "";
 
@@ -534,6 +584,7 @@ export function getMetaDataTableView(
         colVersion,
         // colDate,
         colLocale,
+        apiNativeName,
         colClips,
         colUsers,
         colTotalHrs,
@@ -547,6 +598,7 @@ export function getMetaDataTableView(
         colVersion,
         // colDate,
         colLocale,
+        apiNativeName,
         colAvgDurationSecs,
         calcValidHrsPercentage,
         calcInvalidRecsPercentage,
@@ -573,6 +625,7 @@ export function getMetaDataTableView(
       viewCols = [
         colVersion,
         colLocale,
+        apiNativeName,
         colClips,
         colBucketsValidated,
         colBucketsInValidated,
@@ -587,6 +640,7 @@ export function getMetaDataTableView(
       viewCols = [
         colVersion,
         colLocale,
+        apiNativeName,
         colBucketsTrain,
         colBucketsDev,
         colBucketsTest,
@@ -609,6 +663,7 @@ export function getMetaDataTableView(
       viewCols = [
         colVersion,
         colLocale,
+        apiNativeName,
         colUsers,
         calcAvgRecsPerUser,
         calcAvgSecsPerUser,
@@ -620,6 +675,7 @@ export function getMetaDataTableView(
       viewCols = [
         colVersion,
         colLocale,
+        apiNativeName,
         colAgesTeens,
         colAgesTwenties,
         colAgesThirties,
@@ -637,6 +693,7 @@ export function getMetaDataTableView(
       viewCols = [
         colVersion,
         colLocale,
+        apiNativeName,
         colGendersMale,
         colGendersFemale,
         colGendersOther,
@@ -648,7 +705,15 @@ export function getMetaDataTableView(
       viewTitle = intl.get("menu.views.genders");
       break;
     case "other":
-      viewCols = [colVersion, colLocale, colSize, colChecksum];
+      viewCols = [
+        colVersion,
+        colLocale,
+        apiNativeName,
+        apiId,
+        apiTargetSentenceCount,
+        colSize,
+        colChecksum,
+      ];
       viewTitle = intl.get("menu.views.other");
       break;
     default:

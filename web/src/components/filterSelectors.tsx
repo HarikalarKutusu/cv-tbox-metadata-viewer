@@ -17,6 +17,7 @@ import { SelectChangeEvent } from "@mui/material/Select";
 // App
 import { appTheme } from "./ui/theme";
 import { useStore } from "../stores/store";
+import { getCVLanguageRecord } from "../helpers/dataTableHelper";
 
 const FilterSelectors = () => {
   const { metaData } = useStore();
@@ -152,7 +153,7 @@ const FilterSelectors = () => {
               return (
                 <MenuItem key={x} value={x}>
                   <Checkbox checked={languageFilter.indexOf(x) > -1} />
-                  <ListItemText primary={x} />
+                  <ListItemText primary={x + " (" + getCVLanguageRecord(x).native_name  + ")"} />
                 </MenuItem>
               );
             })}
