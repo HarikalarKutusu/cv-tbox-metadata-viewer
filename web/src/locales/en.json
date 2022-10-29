@@ -77,6 +77,8 @@
   "col.size": "File Size (MB)",
   "col.checksum": "Checksum",
 
+  "calc.link_to_analyzer": "Analyzer",
+
   "calc.valid_recs_percentage": "%Valid Recs",
   "calc.invalid_recs_percentage": "%Invalid Recs",
   "calc.other_recs_percentage": "%Other Recs",
@@ -92,7 +94,7 @@
   "calc.est_dev_hrs": "~Dev Hrs.",
   "calc.est_test_hrs": "~Test Hrs.",
 
-  "calc.fm_ratio": "Female/Male Ratio",
+  "calc.fm_ratio": "F/M Ratio",
   "calc.male_percentage": "%Male/Data",
   "calc.female_percentage": "%Female/Data",
 
