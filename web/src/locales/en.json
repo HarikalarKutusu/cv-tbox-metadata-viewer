@@ -77,6 +77,8 @@
   "col.size": "File Size (MB)",
   "col.checksum": "Checksum",
 
+  "calc.link_to_analyzer": "Analyzer",
+
   "calc.valid_recs_percentage": "%Valid Recs",
   "calc.invalid_recs_percentage": "%Invalid Recs",
   "calc.other_recs_percentage": "%Other Recs",
@@ -92,7 +94,7 @@
   "calc.est_dev_hrs": "~Dev Hrs.",
   "calc.est_test_hrs": "~Test Hrs.",
 
-  "calc.fm_ratio": "Female/Male Ratio",
+  "calc.fm_ratio": "F/M Ratio",
   "calc.male_percentage": "%Male/Data",
   "calc.female_percentage": "%Female/Data",
 
@@ -102,6 +104,10 @@
   "col.total_totalHrs": "Total Hours",
   "col.total_validHrs": "Valid Hours",
   "calc.valid_percentage": "%Valid/Total",
+
+  "api.native_name": "Native Name",
+  "api.id": "Internal Id",
+  "api.target_sentence_count": "Min. Sentences",
 
   "graph.title.cv_global_totals": "Common Voice Global Totals",
   "graph.subtitle.total_valid_hours": "Total and Validated Hours",
