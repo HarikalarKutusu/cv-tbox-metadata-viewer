@@ -473,7 +473,7 @@
     "target_sentence_count": 750,
     "native_name": "Kernowek",
     "is_contributable": 0,
-    "is_translated": 0,
+    "is_translated": 1,
     "text_direction": "LTR"
   },
   {
@@ -1211,7 +1211,7 @@
     "target_sentence_count": 750,
     "native_name": "ps",
     "is_contributable": 0,
-    "is_translated": 1,
+    "is_translated": 0,
     "text_direction": "RTL"
   },
   {
@@ -1399,7 +1399,7 @@
     "name": "quy",
     "target_sentence_count": 750,
     "native_name": "Quechua Chanka",
-    "is_contributable": 0,
+    "is_contributable": 1,
     "is_translated": 1,
     "text_direction": "LTR"
   },
@@ -1614,7 +1614,7 @@
     "id": 76505,
     "name": "lo",
     "target_sentence_count": 5000,
-    "native_name": "lo",
+    "native_name": "ພາສາລາວ",
     "is_contributable": 0,
     "is_translated": 0,
     "text_direction": "LTR"
