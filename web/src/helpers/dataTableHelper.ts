@@ -13,12 +13,32 @@ import CV_LANGUAGES from "./../assets/data/$cv_languages.json";
 //== Table Styling
 //======================================
 export const TABLE_STYLE = {
+  header: {
+    style: {
+      paddingLeft: "8px",
+      paddingRight: "8px",
+
+    }
+  },
   headRow: {
     style: {
       backgroundColor: PRIMARY_COLOR,
-      // backgroundColor: "#ee9a9d",
       color: "#ffffff",
     },
+  },
+  headCells: {
+    style: {
+      paddingLeft: "8px",
+      paddingRight: "8px",
+  
+    }
+  },
+  cells: {
+    style: {
+      paddingLeft: "8px",
+      paddingRight: "8px",
+  
+    }
   },
 };
 
