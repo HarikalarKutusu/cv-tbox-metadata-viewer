@@ -300,6 +300,7 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_nodata"),
     sortable: true,
     right: true,
+    width: "80px",
     selector: (row) => (row.ages_nodata ? row.ages_nodata : "-"),
     sortFunction: (a, b) => (a.ages_nodata > b.ages_nodata ? 1 : -1),
   };
@@ -308,6 +309,7 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_teens"),
     sortable: true,
     right: true,
+    width: "80px",
     selector: (row) => (row.ages_teens ? row.ages_teens : "-"),
     sortFunction: (a, b) => (a.ages_teens > b.ages_teens ? 1 : -1),
   };
@@ -316,6 +318,7 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_twenties"),
     sortable: true,
     right: true,
+    width: "80px",
     selector: (row) => (row.ages_twenties ? row.ages_twenties : "-"),
     sortFunction: (a, b) => (a.ages_twenties > b.ages_twenties ? 1 : -1),
   };
@@ -324,6 +327,7 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_thirties"),
     sortable: true,
     right: true,
+    width: "80px",
     selector: (row) => (row.ages_thirties ? row.ages_thirties : "-"),
     sortFunction: (a, b) => (a.ages_thirties > b.ages_thirties ? 1 : -1),
   };
@@ -332,6 +336,7 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_fourties"),
     sortable: true,
     right: true,
+    width: "80px",
     selector: (row) => (row.ages_fourties ? row.ages_fourties : "-"),
     sortFunction: (a, b) => (a.ages_fourties > b.ages_fourties ? 1 : -1),
   };
@@ -340,6 +345,7 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_fifties"),
     sortable: true,
     right: true,
+    width: "80px",
     selector: (row) => (row.ages_fifties ? row.ages_fifties : "-"),
     sortFunction: (a, b) => (a.ages_fifties > b.ages_fifties ? 1 : -1),
   };
@@ -348,6 +354,7 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_sixties"),
     sortable: true,
     right: true,
+    width: "80px",
     selector: (row) => (row.ages_sixties ? row.ages_sixties : "-"),
     sortFunction: (a, b) => (a.ages_sixties > b.ages_sixties ? 1 : -1),
   };
@@ -356,6 +363,7 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_seventies"),
     sortable: true,
     right: true,
+    width: "80px",
     selector: (row) => (row.ages_seventies ? row.ages_seventies : "-"),
     sortFunction: (a, b) => (a.ages_seventies > b.ages_seventies ? 1 : -1),
   };
@@ -364,6 +372,7 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_eighties"),
     sortable: true,
     right: true,
+    width: "80px",
     selector: (row) => (row.ages_eighties ? row.ages_eighties : "-"),
     sortFunction: (a, b) => (a.ages_eighties > b.ages_eighties ? 1 : -1),
   };
@@ -372,6 +381,7 @@ export function getMetaDataTableView(
     name: intl.get("col.ages_nineties"),
     sortable: true,
     right: true,
+    width: "80px",
     selector: (row) => (row.ages_nineties ? row.ages_nineties : "-"),
     sortFunction: (a, b) => (a.ages_nineties > b.ages_nineties ? 1 : -1),
   };
@@ -422,7 +432,7 @@ export function getMetaDataTableView(
     id: "checksum",
     name: intl.get("col.checksum"),
     sortable: false,
-    // right: true,
+    width: "500px",
     selector: (row) => (row.checksum ? row.checksum : "-"),
   };
 
@@ -581,14 +591,15 @@ export function getMetaDataTableView(
     name: intl.get("api.id"),
     sortable: true,
     right: true,
-    selector: (row) =>
-      getCVLanguageRecord(row.locale).id,
-  }
+    width: "100px",
+    selector: (row) => getCVLanguageRecord(row.locale).id,
+  };
   const apiTargetSentenceCount: TableColumn<DT_ROW_TYPE> = {
     id: "target_sentence_count",
     name: intl.get("api.target_sentence_count"),
     sortable: true,
     right: true,
+    width: "120px",
     selector: (row) =>
       getCVLanguageRecord(row.locale).target_sentence_count.toLocaleString(
         langCode,
