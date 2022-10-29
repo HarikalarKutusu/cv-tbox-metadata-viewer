@@ -77,6 +77,8 @@
   "col.size": "Dosya büyüklüğü (MB)",
   "col.checksum": "Sağlama toplamı",
 
+  "calc.link_to_analyzer": "Analizci",
+
   "calc.valid_recs_percentage": "%Onaylı Kayıt",
   "calc.invalid_recs_percentage": "%Geçersiz Kayıt",
   "calc.other_recs_percentage": "%Diğer Kayıt",
@@ -92,7 +94,7 @@
   "calc.est_dev_hrs": "~Geliştirme Saati",
   "calc.est_test_hrs": "~Test Saati",
 
-  "calc.fm_ratio": "Kadın/Erkek Oranı",
+  "calc.fm_ratio": "K/E Oranı",
   "calc.male_percentage": "%Erkek/Data",
   "calc.female_percentage": "%Kadın/Data",
 
