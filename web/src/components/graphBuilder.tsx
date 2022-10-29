@@ -10,6 +10,7 @@ import { useStore } from "./../stores/store";
 
 import {
   CV_METADATATABLE_TYPE,
+  getCVLanguageRecord,
   TOTALS_TABLE_TYPE,
 } from "../helpers/dataTableHelper";
 
@@ -79,7 +80,13 @@ export const GraphBuilder = () => {
     viewGraphs, // keep this for fix to intl not rendering correcty
   ]);
 
-  const lc = languageFilter[0];
+  let lc: string = "";
+  let native_name_post: string = "";
+
+  if (gEnable && languageFilter.length === 1) {
+    lc = languageFilter[0];
+    native_name_post = " (" + getCVLanguageRecord(lc).native_name + ")";
+  }
 
   return !metaData || !initDone || !viewGraphs ? (
     <>...</>
@@ -103,7 +110,9 @@ export const GraphBuilder = () => {
                       stacked={gd.stacked}
                       seriesNames={getSeriesNames(gd.seriesNames)}
                       title={
-                        gd.title ? intl.get(gd.title) : "Common Voice " + lc
+                        gd.title
+                          ? intl.get(gd.title)
+                          : "Common Voice - " + lc + native_name_post
                       }
                       subTitle={gd.subTitle ? intl.get(gd.subTitle) : undefined}
                       fillPercent={gd.fillPercent}
@@ -119,7 +128,9 @@ export const GraphBuilder = () => {
                           stacked={gd.stacked}
                           seriesNames={getSeriesNames(gd.seriesNames)}
                           title={
-                            gd.title ? intl.get(gd.title) : "Common Voice " + lc
+                            gd.title
+                              ? intl.get(gd.title)
+                              : "Common Voice - " + lc + native_name_post
                           }
                           subTitle={
                             gd.subTitle ? intl.get(gd.subTitle) : undefined
@@ -138,7 +149,7 @@ export const GraphBuilder = () => {
                               title={
                                 gd.title
                                   ? intl.get(gd.title)
-                                  : "Common Voice " + lc
+                                  : "Common Voice - " + lc + native_name_post
                               }
                               subTitle={
                                 gd.subTitle ? intl.get(gd.subTitle) : undefined
