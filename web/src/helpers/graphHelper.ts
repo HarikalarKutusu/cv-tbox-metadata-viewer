@@ -1,4 +1,4 @@
-import { CV_METADATATABLE_TYPE, DT_ROW_TYPE, TOTALS_TABLE_TYPE } from "./dataTableHelper";
+import { CV_METADATATABLE_TYPE, TOTALS_TABLE_TYPE } from "./dataTableHelper";
 
 export const GRAPH_COLORS = [
   "#4e79a7",
