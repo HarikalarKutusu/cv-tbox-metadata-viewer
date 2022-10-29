@@ -1,7 +1,7 @@
 // App related / app-wide stuff
 
-export const appVersion = "v0.4.0b";
-export const appDataDate = "2022-09-25";
+export const appVersion = "v0.5.0b";
+export const appDataDate = "2022-10-29";
 
 // URLs
 export const appCommonVoiceURL = "https://commonvoice.mozilla.org/";
