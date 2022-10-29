@@ -103,6 +103,10 @@
   "col.total_validHrs": "Valid Hours",
   "calc.valid_percentage": "%Valid/Total",
 
+  "api.native_name": "Native Name",
+  "api.id": "Internal Id",
+  "api.target_sentence_count": "Min. Sentences",
+
   "graph.title.cv_global_totals": "Common Voice Global Totals",
   "graph.subtitle.total_valid_hours": "Total and Validated Hours",
   "graph.subtitle.buckets_main_values": "Recordings in Main Buckets",
