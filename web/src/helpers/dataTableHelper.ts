@@ -34,6 +34,13 @@ export const TABLE_STYLE = {
   },
 };
 
+export const dec2 = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+export const dec3 = { minimumFractionDigits: 3, maximumFractionDigits: 3 };
+
+//======================================
+//== Meta  DataTable
+//======================================
+
 export type DT_ROW_TYPE = {
   version: string;
   date: string;
@@ -95,7 +102,9 @@ export type DT_ROW_TYPE = {
 
 export type CV_METADATATABLE_TYPE = DT_ROW_TYPE[];
 
-// TOTALS
+//======================================
+//== TOTALS  DataTable
+//======================================
 
 export type TOTALS_ROW_TYPE = {
   version: string;
@@ -106,11 +115,22 @@ export type TOTALS_ROW_TYPE = {
   total_duration: number;
   total_totalHrs: number;
   total_validHrs: number;
+  // calculated
+  calc_valid_percentage: number;
+  calc_avg_dur_clip: number;
+  calc_avg_dur_user: number;
+  calc_100minus: number;
+  calc_100_300: number;
+  calc_300_1000: number;
+  calc_1000plus: number;
 };
 
 export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];
 
-// CV Languages Table from api
+//======================================
+//== CV Languages Table from api
+//======================================
+
 export type CV_LANGUAGE_ROW = {
   id: number;
   name: string;
