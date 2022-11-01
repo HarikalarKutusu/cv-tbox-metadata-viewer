@@ -17,6 +17,8 @@ import {
   DT_ROW_TYPE,
   TABLE_STYLE,
   getCVLanguageRecord,
+  dec2,
+  dec3,
 } from "../helpers/dataTableHelper";
 import { appDatasetAnalyzerURL } from "./../helpers/appHelper";
 
@@ -49,9 +51,6 @@ export const MetadataTable = (props: MetadataTableProps) => {
     viewname: string,
     langCode: string,
   ): [TableColumn<DT_ROW_TYPE>[], string] => {
-    const dec2 = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-    const dec3 = { minimumFractionDigits: 3, maximumFractionDigits: 3 };
-
     const colVersion: TableColumn<DT_ROW_TYPE> = {
       id: "version",
       name: intl.get("col.version"),
@@ -525,7 +524,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
       button: true,
       cell: (row) => (
         <a
-          href={appDatasetAnalyzerURL + "examine/" + row.locale + "/" + row.version}
+          href={
+            appDatasetAnalyzerURL + "examine/" + row.locale + "/" + row.version
+          }
           target="_blank"
           rel="noreferrer"
           style={{}}
@@ -805,6 +806,13 @@ export const MetadataTable = (props: MetadataTableProps) => {
         total_duration: 0,
         total_totalHrs: 0,
         total_validHrs: 0,
+        calc_valid_percentage: 0,
+        calc_avg_dur_clip: 0,
+        calc_avg_dur_user: 0,
+        calc_100minus: 0,
+        calc_100_300: 0,
+        calc_300_1000: 0,
+        calc_1000plus: 0,
       };
       // now fill other values with reducers
       res.total_clips = subset.reduce((sum, row) => {
@@ -821,6 +829,23 @@ export const MetadataTable = (props: MetadataTableProps) => {
       }, 0);
       res.total_validHrs = subset.reduce((sum, row) => {
         return sum + row.validHrs;
+      }, 0);
+      res.calc_valid_percentage =
+        (100 * res.total_validHrs) / res.total_totalHrs;
+      res.calc_avg_dur_clip = (3600 * res.total_totalHrs) / res.total_clips;
+      res.calc_avg_dur_user = (3600 * res.total_totalHrs) / res.total_users;
+
+      res.calc_100minus = subset.reduce((cnt, row) => {
+        return row.totalHrs < 100 ? cnt + 1 : cnt;
+      }, 0);
+      res.calc_100_300 = subset.reduce((cnt, row) => {
+        return row.totalHrs >= 100 && row.totalHrs < 300 ? cnt + 1 : cnt;
+      }, 0);
+      res.calc_300_1000 = subset.reduce((cnt, row) => {
+        return row.totalHrs >= 300 && row.totalHrs < 1000 ? cnt + 1 : cnt;
+      }, 0);
+      res.calc_1000plus = subset.reduce((cnt, row) => {
+        return row.totalHrs >= 1000 ? cnt + 1 : cnt;
       }, 0);
       // put row to table
       totals.push(res);
@@ -861,33 +886,6 @@ export const MetadataTable = (props: MetadataTableProps) => {
       defaultSortFieldId={"version"}
       defaultSortAsc={false}
       customStyles={TABLE_STYLE}
-      // sortIcon={sortIcon}
-      // sortFunction={numericSort}
-      // onSort
-
-      // fixedHeader
-      // fixedHeaderScrollHeight="300px"
-      // subHeader
-      // subHeaderWrap
-      // subHeaderAlign={Alignment.RIGHT}
-      // subHeaderComponent={Filter}
-      // selectableRows
-      // selectableRowsHig hlight
-      // selectableRowsNoSelectAll
-      // selectableRowsRadio="checkbox"
-      // selectableRowsComponent={Checkbox}
-      // selectableRowsComponentProps={selectProps}
-
-      // noDataComponent
-      // onRowClicked
-      // onRowDoubleClicked
-      // onRowMouseEnter
-      // onRowMouseLeave
-      // onColumnOrderChange
-
-      // expandableRows
-      // expandableRowsComponent
-      // expandableRowsComponentProps
     />
   );
 };
@@ -907,15 +905,17 @@ export const TotalsTable = () => {
       name: intl.get("col.version"),
       sortable: true,
       center: true,
-      width: "100px",
+      width: "80px",
       selector: (row) => row.version,
-      sortFunction: (a, b) => (Number(a) > Number(b) ? 1 : -1),
+      sortFunction: (a, b) =>
+        parseFloat(a.version) > parseFloat(b.version) ? 1 : -1,
     };
     const colDate: TableColumn<TOTALS_ROW_TYPE> = {
       id: "date",
       name: intl.get("col.date"),
       sortable: true,
       center: true,
+      width: "100px",
       selector: (row) => row.date,
     };
     const colLocale: TableColumn<TOTALS_ROW_TYPE> = {
@@ -923,7 +923,7 @@ export const TotalsTable = () => {
       name: intl.get("col.total_locales"),
       sortable: true,
       center: true,
-      // width: "100px",
+      width: "80px",
       selector: (row) => row.total_locales,
     };
     const colClips: TableColumn<TOTALS_ROW_TYPE> = {
@@ -931,6 +931,7 @@ export const TotalsTable = () => {
       name: intl.get("col.total_clips"),
       sortable: true,
       right: true,
+      width: "100px",
       selector: (row) => row.total_clips,
       cell: (row) => row.total_clips.toLocaleString(langCode),
     };
@@ -939,6 +940,7 @@ export const TotalsTable = () => {
       name: intl.get("col.total_users"),
       sortable: true,
       right: true,
+      width: "100px",
       selector: (row) => row.total_users,
       cell: (row) => row.total_users.toLocaleString(langCode),
     };
@@ -947,6 +949,7 @@ export const TotalsTable = () => {
       name: intl.get("col.total_totalHrs"),
       sortable: true,
       right: true,
+      width: "100px",
       selector: (row) => row.total_totalHrs,
       cell: (row) => Math.round(row.total_totalHrs).toLocaleString(langCode),
     };
@@ -955,6 +958,7 @@ export const TotalsTable = () => {
       name: intl.get("col.total_validHrs"),
       sortable: true,
       right: true,
+      width: "100px",
       selector: (row) => row.total_validHrs,
       cell: (row) => Math.round(row.total_validHrs).toLocaleString(langCode),
     };
@@ -965,8 +969,58 @@ export const TotalsTable = () => {
       name: intl.get("calc.valid_percentage"),
       sortable: true,
       right: true,
+      width: "100px",
       selector: (row) =>
         ((100 * row.total_validHrs) / row.total_totalHrs).toFixed(2),
+    };
+    const calcAvgDurClip: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "calc_avg_dur_clip",
+      name: intl.get("calc.avg_dur_clip"),
+      sortable: true,
+      right: true,
+      width: "120px",
+      selector: (row) => row.calc_avg_dur_clip.toFixed(3),
+    };
+    const calcAvgDurUser: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "calc_avg_dur_user",
+      name: intl.get("calc.avg_dur_user"),
+      sortable: true,
+      right: true,
+      width: "120px",
+      selector: (row) => row.calc_avg_dur_user.toLocaleString(langCode, dec2),
+    };
+    // voice-corpus bands
+    const calc100minus: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "calc_100minus",
+      name: intl.get("calc.100minus"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.calc_100minus,
+    };
+    const calc100_300: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "calc_100_300",
+      name: intl.get("calc.100_300"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.calc_100_300,
+    };
+    const calc300_1000: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "calc_300_1000",
+      name: intl.get("calc.300_1000"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.calc_300_1000,
+    };
+    const calc1000plus: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "calc_1000plus",
+      name: intl.get("calc.1000plus"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.calc_1000plus,
     };
 
     let viewCols: TableColumn<TOTALS_ROW_TYPE>[];
@@ -981,6 +1035,12 @@ export const TotalsTable = () => {
       colTotalHrs,
       colValidHrs,
       calcValidPercentage,
+      calcAvgDurClip,
+      calcAvgDurUser,
+      calc100minus,
+      calc100_300,
+      calc300_1000,
+      calc1000plus,
     ];
     viewTitle = intl.get("menu.views.totals");
     // console.log(viewCols, viewTitle)
@@ -1011,34 +1071,9 @@ export const TotalsTable = () => {
       highlightOnHover
       title={viewTitle}
       persistTableHead
+      defaultSortFieldId={"version"}
+      defaultSortAsc={false}
       customStyles={TABLE_STYLE}
-      // fixedHeader
-      // fixedHeaderScrollHeight="300px"
-      // subHeader
-      // subHeaderWrap
-      // subHeaderAlign={Alignment.RIGHT}
-      // subHeaderComponent={Filter}
-      // sortIcon={sortIcon}
-      // selectableRows
-      // selectableRowsHig hlight
-      // selectableRowsNoSelectAll
-      // selectableRowsRadio="checkbox"
-      // selectableRowsComponent={Checkbox}
-      // selectableRowsComponentProps={selectProps}
-
-      // noDataComponent
-      // onRowClicked
-      // onRowDoubleClicked
-      // onRowMouseEnter
-      // onRowMouseLeave
-      // onColumnOrderChange
-
-      // sortFunction={numericSort}
-      // onSort
-
-      // expandableRows
-      // expandableRowsComponent
-      // expandableRowsComponentProps
     />
   );
 };

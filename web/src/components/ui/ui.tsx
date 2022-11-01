@@ -50,7 +50,7 @@ import TransgenderIcon from "@mui/icons-material/Transgender";
 import BuildIcon from "@mui/icons-material/Build";
 
 // APP
-import { appTheme } from "./theme"
+import { appTheme } from "./theme";
 import { useStore } from "./../../stores/store";
 import { LanguageSelector } from "./../languageSelector";
 import { MetadataTable, TotalsTable } from "./../metaDataTable";
@@ -133,7 +133,6 @@ const Drawer = styled(MuiDrawer, {
     }),
   },
 }));
-
 
 export function AppUI() {
   const [open, setOpen] = React.useState(false);
