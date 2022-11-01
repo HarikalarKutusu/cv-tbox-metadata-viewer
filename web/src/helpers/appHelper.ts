@@ -1,6 +1,6 @@
 // App related / app-wide stuff
 
-export const appVersion = "v0.5.0b";
+export const appVersion = "v0.6.0b";
 export const appDataDate = "2022-10-29";
 
 // URLs
