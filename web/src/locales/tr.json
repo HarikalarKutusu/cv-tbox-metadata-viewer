@@ -104,6 +104,13 @@
   "col.total_totalHrs": "Toplam Saat",
   "col.total_validHrs": "Geçerli Saat",
   "calc.valid_percentage": "%Geçerli/Toplam",
+  "calc.avg_dur_clip": "Ort. Kayıt Sn.",
+  "calc.avg_dur_user": "Ort. Kişi Sn.",
+  "calc.100minus": "-100h",
+  "calc.100_300": "100-300h",
+  "calc.300_1000": "300-1000h",
+  "calc.1000plus": "1000h+",
+  "graph.subtitle.voice_corpus_bands": "Ses Corpus Bandına Göre Dil Sayısı",
 
   "api.native_name": "Yerel Adı",
   "api.id": "İç Kimliği",
