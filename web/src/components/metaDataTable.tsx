@@ -1,9 +1,10 @@
 // React
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 // i10n
 import intl from "react-intl-universal";
 // MUI
 import AddchartIcon from "@mui/icons-material/Addchart";
+import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 
 // DataTable
 import DataTable, { Direction, TableColumn } from "react-data-table-component";
@@ -24,6 +25,67 @@ import { appDatasetAnalyzerURL } from "./../helpers/appHelper";
 
 // Data
 import METADATA_RAW from "./../assets/data/$metadata.json";
+
+//
+// Table Download
+//
+
+// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
+const convertArrayOfObjectsToCSV = (
+  array: DT_ROW_TYPE[] | TOTALS_ROW_TYPE[],
+) => {
+  let result: string;
+
+  const columnDelimiter = ",";
+  const lineDelimiter = "\n";
+  const keys = Object.keys(array[0]);
+
+  result = "";
+  result += keys.join(columnDelimiter);
+  result += lineDelimiter;
+
+  array.forEach((item: any) => {
+    let ctr = 0;
+    keys.forEach((key) => {
+      if (ctr > 0) result += columnDelimiter;
+
+      result += item[key];
+
+      ctr++;
+    });
+    result += lineDelimiter;
+  });
+
+  return result;
+};
+
+// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
+const downloadCSV = (
+  array: DT_ROW_TYPE[] | TOTALS_ROW_TYPE[],
+  lcList: string[],
+  verList: string[],
+) => {
+  const link = document.createElement("a");
+  let csv = convertArrayOfObjectsToCSV(array);
+  if (csv == null) return;
+
+  const ext: string = ".csv";
+  let fn: string = "cv-metadata";
+  if (lcList.length > 0) {
+    lcList.forEach((lc) => (fn += "-" + lc));
+  }
+  if (verList.length > 0) {
+    verList.forEach((ver) => (fn += "-v" + ver));
+  }
+
+  if (!csv.match(/^data:text\/csv/i)) {
+    csv = `data:text/csv;charset=utf-8,${csv}`;
+  }
+
+  link.setAttribute("href", encodeURI(csv));
+  link.setAttribute("download", fn + ext);
+  link.click();
+};
 
 //
 // JSX
@@ -694,16 +756,19 @@ export const MetadataTable = (props: MetadataTableProps) => {
     selectAllRowsItemText: intl.get("pagination.selectallrows"),
   };
 
-  const applyFilters = (data: CV_METADATATABLE_TYPE) => {
-    let res: CV_METADATATABLE_TYPE = data;
-    if (versionFilter.length > 0) {
-      res = res.filter((row) => versionFilter.includes(row.version));
-    }
-    if (languageFilter.length > 0) {
-      res = res.filter((row) => languageFilter.includes(row.locale));
-    }
-    return res;
-  };
+  const applyFilters = useCallback(
+    (data: CV_METADATATABLE_TYPE) => {
+      let res: CV_METADATATABLE_TYPE = data;
+      if (versionFilter.length > 0) {
+        res = res.filter((row) => versionFilter.includes(row.version));
+      }
+      if (languageFilter.length > 0) {
+        res = res.filter((row) => languageFilter.includes(row.locale));
+      }
+      return res;
+    },
+    [languageFilter, versionFilter],
+  );
 
   const calcCalculatedFields = (data: CV_METADATATABLE_TYPE) => {
     const newData: CV_METADATATABLE_TYPE = [];
@@ -854,6 +919,19 @@ export const MetadataTable = (props: MetadataTableProps) => {
     return totals;
   };
 
+  const exportCVSTotalsMemo = useMemo(
+    () => (
+      <DownloadForOfflineIcon
+        onClick={() =>
+          downloadCSV(applyFilters(metaData!), languageFilter, versionFilter)
+        }
+        color="secondary"
+        sx={{ cursor: "grab" }}
+      />
+    ),
+    [applyFilters, languageFilter, metaData, versionFilter],
+  );
+
   useEffect(() => {
     // make sure data is ready
     if (!metaData) {
@@ -886,6 +964,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       defaultSortFieldId={"version"}
       defaultSortAsc={false}
       customStyles={TABLE_STYLE}
+      actions={exportCVSTotalsMemo}
     />
   );
 };
@@ -1055,6 +1134,17 @@ export const TotalsTable = () => {
 
   const [viewColumns, viewTitle] = getTotalsTableView(langCode);
 
+  const exportCVSMemo = useMemo(
+    () => (
+      <DownloadForOfflineIcon
+        onClick={() => downloadCSV(cvTotals!, ["totals"], [])}
+        color="secondary"
+        sx={{ cursor: "grab" }}
+      />
+    ),
+    [cvTotals],
+  );
+
   return !cvTotals || !initDone ? (
     <></>
   ) : (
@@ -1074,6 +1164,7 @@ export const TotalsTable = () => {
       defaultSortFieldId={"version"}
       defaultSortAsc={false}
       customStyles={TABLE_STYLE}
+      actions={exportCVSMemo}
     />
   );
 };

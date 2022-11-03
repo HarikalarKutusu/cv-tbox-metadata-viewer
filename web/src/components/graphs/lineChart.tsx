@@ -127,6 +127,7 @@ export const AppLineChart = (props: IAppChartProps) => {
             <DownloadForOfflineIcon
               color="secondary"
               onClick={handleDownload}
+              sx={{ cursor: "grab" }}
             />
           </div>
         </div>
