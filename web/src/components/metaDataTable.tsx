@@ -919,7 +919,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     return totals;
   };
 
-  const exportCVSTotalsMemo = useMemo(
+  const exportCVSMetadataMemo = useMemo(
     () => (
       <DownloadForOfflineIcon
         onClick={() =>
@@ -964,7 +964,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       defaultSortFieldId={"version"}
       defaultSortAsc={false}
       customStyles={TABLE_STYLE}
-      actions={exportCVSTotalsMemo}
+      actions={exportCVSMetadataMemo}
     />
   );
 };
@@ -1134,7 +1134,7 @@ export const TotalsTable = () => {
 
   const [viewColumns, viewTitle] = getTotalsTableView(langCode);
 
-  const exportCVSMemo = useMemo(
+  const exportCVSTotalsMemo = useMemo(
     () => (
       <DownloadForOfflineIcon
         onClick={() => downloadCSV(cvTotals!, ["totals"], [])}
@@ -1164,7 +1164,7 @@ export const TotalsTable = () => {
       defaultSortFieldId={"version"}
       defaultSortAsc={false}
       customStyles={TABLE_STYLE}
-      actions={exportCVSMemo}
+      actions={exportCVSTotalsMemo}
     />
   );
 };
