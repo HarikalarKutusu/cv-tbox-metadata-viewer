@@ -543,8 +543,8 @@
     "id": 61,
     "name": "oc",
     "target_sentence_count": 750,
-    "native_name": "Occitan",
-    "is_contributable": 0,
+    "native_name": "occitan",
+    "is_contributable": 1,
     "is_translated": 1,
     "text_direction": "LTR"
   },
@@ -815,7 +815,7 @@
     "target_sentence_count": 5000,
     "native_name": "Hrvatski",
     "is_contributable": 0,
-    "is_translated": 1,
+    "is_translated": 0,
     "text_direction": "LTR"
   },
   {
@@ -1273,7 +1273,7 @@
     "name": "yo",
     "target_sentence_count": 2000,
     "native_name": "Yòrùbá",
-    "is_contributable": 0,
+    "is_contributable": 1,
     "is_translated": 1,
     "text_direction": "LTR"
   },
@@ -1471,7 +1471,7 @@
     "name": "dyu",
     "target_sentence_count": 5000,
     "native_name": "Dioula ye",
-    "is_contributable": 0,
+    "is_contributable": 1,
     "is_translated": 1,
     "text_direction": "LTR"
   },
@@ -1615,7 +1615,7 @@
     "name": "lo",
     "target_sentence_count": 5000,
     "native_name": "ພາສາລາວ",
-    "is_contributable": 0,
+    "is_contributable": 1,
     "is_translated": 1,
     "text_direction": "LTR"
   },
@@ -1677,7 +1677,7 @@
     "id": 77925,
     "name": "tyv",
     "target_sentence_count": 5000,
-    "native_name": "Tuvan",
+    "native_name": "tyv",
     "is_contributable": 0,
     "is_translated": 0,
     "text_direction": "LTR"
@@ -1686,7 +1686,16 @@
     "id": 77926,
     "name": "wo",
     "target_sentence_count": 5000,
-    "native_name": "Wolof",
+    "native_name": "wo",
+    "is_contributable": 0,
+    "is_translated": 0,
+    "text_direction": "LTR"
+  },
+  {
+    "id": 78324,
+    "name": "nhe",
+    "target_sentence_count": 5000,
+    "native_name": "nhe",
     "is_contributable": 0,
     "is_translated": 0,
     "text_direction": "LTR"
