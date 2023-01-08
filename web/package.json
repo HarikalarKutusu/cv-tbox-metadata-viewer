@@ -1,7 +1,7 @@
 {
   "name": "cv-toolbox-metadata-viewer",
   "homepage": "/",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "private": true,
   "scripts": {
     "start": "react-app-rewired start",
@@ -14,9 +14,6 @@
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.10",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "file-saver": "^2.0.5",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.3",
@@ -31,7 +28,6 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
-    "@types/jest": "^29.2.0",
     "@types/node": "^18.11.4",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
@@ -41,8 +37,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
