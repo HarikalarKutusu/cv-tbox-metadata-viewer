@@ -418,7 +418,7 @@
     "name": "is",
     "target_sentence_count": 2000,
     "native_name": "Íslenska",
-    "is_contributable": 0,
+    "is_contributable": 1,
     "is_translated": 1,
     "text_direction": "LTR"
   },
@@ -671,7 +671,7 @@
     "target_sentence_count": 2000,
     "native_name": "తెలుగు",
     "is_contributable": 0,
-    "is_translated": 0,
+    "is_translated": 1,
     "text_direction": "LTR"
   },
   {
@@ -1128,7 +1128,7 @@
     "id": 39847,
     "name": "bm",
     "target_sentence_count": 5000,
-    "native_name": "bm",
+    "native_name": "Bamanankan na",
     "is_contributable": 0,
     "is_translated": 0,
     "text_direction": "LTR"
@@ -1202,7 +1202,7 @@
     "target_sentence_count": 750,
     "native_name": "Bahasa Melayu",
     "is_contributable": 0,
-    "is_translated": 0,
+    "is_translated": 1,
     "text_direction": "LTR"
   },
   {
@@ -1290,7 +1290,7 @@
     "id": 46291,
     "name": "ie",
     "target_sentence_count": 5000,
-    "native_name": "ie",
+    "native_name": "Interlingue",
     "is_contributable": 0,
     "is_translated": 0,
     "text_direction": "LTR"
@@ -1390,7 +1390,7 @@
     "name": "tk",
     "target_sentence_count": 2000,
     "native_name": "Türkmençe",
-    "is_contributable": 0,
+    "is_contributable": 1,
     "is_translated": 1,
     "text_direction": "LTR"
   },
@@ -1698,6 +1698,15 @@
     "native_name": "nhe",
     "is_contributable": 0,
     "is_translated": 0,
+    "text_direction": "LTR"
+  },
+  {
+    "id": 78724,
+    "name": "nhi",
+    "target_sentence_count": 5000,
+    "native_name": "nhi",
+    "is_contributable": 0,
+    "is_translated": 1,
     "text_direction": "LTR"
   }
 ]
