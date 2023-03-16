@@ -752,7 +752,7 @@
     "target_sentence_count": 2000,
     "native_name": "አማርኛ",
     "is_contributable": 0,
-    "is_translated": 0,
+    "is_translated": 1,
     "text_direction": "LTR"
   },
   {
@@ -1067,7 +1067,7 @@
     "target_sentence_count": 2000,
     "native_name": "Tagalog",
     "is_contributable": 0,
-    "is_translated": 0,
+    "is_translated": 1,
     "text_direction": "LTR"
   },
   {
@@ -1164,9 +1164,9 @@
     "id": 42022,
     "name": "ht",
     "target_sentence_count": 750,
-    "native_name": "ht",
+    "native_name": "Ayisyen",
     "is_contributable": 0,
-    "is_translated": 0,
+    "is_translated": 1,
     "text_direction": "LTR"
   },
   {
@@ -1210,7 +1210,7 @@
     "name": "ps",
     "target_sentence_count": 750,
     "native_name": "پښتو",
-    "is_contributable": 0,
+    "is_contributable": 1,
     "is_translated": 1,
     "text_direction": "RTL"
   },
@@ -1373,7 +1373,7 @@
     "target_sentence_count": 750,
     "native_name": "ꯃꯤꯇꯩ ꯂꯣꯟ",
     "is_contributable": 0,
-    "is_translated": 0,
+    "is_translated": 1,
     "text_direction": "LTR"
   },
   {
@@ -1695,9 +1695,9 @@
     "id": 78324,
     "name": "nhe",
     "target_sentence_count": 5000,
-    "native_name": "nhe",
+    "native_name": "Náhuatl de la Huasteca Oriental",
     "is_contributable": 0,
-    "is_translated": 0,
+    "is_translated": 1,
     "text_direction": "LTR"
   },
   {
@@ -1707,6 +1707,24 @@
     "native_name": "nhi",
     "is_contributable": 0,
     "is_translated": 1,
+    "text_direction": "LTR"
+  },
+  {
+    "id": 78917,
+    "name": "bo",
+    "target_sentence_count": 5000,
+    "native_name": "bo",
+    "is_contributable": 0,
+    "is_translated": 0,
+    "text_direction": "LTR"
+  },
+  {
+    "id": 78918,
+    "name": "ny",
+    "target_sentence_count": 5000,
+    "native_name": "ny",
+    "is_contributable": 0,
+    "is_translated": 0,
     "text_direction": "LTR"
   }
 ]
