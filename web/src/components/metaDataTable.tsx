@@ -834,11 +834,11 @@ export const MetadataTable = (props: MetadataTableProps) => {
           (100 * (row.buckets_train + row.buckets_dev + row.buckets_test)) /
           row.buckets_validated;
         newRow.estTrainHrs =
-          100 * row.validHrs * (row.buckets_train / row.buckets_validated);
+          row.validHrs * (row.buckets_train / row.buckets_validated);
         newRow.estDevHrs =
-          100 * row.validHrs * (row.buckets_dev / row.buckets_validated);
+          row.validHrs * (row.buckets_dev / row.buckets_validated);
         newRow.estTestHrs =
-          100 * row.validHrs * (row.buckets_test / row.buckets_validated);
+          row.validHrs * (row.buckets_test / row.buckets_validated);
       }
       if (row.genders_male > 0)
         newRow.fmRatio = row.genders_female / row.genders_male;
