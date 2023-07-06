@@ -1,7 +1,7 @@
 // App related / app-wide stuff
 
-export const appVersion = "v0.7.5b";
-export const appDataDate = "2023-03-17";
+export const appVersion = "v0.7.6";
+export const appDataDate = "2023-06-27";
 
 // URLs
 export const appCommonVoiceURL = "https://commonvoice.mozilla.org/";
@@ -9,7 +9,8 @@ export const appGithubURL =
   "https://github.com/HarikalarKutusu/cv-tbox-metadata-viewer";
 export const appLicenseURL =
   "https://github.com/HarikalarKutusu/cv-tbox-metadata-viewer/blob/main/LICENSE";
-export const appDatasetAnalyzerURL = "https://cv-dataset-analyzer.netlify.app/";
+// export const appDatasetAnalyzerURL = "https://cv-dataset-analyzer.netlify.app/";
+export const appDatasetAnalyzerURL = "https://analyzer.cv-toolbox.web.tr/";
 
 export const cleanFn = (s: string): string => {
   const toReplace = [

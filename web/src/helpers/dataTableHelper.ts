@@ -2,7 +2,7 @@
 import { PRIMARY_COLOR } from "../components/ui/theme";
 
 // Data
-import CV_LANGUAGES from "./../assets/data/$cv_languages.json";
+import CV_LANGUAGES_RAW from "./../assets/data/$cv_languages.json";
 
 //======================================
 //== Table Styling
@@ -40,6 +40,8 @@ export const dec3 = { minimumFractionDigits: 3, maximumFractionDigits: 3 };
 //======================================
 //== Meta  DataTable
 //======================================
+
+export const IGNORE_VERSIONS: string[] = ["2", "5", "6.0"]
 
 export type DT_ROW_TYPE = {
   version: string;
@@ -144,7 +146,7 @@ export type CV_LANGUAGE_ROW = {
 // CV LANGUAGES (API data)
 
 export const getCVLanguageRecord = (lc: string): CV_LANGUAGE_ROW => {
-  return (CV_LANGUAGES as CV_LANGUAGE_ROW[]).filter(
+  return (CV_LANGUAGES_RAW.data as CV_LANGUAGE_ROW[]).filter(
     (row) => row.name === lc,
   )[0];
 };

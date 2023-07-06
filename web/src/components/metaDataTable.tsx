@@ -17,6 +17,7 @@ import {
   TOTALS_ROW_TYPE,
   DT_ROW_TYPE,
   TABLE_STYLE,
+  IGNORE_VERSIONS,
   getCVLanguageRecord,
   dec2,
   dec3,
@@ -935,7 +936,8 @@ export const MetadataTable = (props: MetadataTableProps) => {
   useEffect(() => {
     // make sure data is ready
     if (!metaData) {
-      const rawdata = METADATA_RAW.data as CV_METADATATABLE_TYPE;
+      let rawdata = METADATA_RAW.data as CV_METADATATABLE_TYPE;
+      rawdata = rawdata.filter((row) => !IGNORE_VERSIONS.includes(row.version) )
       const calcdata = calcCalculatedFields(rawdata);
       const totals = calcCVTotals(calcdata);
       setMetaData(calcdata);
