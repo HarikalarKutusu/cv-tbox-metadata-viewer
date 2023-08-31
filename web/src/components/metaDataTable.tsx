@@ -828,7 +828,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       }
       if (row.users > 0) {
         newRow.avgRecsPerUser = row.clips / row.users;
-        newRow.avgSecsPerUser = row.duration / 1000 / row.users;
+        newRow.avgSecsPerUser = row.duration / row.users;
       }
       if (row.buckets_validated > 0) {
         newRow.percentageUsed =
