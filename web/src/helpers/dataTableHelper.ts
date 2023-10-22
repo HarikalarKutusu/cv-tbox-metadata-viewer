@@ -1,3 +1,5 @@
+// i10n
+import intl from "react-intl-universal";
 // APP
 import { PRIMARY_COLOR } from "../components/ui/theme";
 
@@ -149,4 +151,9 @@ export const getCVLanguageRecord = (lc: string): CV_LANGUAGE_ROW => {
   return (CV_LANGUAGES_RAW.data as CV_LANGUAGE_ROW[]).filter(
     (row) => row.name === lc,
   )[0];
+};
+
+export const getCVLanguageText = (lc: string): string => {
+  const langRec = getCVLanguageRecord(lc);
+  return langRec.native_name + " (" +  intl.get("lang." + langRec.name) + ")";
 };
