@@ -19,6 +19,7 @@ import {
   TABLE_STYLE,
   IGNORE_VERSIONS,
   getCVLanguageRecord,
+  getCVLanguageText,
   dec2,
   dec3,
 } from "../helpers/dataTableHelper";
@@ -554,7 +555,8 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("api.native_name"),
       sortable: true,
       center: true,
-      selector: (row) => getCVLanguageRecord(row.locale).native_name,
+      // selector: (row) => getCVLanguageRecord(row.locale).native_name,
+      selector: (row) => getCVLanguageText(row.locale),
     };
     const apiId: TableColumn<DT_ROW_TYPE> = {
       id: "api_id",

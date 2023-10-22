@@ -150,10 +150,20 @@ const FilterSelectors = () => {
             }}
           >
             {languageList.map((x) => {
+              const langRec = getCVLanguageRecord(x);
               return (
                 <MenuItem key={x} value={x}>
                   <Checkbox checked={languageFilter.indexOf(x) > -1} />
-                  <ListItemText primary={x + " (" + getCVLanguageRecord(x).native_name  + ")"} />
+                  <ListItemText
+                    primary={
+                      x +
+                      " (" +
+                      langRec.native_name +
+                      " | " +
+                      intl.get("lang." + langRec.name) +
+                      ")"
+                    }
+                  />
                 </MenuItem>
               );
             })}
