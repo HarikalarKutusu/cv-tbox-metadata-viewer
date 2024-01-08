@@ -43,7 +43,7 @@ export const dec3 = { minimumFractionDigits: 3, maximumFractionDigits: 3 };
 //== Meta  DataTable
 //======================================
 
-export const IGNORE_VERSIONS: string[] = ["2", "5", "6.0"]
+export const IGNORE_VERSIONS: string[] = ["2", "5", "6.0", "16.0"]
 
 export type DT_ROW_TYPE = {
   version: string;
