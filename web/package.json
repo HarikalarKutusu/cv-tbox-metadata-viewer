@@ -1,7 +1,7 @@
 {
   "name": "cv-toolbox-metadata-viewer",
   "homepage": "/",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "private": true,
   "scripts": {
     "start": "react-app-rewired start",
@@ -26,6 +26,7 @@
     "zustand": "^4.1.2"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/file-saver": "^2.0.5",
     "@types/node": "^20.10.5",
     "@types/react": "^18.0.18",
