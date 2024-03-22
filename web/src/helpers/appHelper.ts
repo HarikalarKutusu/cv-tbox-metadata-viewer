@@ -1,6 +1,10 @@
+//
 // App related / app-wide stuff
-
-export const appVersion = "v0.9.0b";
+//
+// App Version
+import packageJson from "./../../package.json";
+export const appVersion: string = packageJson.version;
+export const isBeta: boolean = packageJson.version.endsWith("b");
 export const appDataDate = "2024-03-15";
 
 // URLs
