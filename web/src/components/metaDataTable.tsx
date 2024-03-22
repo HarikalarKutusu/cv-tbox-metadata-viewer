@@ -544,7 +544,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       id: "api_native_name",
       name: intl.get("api.native_name"),
       sortable: true,
-      center: true,
+      width: "200px",
       // selector: (row) => getCVLanguageRecord(row.locale).native_name,
       selector: (row) => getCVLanguageText(row.locale),
     };
@@ -566,6 +566,78 @@ export const MetadataTable = (props: MetadataTableProps) => {
         getCVLanguageRecord(row.locale).target_sentence_count.toLocaleString(
           langCode,
         ),
+    };
+
+    //
+    // Text Corpus Columns
+    //
+    const calcTCTotal: TableColumn<DT_ROW_TYPE> = {
+      id: "tcTotal",
+      name: intl.get("calc.tc.total"),
+      sortable: true,
+      right: true,
+      selector: (row) =>
+        row.totalSentences ? row.totalSentences.toLocaleString(langCode) : "-",
+    };
+    const colTCValidated: TableColumn<DT_ROW_TYPE> = {
+      id: "tcValidated",
+      name: intl.get("col.tc.validated"),
+      sortable: true,
+      right: true,
+      selector: (row) =>
+        row.validatedSentences
+          ? row.validatedSentences.toLocaleString(langCode)
+          : "-",
+      sortFunction: (a, b) =>
+        a.validatedSentences > b.validatedSentences ? 1 : -1,
+    };
+    const colTCUnvalidated: TableColumn<DT_ROW_TYPE> = {
+      id: "tcUnvalidated",
+      name: intl.get("col.tc.unvalidated"),
+      sortable: true,
+      right: true,
+      selector: (row) =>
+        row.unvalidatedSentences
+          ? row.unvalidatedSentences.toLocaleString(langCode)
+          : "-",
+      sortFunction: (a, b) =>
+        a.unvalidatedSentences > b.unvalidatedSentences ? 1 : -1,
+    };
+    const calcTCValidatedPercentage: TableColumn<DT_ROW_TYPE> = {
+      id: "tcTotal",
+      name: intl.get("calc.tc.validated_percentage"),
+      sortable: true,
+      right: true,
+      selector: (row) =>
+        row.validSentencePercentage
+          ? row.validSentencePercentage.toFixed(2)
+          : "-",
+      sortFunction: (a, b) =>
+        a.validSentencePercentage! > b.validSentencePercentage! ? 1 : -1,
+    };
+    const calcTCWithDomain: TableColumn<DT_ROW_TYPE> = {
+      id: "tcWithDomain",
+      name: intl.get("calc.tc.with_domain"),
+      sortable: true,
+      right: true,
+      selector: (row) =>
+        row.sentencesWithDomain
+          ? row.sentencesWithDomain.toLocaleString(langCode)
+          : "-",
+      sortFunction: (a, b) =>
+        a.sentencesWithDomain! > b.sentencesWithDomain! ? 1 : -1,
+    };
+    const calcTCWithDomainPercentage: TableColumn<DT_ROW_TYPE> = {
+      id: "tcWithDomainPercentage",
+      name: intl.get("calc.tc.with_domain_percentage"),
+      sortable: true,
+      right: true,
+      selector: (row) =>
+        row.sentencesWithDomainPercentage
+          ? row.sentencesWithDomainPercentage.toFixed(2)
+          : "-",
+      sortFunction: (a, b) =>
+        a.sentencesWithDomainPercentage! > b.sentencesWithDomainPercentage! ? 1 : -1,
     };
 
     // Icon Links
@@ -697,6 +769,20 @@ export const MetadataTable = (props: MetadataTableProps) => {
         ];
         viewTitle = intl.get("menu.views.genders");
         break;
+      case "textcorpus":
+        viewCols = [
+          colVersion,
+          colLocale,
+          apiNativeName,
+          calcTCTotal,
+          colTCValidated,
+          colTCUnvalidated,
+          calcTCValidatedPercentage,
+          calcTCWithDomain,
+          calcTCWithDomainPercentage,
+        ];
+        viewTitle = intl.get("menu.views.textcorpus");
+        break;
       case "other":
         viewCols = [
           colVersion,
@@ -816,6 +902,22 @@ export const MetadataTable = (props: MetadataTableProps) => {
         newRow.femalePercentage =
           (100 * row.genders_female) / (1 - row.genders_nodata);
       }
+      // New text corpora related
+      newRow.totalSentences = row.validatedSentences + row.unvalidatedSentences;
+      newRow.validSentencePercentage = newRow.totalSentences > 0 ? 100 * row.validatedSentences / newRow.totalSentences : 0
+      newRow.sentencesWithDomain =
+        row.sentence_domain_agriculture +
+        row.sentence_domain_automotive +
+        row.sentence_domain_finance +
+        row.sentence_domain_food_service_retail +
+        row.sentence_domain_general +
+        row.sentence_domain_healthcare +
+        row.sentence_domain_history_law_government +
+        row.sentence_domain_language_fundamentals +
+        row.sentence_domain_media_entertainment +
+        row.sentence_domain_nature_environment +
+        row.sentence_domain_news_current_affairs;
+      newRow.sentencesWithDomainPercentage = row.validatedSentences > 0 ? 100 * newRow.sentencesWithDomain / row.validatedSentences : 0
       // append to result table
       newData.push(newRow);
     });
@@ -904,7 +1006,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     // make sure data is ready
     if (!metaData) {
       let rawdata = METADATA_RAW.data as CV_METADATATABLE_TYPE;
-      rawdata = rawdata.filter((row) => !IGNORE_VERSIONS.includes(row.version) )
+      rawdata = rawdata.filter((row) => !IGNORE_VERSIONS.includes(row.version));
       const calcdata = calcCalculatedFields(rawdata);
       const totals = calcCVTotals(calcdata);
       setMetaData(calcdata);
