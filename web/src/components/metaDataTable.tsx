@@ -637,7 +637,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
           ? row.sentencesWithDomainPercentage.toFixed(2)
           : "-",
       sortFunction: (a, b) =>
-        a.sentencesWithDomainPercentage! > b.sentencesWithDomainPercentage! ? 1 : -1,
+        a.sentencesWithDomainPercentage! > b.sentencesWithDomainPercentage!
+          ? 1
+          : -1,
     };
 
     // Icon Links
@@ -904,7 +906,10 @@ export const MetadataTable = (props: MetadataTableProps) => {
       }
       // New text corpora related
       newRow.totalSentences = row.validatedSentences + row.unvalidatedSentences;
-      newRow.validSentencePercentage = newRow.totalSentences > 0 ? 100 * row.validatedSentences / newRow.totalSentences : 0
+      newRow.validSentencePercentage =
+        newRow.totalSentences > 0
+          ? (100 * row.validatedSentences) / newRow.totalSentences
+          : 0;
       newRow.sentencesWithDomain =
         row.sentence_domain_agriculture +
         row.sentence_domain_automotive +
@@ -917,7 +922,10 @@ export const MetadataTable = (props: MetadataTableProps) => {
         row.sentence_domain_media_entertainment +
         row.sentence_domain_nature_environment +
         row.sentence_domain_news_current_affairs;
-      newRow.sentencesWithDomainPercentage = row.validatedSentences > 0 ? 100 * newRow.sentencesWithDomain / row.validatedSentences : 0
+      newRow.sentencesWithDomainPercentage =
+        row.validatedSentences > 0
+          ? (100 * newRow.sentencesWithDomain) / row.validatedSentences
+          : 0;
       // append to result table
       newData.push(newRow);
     });
@@ -948,7 +956,14 @@ export const MetadataTable = (props: MetadataTableProps) => {
         calc_100_300: 0,
         calc_300_1000: 0,
         calc_1000plus: 0,
+        tc_total: 0,
+        tc_val: 0,
+        tc_unval: 0,
+        tc_val_percentage: 0,
+        tc_with_domain: 0,
+        tc_domain_percentage: 0,
       };
+
       // now fill other values with reducers
       res.total_clips = subset.reduce((sum, row) => {
         return sum + row.clips;
@@ -982,10 +997,29 @@ export const MetadataTable = (props: MetadataTableProps) => {
       res.calc_1000plus = subset.reduce((cnt, row) => {
         return row.totalHrs >= 1000 ? cnt + 1 : cnt;
       }, 0);
+
+      // Text Corpus Totals
+      res.tc_total = subset.reduce((sum, row) => {
+        return sum + row.totalSentences!;
+      }, 0);
+      res.tc_val = subset.reduce((sum, row) => {
+        return sum + row.validatedSentences!;
+      }, 0);
+      res.tc_unval = subset.reduce((sum, row) => {
+        return sum + row.unvalidatedSentences!;
+      }, 0);
+      res.tc_val_percentage =
+        res.tc_total > 0 ? (100 * res.tc_val) / res.tc_total : 0;
+      res.tc_with_domain = subset.reduce((sum, row) => {
+        return sum + row.sentencesWithDomain!;
+      }, 0);
+      res.tc_domain_percentage =
+        res.tc_val > 0 ? (100 * res.tc_with_domain) / res.tc_val : 0;
+
       // put row to table
       totals.push(res);
     });
-    // console.log(totals);
+
     return totals;
   };
 
@@ -1049,7 +1083,7 @@ export const TotalsTable = () => {
 
   const getTotalsTableView = (
     langCode: string,
-  ): [TableColumn<TOTALS_ROW_TYPE>[], string] => {
+  ): [TableColumn<TOTALS_ROW_TYPE>[], string, TableColumn<TOTALS_ROW_TYPE>[], string] => {
     const colVersion: TableColumn<TOTALS_ROW_TYPE> = {
       id: "version",
       name: intl.get("col.version"),
@@ -1139,6 +1173,71 @@ export const TotalsTable = () => {
       width: "120px",
       selector: (row) => row.calc_avg_dur_user.toLocaleString(langCode, dec2),
     };
+    //
+    // Text Corpus Columns
+    //
+    const calcTCTotal: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "tcTotal",
+      name: intl.get("calc.tc.total"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) =>
+        row.tc_total ? row.tc_total.toLocaleString(langCode) : "-",
+    };
+    const colTCValidated: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "tcValidated",
+      name: intl.get("col.tc.validated"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) =>
+        row.tc_val ? row.tc_val.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.tc_val > b.tc_val ? 1 : -1),
+    };
+    const colTCUnvalidated: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "tcUnvalidated",
+      name: intl.get("col.tc.unvalidated"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) =>
+        row.tc_unval ? row.tc_unval.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.tc_unval > b.tc_unval ? 1 : -1),
+    };
+    const calcTCValidatedPercentage: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "tcTotal",
+      name: intl.get("calc.tc.validated_percentage"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) =>
+        row.tc_val_percentage ? row.tc_val_percentage.toFixed(2) : "-",
+      sortFunction: (a, b) =>
+        a.tc_val_percentage! > b.tc_val_percentage! ? 1 : -1,
+    };
+    const calcTCWithDomain: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "tcWithDomain",
+      name: intl.get("calc.tc.with_domain"),
+      sortable: true,
+      right: true,
+      width: "120px",
+      selector: (row) =>
+        row.tc_with_domain ? row.tc_with_domain.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.tc_with_domain! > b.tc_with_domain! ? 1 : -1),
+    };
+    const calcTCWithDomainPercentage: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "tcWithDomainPercentage",
+      name: intl.get("calc.tc.with_domain_percentage"),
+      sortable: true,
+      right: true,
+      width: "120px",
+      selector: (row) =>
+        row.tc_domain_percentage ? row.tc_domain_percentage.toFixed(2) : "-",
+      sortFunction: (a, b) =>
+        a.tc_domain_percentage! > b.tc_domain_percentage! ? 1 : -1,
+    };
+
     // voice-corpus bands
     const calc100minus: TableColumn<TOTALS_ROW_TYPE> = {
       id: "calc_100minus",
@@ -1173,10 +1272,12 @@ export const TotalsTable = () => {
       selector: (row) => row.calc_1000plus,
     };
 
-    let viewCols: TableColumn<TOTALS_ROW_TYPE>[];
-    let viewTitle: string = "";
+    let viewCols1: TableColumn<TOTALS_ROW_TYPE>[];
+    let viewTitle1 = "";
+    let viewCols2: TableColumn<TOTALS_ROW_TYPE>[];
+    let viewTitle2: string = "";
 
-    viewCols = [
+    viewCols1 = [
       colVersion,
       colDate,
       colLocale,
@@ -1192,9 +1293,20 @@ export const TotalsTable = () => {
       calc300_1000,
       calc1000plus,
     ];
-    viewTitle = intl.get("menu.views.totals");
+    viewCols2 = [
+      colVersion,
+      colDate,
+      calcTCTotal,
+      colTCValidated,
+      colTCUnvalidated,
+      calcTCValidatedPercentage,
+      calcTCWithDomain,
+      calcTCWithDomainPercentage,
+    ];
+    viewTitle1 = intl.get("menu.views.totals");
+    viewTitle2 = intl.get("menu.views.totals2");
     // console.log(viewCols, viewTitle)
-    return [viewCols, viewTitle];
+    return [viewCols1, viewTitle1, viewCols2, viewTitle2];
   };
   const paginationComponentOptions = {
     rowsPerPageText: intl.get("pagination.perpage"),
@@ -1203,7 +1315,7 @@ export const TotalsTable = () => {
     selectAllRowsItemText: intl.get("pagination.selectallrows"),
   };
 
-  const [viewColumns, viewTitle] = getTotalsTableView(langCode);
+  const [viewColumns1, viewTitle1, viewColumns2, viewTitle2] = getTotalsTableView(langCode);
 
   const exportCVSTotalsMemo = useMemo(
     () => (
@@ -1219,23 +1331,43 @@ export const TotalsTable = () => {
   return !cvTotals || !initDone ? (
     <></>
   ) : (
-    <DataTable
-      columns={viewColumns}
-      data={cvTotals}
-      progressPending={!cvTotals}
-      responsive
-      dense
-      pagination
-      paginationPerPage={20}
-      paginationComponentOptions={paginationComponentOptions}
-      direction={Direction.AUTO}
-      highlightOnHover
-      title={viewTitle}
-      persistTableHead
-      defaultSortFieldId={"version"}
-      defaultSortAsc={false}
-      customStyles={TABLE_STYLE}
-      actions={exportCVSTotalsMemo}
-    />
+    <>
+      <DataTable
+        columns={viewColumns1}
+        data={cvTotals}
+        progressPending={!cvTotals}
+        responsive
+        dense
+        pagination
+        paginationPerPage={20}
+        paginationComponentOptions={paginationComponentOptions}
+        direction={Direction.AUTO}
+        highlightOnHover
+        title={viewTitle1}
+        persistTableHead
+        defaultSortFieldId={"version"}
+        defaultSortAsc={false}
+        customStyles={TABLE_STYLE}
+        actions={exportCVSTotalsMemo}
+      />
+      <DataTable
+        columns={viewColumns2}
+        data={cvTotals}
+        progressPending={!cvTotals}
+        responsive
+        dense
+        pagination
+        paginationPerPage={20}
+        paginationComponentOptions={paginationComponentOptions}
+        direction={Direction.AUTO}
+        highlightOnHover
+        title={viewTitle2}
+        persistTableHead
+        defaultSortFieldId={"version"}
+        defaultSortAsc={false}
+        customStyles={TABLE_STYLE}
+        actions={exportCVSTotalsMemo}
+      />
+    </>
   );
 };

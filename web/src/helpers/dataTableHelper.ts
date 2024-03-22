@@ -146,6 +146,13 @@ export type TOTALS_ROW_TYPE = {
   calc_100_300: number;
   calc_300_1000: number;
   calc_1000plus: number;
+  // text corpus
+  tc_total: number;
+  tc_val: number;
+  tc_unval: number;
+  tc_val_percentage: number;
+  tc_with_domain: number;
+  tc_domain_percentage: number;
 };
 
 export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];
