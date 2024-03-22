@@ -687,12 +687,15 @@ export const MetadataTable = (props: MetadataTableProps) => {
       case "calculated":
         viewCols = [
           colVersion,
-          // colDate,
           colLocale,
           apiNativeName,
           colAvgDurationSecs,
           calcValidHrsPercentage,
           calcInvalidRecsPercentage,
+          colClips,
+          colTotalHrs,
+          colValidHrs,
+          colBucketsInValidated,
         ];
         viewTitle = intl.get("menu.views.calculated");
         break;
@@ -743,6 +746,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
           colVersion,
           colLocale,
           apiNativeName,
+          colUsers,
           colAgesTeens,
           colAgesTwenties,
           colAgesThirties,
@@ -761,6 +765,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
           colVersion,
           colLocale,
           apiNativeName,
+          colUsers,
           colGendersMale,
           colGendersFemale,
           colGendersOther,
