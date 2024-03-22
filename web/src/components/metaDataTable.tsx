@@ -451,16 +451,6 @@ export const MetadataTable = (props: MetadataTableProps) => {
       sortFunction: (a, b) =>
         a.validatedHrsPercentage! > b.validatedHrsPercentage! ? 1 : -1,
     };
-    const calcReportedPercentage: TableColumn<DT_ROW_TYPE> = {
-      id: "reportedPercentage",
-      name: intl.get("calc.reported_percentage"),
-      sortable: true,
-      right: true,
-      selector: (row) =>
-        row.reportedPercentage ? row.reportedPercentage.toFixed(2) : "-",
-      sortFunction: (a, b) =>
-        a.reportedPercentage! > b.reportedPercentage! ? 1 : -1,
-    };
     const calcAvgRecsPerUser: TableColumn<DT_ROW_TYPE> = {
       id: "avgRecsPerUser",
       name: intl.get("calc.avg_recs_per_user"),
@@ -629,25 +619,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
           colAvgDurationSecs,
           calcValidHrsPercentage,
           calcInvalidRecsPercentage,
-          calcReportedPercentage,
         ];
         viewTitle = intl.get("menu.views.calculated");
         break;
-      // case "buckets-all":
-      //   viewCols = [
-      //     colVersion,
-      //     colLocale,
-      //     colClips,
-      //     colBucketsValidated,
-      //     colBucketsInValidated,
-      //     colBucketsOther,
-      //     colBucketsTrain,
-      //     colBucketsDev,
-      //     colBucketsTest,
-      //     colBucketsReported,
-      //   ];
-      //   viewTitle = intl.get("menu.views.buckets-all");
-      //   break;
       case "buckets-main":
         viewCols = [
           colVersion,
@@ -678,14 +652,6 @@ export const MetadataTable = (props: MetadataTableProps) => {
         ];
         viewTitle = intl.get("menu.views.buckets-model");
         break;
-      // case "buckets-reported":
-      //   viewCols = [colVersion, colLocale, colBucketsReported];
-      //   viewTitle = intl.get('menu.views.buckets-reported');
-      //   break;
-      // case "average-duration":
-      //   viewCols = [colVersion, colLocale, colAvgDurationSecs];
-      //   viewTitle = intl.get('menu.views.alldata');
-      //   break;
       case "users":
         viewCols = [
           colVersion,
