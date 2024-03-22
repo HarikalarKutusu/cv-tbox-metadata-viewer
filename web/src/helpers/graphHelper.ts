@@ -204,15 +204,6 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
     seriesNames: ["calc.invalid_recs_percentage"],
     subTitle: "calc.invalid_recs_percentage",
   },
-  {
-    view: "calculated",
-    data: "metadata",
-    type: "bar",
-    xKey: "version",
-    yKeys: ["reportedPercentage"],
-    seriesNames: ["calc.reported_percentage"],
-    subTitle: "calc.reported_percentage",
-  },
   // view = buckets-main
   {
     view: "buckets-main",

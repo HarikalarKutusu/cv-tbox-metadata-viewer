@@ -789,7 +789,6 @@ export const MetadataTable = (props: MetadataTableProps) => {
         newRow.invalidRecsPercentage =
           (100 * row.buckets_invalidated) / row.clips;
         newRow.otherRecsPercentage = (100 * row.buckets_other) / row.clips;
-        newRow.reportedPercentage = (100 * row.buckets_reported) / row.clips;
       }
       if (row.totalHrs > 0) {
         newRow.validatedHrsPercentage = (100 * row.validHrs) / row.totalHrs;
