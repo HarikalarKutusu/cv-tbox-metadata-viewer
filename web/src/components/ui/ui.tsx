@@ -46,6 +46,8 @@ import GroupIcon from "@mui/icons-material/Group";
 import ElderlyWomanIcon from "@mui/icons-material/ElderlyWoman";
 // gender
 import TransgenderIcon from "@mui/icons-material/Transgender";
+// Text Corpus
+import AbcIcon from '@mui/icons-material/Abc';
 // Other (tech info)
 import BuildIcon from "@mui/icons-material/Build";
 
@@ -57,32 +59,11 @@ import { MetadataTable, TotalsTable } from "./../metaDataTable";
 import { FilterSelectors } from "../filterSelectors";
 import { GraphBuilder } from "../graphBuilder";
 import { AppInfo } from "./appInfo";
-
 // import { ListItem } from "@mui/material";
 
 //
 // UI
 //
-
-// Copyright
-
-// function Copyright(props: any) {
-//   return (
-//     <Typography
-//       variant="body2"
-//       color="text.secondary"
-//       align="center"
-//       {...props}
-//     >
-//       {"Copyright © "}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{" "}
-//       {new Date().getFullYear()}
-//       {"."}
-//     </Typography>
-//   );
-// }
 
 const drawerWidth: number = 240;
 
@@ -217,6 +198,16 @@ export function AppUI() {
             <TransgenderIcon />
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.genders")} />
+        </ListItemButton>
+        <ListItemButton
+          onClick={() => setTableView("textcorpus")}
+          title={intl.get("menu.views.textcorpus")}
+          aria-label={intl.get("menu.views.textcorpus")}
+        >
+          <ListItemIcon>
+            <AbcIcon />
+          </ListItemIcon>
+          <ListItemText primary={intl.get("menu.views.textcorpus")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => setTableView("other")}

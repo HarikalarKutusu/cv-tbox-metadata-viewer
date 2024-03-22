@@ -1,7 +1,11 @@
+//
 // App related / app-wide stuff
-
-export const appVersion = "v0.8.2";
-export const appDataDate = "2024-01-08";
+//
+// App Version
+import packageJson from "./../../package.json";
+export const appVersion: string = packageJson.version;
+export const isBeta: boolean = packageJson.version.endsWith("b");
+export const appDataDate = "2024-03-15";
 
 // URLs
 export const appCommonVoiceURL = "https://commonvoice.mozilla.org/";

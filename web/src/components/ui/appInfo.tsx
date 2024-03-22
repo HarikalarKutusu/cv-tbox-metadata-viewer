@@ -5,11 +5,12 @@ import CopyrightIcon from "@mui/icons-material/Copyright";
 
 // App
 import {
-  appVersion,
-  appDataDate,
   appCommonVoiceURL,
   appGithubURL,
   appLicenseURL,
+  appVersion,
+  appDataDate,
+  isBeta
 } from "../../helpers/appHelper";
 
 import "./appInfo.css"
@@ -30,6 +31,7 @@ export const AppInfo = () => {
         }}
       >
         <div>
+          {isBeta ? <h2 style={{textAlign: "center"}}>BETA</h2> : <p></p>}
           <div className="appinfo-vcenter">
             <PollIcon />
             {appVersion}

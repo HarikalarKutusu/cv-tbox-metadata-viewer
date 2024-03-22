@@ -1,8 +1,5 @@
 // i10n
 import intl from "react-intl-universal";
-// common locale data
-import "intl/locale-data/jsonp/en";
-import "intl/locale-data/jsonp/tr";
 // app locale data (translated strings)
 import msgEN from "./../locales/en.json";
 import msgTR from "./../locales/tr.json";

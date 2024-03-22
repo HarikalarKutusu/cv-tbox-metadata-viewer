@@ -83,6 +83,22 @@ export type DT_ROW_TYPE = {
   genders_other: number;
 
   reportedSentences: number;
+  validatedSentences: number;
+  unvalidatedSentences: number;
+
+  sentence_domain_nodata: number;
+  sentence_domain_agriculture: number;
+  sentence_domain_automotive: number;
+  sentence_domain_finance: number;
+  sentence_domain_food_service_retail: number;
+  sentence_domain_general: number;
+  sentence_domain_healthcare: number;
+  sentence_domain_history_law_government: number;
+  sentence_domain_language_fundamentals: number;
+  sentence_domain_media_entertainment: number;
+  sentence_domain_nature_environment: number;
+  sentence_domain_news_current_affairs: number;
+  sentence_domain_technology_robotics: number;
 
   size: number;
   checksum: string;
@@ -92,7 +108,6 @@ export type DT_ROW_TYPE = {
   invalidRecsPercentage?: number;
   otherRecsPercentage?: number;
   validatedHrsPercentage?: number;
-  reportedPercentage?: number;
   avgRecsPerUser?: number;
   avgSecsPerUser?: number;
   percentageUsed?: number;
@@ -102,6 +117,10 @@ export type DT_ROW_TYPE = {
   fmRatio?: number;
   malePercentage?: number;
   femalePercentage?: number;
+  totalSentences?: number;
+  validSentencePercentage?: number;
+  sentencesWithDomain?: number;
+  sentencesWithDomainPercentage?: number;
 };
 
 export type CV_METADATATABLE_TYPE = DT_ROW_TYPE[];
@@ -127,6 +146,13 @@ export type TOTALS_ROW_TYPE = {
   calc_100_300: number;
   calc_300_1000: number;
   calc_1000plus: number;
+  // text corpus
+  tc_total: number;
+  tc_val: number;
+  tc_unval: number;
+  tc_val_percentage: number;
+  tc_with_domain: number;
+  tc_domain_percentage: number;
 };
 
 export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];
