@@ -29,6 +29,7 @@
   "menu.views.textcorpus": "Yazı Korpusu",
   "menu.views.other": "Diğer Bilgi",
   "menu.views.totals": "CV Toplamları",
+  "menu.views.totals2": "CV Toplamları (Yazı Korpusları)",
 
   "pagination.perpage": "Sayfa başına",
   "pagination.rangeseparator": "/",

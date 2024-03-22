@@ -29,6 +29,7 @@
   "menu.views.textcorpus": "Text Corpus",
   "menu.views.other": "Other Info",
   "menu.views.totals": "CV Totals",
+  "menu.views.totals2": "CV Totals (Text Corpora)",
 
   "pagination.perpage": "Show per page",
   "pagination.rangeseparator": "of",
