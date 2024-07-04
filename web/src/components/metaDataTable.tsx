@@ -1189,6 +1189,7 @@ export const TotalsTable = () => {
       width: "100px",
       selector: (row) =>
         row.tc_total ? row.tc_total.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.tc_total) > Number(b.tc_total) ? 1 : -1),
     };
     const colTCValidated: TableColumn<TOTALS_ROW_TYPE> = {
       id: "tcValidated",
