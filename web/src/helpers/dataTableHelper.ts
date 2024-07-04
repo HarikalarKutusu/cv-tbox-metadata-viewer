@@ -87,10 +87,10 @@ export type DT_ROW_TYPE = {
   unvalidatedSentences: number;
 
   sentence_domain_nodata: number;
-  sentence_domain_agriculture: number;
-  sentence_domain_automotive: number;
+  sentence_domain_agriculture_food: number;
+  sentence_domain_automotive_transport: number;
   sentence_domain_finance: number;
-  sentence_domain_food_service_retail: number;
+  sentence_domain_service_retail: number;
   sentence_domain_general: number;
   sentence_domain_healthcare: number;
   sentence_domain_history_law_government: number;
