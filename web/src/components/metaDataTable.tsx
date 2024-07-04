@@ -916,10 +916,10 @@ export const MetadataTable = (props: MetadataTableProps) => {
           ? (100 * row.validatedSentences) / newRow.totalSentences
           : 0;
       newRow.sentencesWithDomain =
-        row.sentence_domain_agriculture +
-        row.sentence_domain_automotive +
+        row.sentence_domain_agriculture_food +
+        row.sentence_domain_automotive_transport +
         row.sentence_domain_finance +
-        row.sentence_domain_food_service_retail +
+        row.sentence_domain_service_retail +
         row.sentence_domain_general +
         row.sentence_domain_healthcare +
         row.sentence_domain_history_law_government +
@@ -1189,6 +1189,7 @@ export const TotalsTable = () => {
       width: "100px",
       selector: (row) =>
         row.tc_total ? row.tc_total.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.tc_total) > Number(b.tc_total) ? 1 : -1),
     };
     const colTCValidated: TableColumn<TOTALS_ROW_TYPE> = {
       id: "tcValidated",
@@ -1357,7 +1358,7 @@ export const TotalsTable = () => {
       />
       <DataTable
         columns={viewColumns2}
-        data={cvTotals}
+        data={cvTotals.filter(row => row.tc_total > 0)}
         progressPending={!cvTotals}
         responsive
         dense
