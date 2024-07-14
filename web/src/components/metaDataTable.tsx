@@ -197,195 +197,195 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
     const colBucketsValidated: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsValidated",
-      name: intl.get("col.buckets_validated"),
+      name: intl.get("col.b_validated"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_validated
-          ? row.buckets_validated.toLocaleString(langCode)
+        row.b_validated
+          ? row.b_validated.toLocaleString(langCode)
           : "-",
       sortFunction: (a, b) =>
-        a.buckets_validated > b.buckets_validated ? 1 : -1,
+        a.b_validated > b.b_validated ? 1 : -1,
     };
     const colBucketsInValidated: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsInValidated",
-      name: intl.get("col.buckets_invalidated"),
+      name: intl.get("col.b_invalidated"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_invalidated
-          ? row.buckets_invalidated.toLocaleString(langCode)
+        row.b_invalidated
+          ? row.b_invalidated.toLocaleString(langCode)
           : "-",
       sortFunction: (a, b) =>
-        a.buckets_invalidated > b.buckets_invalidated ? 1 : -1,
+        a.b_invalidated > b.b_invalidated ? 1 : -1,
     };
     const colBucketsOther: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsOther",
-      name: intl.get("col.buckets_other"),
+      name: intl.get("col.b_other"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_other ? row.buckets_other.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.buckets_other > b.buckets_other ? 1 : -1),
+        row.b_other ? row.b_other.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_other > b.b_other ? 1 : -1),
     };
     const colBucketsTrain: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsTrain",
-      name: intl.get("col.buckets_train"),
+      name: intl.get("col.b_train"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_train ? row.buckets_train.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.buckets_train > b.buckets_train ? 1 : -1),
+        row.b_train ? row.b_train.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_train > b.b_train ? 1 : -1),
     };
     const colBucketsDev: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsDev",
-      name: intl.get("col.buckets_dev"),
+      name: intl.get("col.b_dev"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_dev ? row.buckets_dev.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.buckets_dev > b.buckets_dev ? 1 : -1),
+        row.b_dev ? row.b_dev.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_dev > b.b_dev ? 1 : -1),
     };
     const colBucketsTest: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsTest",
-      name: intl.get("col.buckets_test"),
+      name: intl.get("col.b_test"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_test ? row.buckets_test.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.buckets_test > b.buckets_test ? 1 : -1),
+        row.b_test ? row.b_test.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_test > b.b_test ? 1 : -1),
     };
     // const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
     //   id: "bucketsReported",
-    //   name: intl.get("col.buckets_reported"),
+    //   name: intl.get("col.b_reported"),
     //   sortable: true,
     //   right: true,
-    //   selector: (row) => row.buckets_reported,
-    //   cell: (row) => row.buckets_reported.toLocaleString(langCode),
+    //   selector: (row) => row.b_reported,
+    //   cell: (row) => row.b_reported.toLocaleString(langCode),
     // };
 
     const colAgesNodata: TableColumn<DT_ROW_TYPE> = {
       id: "agesNodata",
-      name: intl.get("col.ages_nodata"),
+      name: intl.get("col.a_nodata"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_nodata ? row.ages_nodata : "-"),
-      sortFunction: (a, b) => (a.ages_nodata > b.ages_nodata ? 1 : -1),
+      selector: (row) => (row.a_nodata ? row.a_nodata : "-"),
+      sortFunction: (a, b) => (a.a_nodata > b.a_nodata ? 1 : -1),
     };
     const colAgesTeens: TableColumn<DT_ROW_TYPE> = {
       id: "agesTeens",
-      name: intl.get("col.ages_teens"),
+      name: intl.get("col.a_teens"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_teens ? row.ages_teens : "-"),
-      sortFunction: (a, b) => (a.ages_teens > b.ages_teens ? 1 : -1),
+      selector: (row) => (row.a_teens ? row.a_teens : "-"),
+      sortFunction: (a, b) => (a.a_teens > b.a_teens ? 1 : -1),
     };
     const colAgesTwenties: TableColumn<DT_ROW_TYPE> = {
       id: "agesTwenties",
-      name: intl.get("col.ages_twenties"),
+      name: intl.get("col.a_twenties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_twenties ? row.ages_twenties : "-"),
-      sortFunction: (a, b) => (a.ages_twenties > b.ages_twenties ? 1 : -1),
+      selector: (row) => (row.a_twenties ? row.a_twenties : "-"),
+      sortFunction: (a, b) => (a.a_twenties > b.a_twenties ? 1 : -1),
     };
     const colAgesThirties: TableColumn<DT_ROW_TYPE> = {
       id: "agesThirties",
-      name: intl.get("col.ages_thirties"),
+      name: intl.get("col.a_thirties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_thirties ? row.ages_thirties : "-"),
-      sortFunction: (a, b) => (a.ages_thirties > b.ages_thirties ? 1 : -1),
+      selector: (row) => (row.a_thirties ? row.a_thirties : "-"),
+      sortFunction: (a, b) => (a.a_thirties > b.a_thirties ? 1 : -1),
     };
     const colAgesFourties: TableColumn<DT_ROW_TYPE> = {
       id: "agesFourties",
-      name: intl.get("col.ages_fourties"),
+      name: intl.get("col.a_fourties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_fourties ? row.ages_fourties : "-"),
-      sortFunction: (a, b) => (a.ages_fourties > b.ages_fourties ? 1 : -1),
+      selector: (row) => (row.a_fourties ? row.a_fourties : "-"),
+      sortFunction: (a, b) => (a.a_fourties > b.a_fourties ? 1 : -1),
     };
     const colAgesFifties: TableColumn<DT_ROW_TYPE> = {
       id: "agesFifties",
-      name: intl.get("col.ages_fifties"),
+      name: intl.get("col.a_fifties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_fifties ? row.ages_fifties : "-"),
-      sortFunction: (a, b) => (a.ages_fifties > b.ages_fifties ? 1 : -1),
+      selector: (row) => (row.a_fifties ? row.a_fifties : "-"),
+      sortFunction: (a, b) => (a.a_fifties > b.a_fifties ? 1 : -1),
     };
     const colAgesSixties: TableColumn<DT_ROW_TYPE> = {
       id: "agesSixties",
-      name: intl.get("col.ages_sixties"),
+      name: intl.get("col.a_sixties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_sixties ? row.ages_sixties : "-"),
-      sortFunction: (a, b) => (a.ages_sixties > b.ages_sixties ? 1 : -1),
+      selector: (row) => (row.a_sixties ? row.a_sixties : "-"),
+      sortFunction: (a, b) => (a.a_sixties > b.a_sixties ? 1 : -1),
     };
     const colAgesSeventies: TableColumn<DT_ROW_TYPE> = {
       id: "agesSeventies",
-      name: intl.get("col.ages_seventies"),
+      name: intl.get("col.a_seventies"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_seventies ? row.ages_seventies : "-"),
-      sortFunction: (a, b) => (a.ages_seventies > b.ages_seventies ? 1 : -1),
+      selector: (row) => (row.a_seventies ? row.a_seventies : "-"),
+      sortFunction: (a, b) => (a.a_seventies > b.a_seventies ? 1 : -1),
     };
     const colAgesEighties: TableColumn<DT_ROW_TYPE> = {
       id: "agesEighties",
-      name: intl.get("col.ages_eighties"),
+      name: intl.get("col.a_eighties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_eighties ? row.ages_eighties : "-"),
-      sortFunction: (a, b) => (a.ages_eighties > b.ages_eighties ? 1 : -1),
+      selector: (row) => (row.a_eighties ? row.a_eighties : "-"),
+      sortFunction: (a, b) => (a.a_eighties > b.a_eighties ? 1 : -1),
     };
     const colAgesNineties: TableColumn<DT_ROW_TYPE> = {
       id: "agesNineties",
-      name: intl.get("col.ages_nineties"),
+      name: intl.get("col.a_nineties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_nineties ? row.ages_nineties : "-"),
-      sortFunction: (a, b) => (a.ages_nineties > b.ages_nineties ? 1 : -1),
+      selector: (row) => (row.a_nineties ? row.a_nineties : "-"),
+      sortFunction: (a, b) => (a.a_nineties > b.a_nineties ? 1 : -1),
     };
 
     const colGendersNodata: TableColumn<DT_ROW_TYPE> = {
       id: "gendersNodata",
-      name: intl.get("col.genders_nodata"),
+      name: intl.get("col.g_nodata"),
       sortable: true,
       right: true,
-      selector: (row) => (row.genders_nodata ? row.genders_nodata : "-"),
-      sortFunction: (a, b) => (a.genders_nodata > b.genders_nodata ? 1 : -1),
+      selector: (row) => (row.g_nodata ? row.g_nodata : "-"),
+      sortFunction: (a, b) => (a.g_nodata > b.g_nodata ? 1 : -1),
     };
     const colGendersMale: TableColumn<DT_ROW_TYPE> = {
       id: "gendersMale",
-      name: intl.get("col.genders_male"),
+      name: intl.get("col.g_male"),
       sortable: true,
       right: true,
-      selector: (row) => (row.genders_male ? row.genders_male : "-"),
-      sortFunction: (a, b) => (a.genders_male > b.genders_male ? 1 : -1),
+      selector: (row) => (row.g_male ? row.g_male : "-"),
+      sortFunction: (a, b) => (a.g_male > b.g_male ? 1 : -1),
     };
     const colGendersFemale: TableColumn<DT_ROW_TYPE> = {
       id: "gendersFemale",
-      name: intl.get("col.genders_female"),
+      name: intl.get("col.g_female"),
       sortable: true,
       right: true,
-      selector: (row) => (row.genders_female ? row.genders_female : "-"),
-      sortFunction: (a, b) => (a.genders_female > b.genders_female ? 1 : -1),
+      selector: (row) => (row.g_female ? row.g_female : "-"),
+      sortFunction: (a, b) => (a.g_female > b.g_female ? 1 : -1),
     };
     const colGendersOther: TableColumn<DT_ROW_TYPE> = {
       id: "gendersOther",
-      name: intl.get("col.genders_other"),
+      name: intl.get("col.g_other"),
       sortable: true,
       right: true,
-      selector: (row) => (row.genders_other ? row.genders_other : "-"),
-      sortFunction: (a, b) => (a.genders_other > b.genders_other ? 1 : -1),
+      selector: (row) => (row.g_other ? row.g_other : "-"),
+      sortFunction: (a, b) => (a.g_other > b.g_other ? 1 : -1),
     };
 
     const colSize: TableColumn<DT_ROW_TYPE> = {
@@ -576,6 +576,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("calc.tc.total"),
       sortable: true,
       right: true,
+      width: "100px",
       selector: (row) =>
         row.totalSentences ? row.totalSentences.toLocaleString(langCode) : "-",
     };
@@ -584,6 +585,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("col.tc.validated"),
       sortable: true,
       right: true,
+      width: "100px",
       selector: (row) =>
         row.validatedSentences
           ? row.validatedSentences.toLocaleString(langCode)
@@ -596,6 +598,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("col.tc.unvalidated"),
       sortable: true,
       right: true,
+      width: "100px",
       selector: (row) =>
         row.unvalidatedSentences
           ? row.unvalidatedSentences.toLocaleString(langCode)
@@ -608,6 +611,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("calc.tc.validated_percentage"),
       sortable: true,
       right: true,
+      width: "100px",
       selector: (row) =>
         row.validSentencePercentage
           ? row.validSentencePercentage.toFixed(2)
@@ -620,6 +624,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("calc.tc.with_domain"),
       sortable: true,
       right: true,
+      width: "120px",
       selector: (row) =>
         row.sentencesWithDomain
           ? row.sentencesWithDomain.toLocaleString(langCode)
@@ -632,6 +637,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("calc.tc.with_domain_percentage"),
       sortable: true,
       right: true,
+      width: "120px",
       selector: (row) =>
         row.sentencesWithDomainPercentage
           ? row.sentencesWithDomainPercentage.toFixed(2)
@@ -640,6 +646,109 @@ export const MetadataTable = (props: MetadataTableProps) => {
         a.sentencesWithDomainPercentage! > b.sentencesWithDomainPercentage!
           ? 1
           : -1,
+    };
+    //
+    // Text Corpus Columns
+    //
+    const colSDAgricultureFood: TableColumn<DT_ROW_TYPE> = {
+      id: "sdAggFood",
+      name: intl.get("dom.agriculture_food"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_agriculture_food ? row.sd_agriculture_food.toLocaleString(langCode) : "-",
+    };
+
+    const colSDAutomotiveTransport: TableColumn<DT_ROW_TYPE> = {
+      id: "sdAutoTransport",
+      name: intl.get("dom.automotive_transport"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_automotive_transport ? row.sd_automotive_transport.toLocaleString(langCode) : "-",
+    };
+    const colSDFinance: TableColumn<DT_ROW_TYPE> = {
+      id: "sdFinance",
+      name: intl.get("dom.finance"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_finance ? row.sd_finance.toLocaleString(langCode) : "-",
+    };
+    const colSDGeneral: TableColumn<DT_ROW_TYPE> = {
+      id: "sdGeneral",
+      name: intl.get("dom.general"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_general ? row.sd_general.toLocaleString(langCode) : "-",
+    };
+    const colSDHealthcare: TableColumn<DT_ROW_TYPE> = {
+      id: "sdHealthcare",
+      name: intl.get("dom.healthcare"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_healthcare ? row.sd_healthcare.toLocaleString(langCode) : "-",
+    };
+    const colSDHistoryLawGovernment: TableColumn<DT_ROW_TYPE> = {
+      id: "sdHistLawGov",
+      name: intl.get("dom.history_law_government"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_history_law_government ? row.sd_history_law_government.toLocaleString(langCode) : "-",
+    };
+    const colSDLanguageFundamentals: TableColumn<DT_ROW_TYPE> = {
+      id: "sdLangFund",
+      name: intl.get("dom.language_fundamentals"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_language_fundamentals ? row.sd_language_fundamentals.toLocaleString(langCode) : "-",
+    };
+    const colSDMediaEntertainment: TableColumn<DT_ROW_TYPE> = {
+      id: "sdMediaEnt",
+      name: intl.get("dom.media_entertainment"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_media_entertainment ? row.sd_media_entertainment.toLocaleString(langCode) : "-",
+    };
+    const colSDNatureEnvironment: TableColumn<DT_ROW_TYPE> = {
+      id: "sdNatureEnv",
+      name: intl.get("dom.nature_environment"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_nature_environment ? row.sd_nature_environment.toLocaleString(langCode) : "-",
+    };
+    const colSDNewsCurrentAffairs: TableColumn<DT_ROW_TYPE> = {
+      id: "sdNews",
+      name: intl.get("dom.news_current_affairs"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_news_current_affairs ? row.sd_news_current_affairs.toLocaleString(langCode) : "-",
+    };
+    const colSDTechnologyRobotics: TableColumn<DT_ROW_TYPE> = {
+      id: "sdTechRob",
+      name: intl.get("dom.technology_robotics"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_technology_robotics ? row.sd_technology_robotics.toLocaleString(langCode) : "-",
     };
 
     // Icon Links
@@ -790,6 +899,26 @@ export const MetadataTable = (props: MetadataTableProps) => {
         ];
         viewTitle = intl.get("menu.views.textcorpus");
         break;
+      case "domains":
+        viewCols = [
+          colVersion,
+          colLocale,
+          apiNativeName,
+          calcTCTotal,
+          calcTCWithDomain,
+          colSDAgricultureFood,
+          colSDAutomotiveTransport,
+          colSDFinance,
+          colSDGeneral,
+          colSDHealthcare,
+          colSDHistoryLawGovernment,
+          colSDLanguageFundamentals,
+          colSDMediaEntertainment,
+          colSDNatureEnvironment,
+          colSDNewsCurrentAffairs,
+        ];
+        viewTitle = intl.get("menu.views.domains");
+        break;
       case "other":
         viewCols = [
           colVersion,
@@ -827,6 +956,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
       if (languageFilter.length > 0) {
         res = res.filter((row) => languageFilter.includes(row.locale));
       }
+      if (tableView === "domains") {
+        res = res.filter((row) => Number(row.version) >= 17.0 );
+      }
       return res;
     },
     [languageFilter, versionFilter],
@@ -841,35 +973,35 @@ export const MetadataTable = (props: MetadataTableProps) => {
       //
       // Handle some original values (percentages)
       //
-      // if (row.ages_teens)
-      newRow.ages_teens = Math.floor(100 * row.ages_teens);
-      // if (row.ages_twenties)
-      newRow.ages_twenties = Math.floor(100 * row.ages_twenties);
-      // if (row.ages_thirties)
-      newRow.ages_thirties = Math.floor(100 * row.ages_thirties);
-      // if (row.ages_fourties)
-      newRow.ages_fourties = Math.floor(100 * row.ages_fourties);
-      // if (row.ages_fifties)
-      newRow.ages_fifties = Math.floor(100 * row.ages_fifties);
-      // if (row.ages_sixties)
-      newRow.ages_sixties = Math.floor(100 * row.ages_sixties);
-      // if (row.ages_seventies)
-      newRow.ages_seventies = Math.floor(100 * row.ages_seventies);
-      // if (row.ages_eighties)
-      newRow.ages_eighties = Math.floor(100 * row.ages_eighties);
-      // if (row.ages_nineties)
-      newRow.ages_nineties = Math.floor(100 * row.ages_nineties);
-      // if (row.ages_nodata)
-      newRow.ages_nodata = Math.floor(100 * row.ages_nodata);
+      // if (row.a_teens)
+      newRow.a_teens = Math.floor(100 * row.a_teens);
+      // if (row.a_twenties)
+      newRow.a_twenties = Math.floor(100 * row.a_twenties);
+      // if (row.a_thirties)
+      newRow.a_thirties = Math.floor(100 * row.a_thirties);
+      // if (row.a_fourties)
+      newRow.a_fourties = Math.floor(100 * row.a_fourties);
+      // if (row.a_fifties)
+      newRow.a_fifties = Math.floor(100 * row.a_fifties);
+      // if (row.a_sixties)
+      newRow.a_sixties = Math.floor(100 * row.a_sixties);
+      // if (row.a_seventies)
+      newRow.a_seventies = Math.floor(100 * row.a_seventies);
+      // if (row.a_eighties)
+      newRow.a_eighties = Math.floor(100 * row.a_eighties);
+      // if (row.a_nineties)
+      newRow.a_nineties = Math.floor(100 * row.a_nineties);
+      // if (row.a_nodata)
+      newRow.a_nodata = Math.floor(100 * row.a_nodata);
 
-      // if (row.genders_male)
-      newRow.genders_male = Math.floor(100 * row.genders_male);
-      // if (row.genders_female)
-      newRow.genders_female = Math.floor(100 * row.genders_female);
-      // if (row.genders_other)
-      newRow.genders_other = Math.floor(100 * row.genders_other);
-      // if (row.genders_nodata)
-      newRow.genders_nodata = Math.floor(100 * row.genders_nodata);
+      // if (row.g_male)
+      newRow.g_male = Math.floor(100 * row.g_male);
+      // if (row.g_female)
+      newRow.g_female = Math.floor(100 * row.g_female);
+      // if (row.g_other)
+      newRow.g_other = Math.floor(100 * row.g_other);
+      // if (row.g_nodata)
+      newRow.g_nodata = Math.floor(100 * row.g_nodata);
 
       // if (row.size)
       newRow.size = Math.round(row.size / (1024 * 1024));
@@ -878,10 +1010,10 @@ export const MetadataTable = (props: MetadataTableProps) => {
       // calculated fields
       //
       if (row.clips !== 0) {
-        newRow.validRecsPercentage = (100 * row.buckets_validated) / row.clips;
+        newRow.validRecsPercentage = (100 * row.b_validated) / row.clips;
         newRow.invalidRecsPercentage =
-          (100 * row.buckets_invalidated) / row.clips;
-        newRow.otherRecsPercentage = (100 * row.buckets_other) / row.clips;
+          (100 * row.b_invalidated) / row.clips;
+        newRow.otherRecsPercentage = (100 * row.b_other) / row.clips;
       }
       if (row.totalHrs > 0) {
         newRow.validatedHrsPercentage = (100 * row.validHrs) / row.totalHrs;
@@ -890,24 +1022,24 @@ export const MetadataTable = (props: MetadataTableProps) => {
         newRow.avgRecsPerUser = row.clips / row.users;
         newRow.avgSecsPerUser = row.duration / row.users;
       }
-      if (row.buckets_validated > 0) {
+      if (row.b_validated > 0) {
         newRow.percentageUsed =
-          (100 * (row.buckets_train + row.buckets_dev + row.buckets_test)) /
-          row.buckets_validated;
+          (100 * (row.b_train + row.b_dev + row.b_test)) /
+          row.b_validated;
         newRow.estTrainHrs =
-          row.validHrs * (row.buckets_train / row.buckets_validated);
+          row.validHrs * (row.b_train / row.b_validated);
         newRow.estDevHrs =
-          row.validHrs * (row.buckets_dev / row.buckets_validated);
+          row.validHrs * (row.b_dev / row.b_validated);
         newRow.estTestHrs =
-          row.validHrs * (row.buckets_test / row.buckets_validated);
+          row.validHrs * (row.b_test / row.b_validated);
       }
-      if (row.genders_male > 0)
-        newRow.fmRatio = row.genders_female / row.genders_male;
-      if (row.genders_nodata !== 1) {
+      if (row.g_male > 0)
+        newRow.fmRatio = row.g_female / row.g_male;
+      if (row.g_nodata !== 1) {
         newRow.malePercentage =
-          (100 * row.genders_male) / (1 - row.genders_nodata);
+          (100 * row.g_male) / (1 - row.g_nodata);
         newRow.femalePercentage =
-          (100 * row.genders_female) / (1 - row.genders_nodata);
+          (100 * row.g_female) / (1 - row.g_nodata);
       }
       // New text corpora related
       newRow.totalSentences = row.validatedSentences + row.unvalidatedSentences;
@@ -916,17 +1048,17 @@ export const MetadataTable = (props: MetadataTableProps) => {
           ? (100 * row.validatedSentences) / newRow.totalSentences
           : 0;
       newRow.sentencesWithDomain =
-        row.sentence_domain_agriculture_food +
-        row.sentence_domain_automotive_transport +
-        row.sentence_domain_finance +
-        row.sentence_domain_service_retail +
-        row.sentence_domain_general +
-        row.sentence_domain_healthcare +
-        row.sentence_domain_history_law_government +
-        row.sentence_domain_language_fundamentals +
-        row.sentence_domain_media_entertainment +
-        row.sentence_domain_nature_environment +
-        row.sentence_domain_news_current_affairs;
+        row.sd_agriculture_food +
+        row.sd_automotive_transport +
+        row.sd_finance +
+        row.sd_service_retail +
+        row.sd_general +
+        row.sd_healthcare +
+        row.sd_history_law_government +
+        row.sd_language_fundamentals +
+        row.sd_media_entertainment +
+        row.sd_nature_environment +
+        row.sd_news_current_affairs;
       newRow.sentencesWithDomainPercentage =
         row.validatedSentences > 0
           ? (100 * newRow.sentencesWithDomain) / row.validatedSentences
@@ -967,6 +1099,20 @@ export const MetadataTable = (props: MetadataTableProps) => {
         tc_val_percentage: 0,
         tc_with_domain: 0,
         tc_domain_percentage: 0,
+        // sentence domains
+        sd_nodata: 0,
+        sd_agriculture_food: 0,
+        sd_automotive_transport: 0,
+        sd_finance: 0,
+        sd_service_retail: 0,
+        sd_general: 0,
+        sd_healthcare: 0,
+        sd_history_law_government: 0,
+        sd_language_fundamentals: 0,
+        sd_media_entertainment: 0,
+        sd_nature_environment: 0,
+        sd_news_current_affairs: 0,
+        sd_technology_robotics: 0,
       };
 
       // now fill other values with reducers
