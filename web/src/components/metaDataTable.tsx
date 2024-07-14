@@ -906,16 +906,17 @@ export const MetadataTable = (props: MetadataTableProps) => {
           apiNativeName,
           calcTCTotal,
           calcTCWithDomain,
+          colSDGeneral,
           colSDAgricultureFood,
           colSDAutomotiveTransport,
           colSDFinance,
-          colSDGeneral,
           colSDHealthcare,
           colSDHistoryLawGovernment,
           colSDLanguageFundamentals,
           colSDMediaEntertainment,
           colSDNatureEnvironment,
           colSDNewsCurrentAffairs,
+          colSDTechnologyRobotics,
         ];
         viewTitle = intl.get("menu.views.domains");
         break;
@@ -961,7 +962,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       }
       return res;
     },
-    [languageFilter, versionFilter],
+    [languageFilter, versionFilter, tableView],
   );
 
   const calcCalculatedFields = (data: CV_METADATATABLE_TYPE) => {
@@ -1052,7 +1053,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
         row.sd_automotive_transport +
         row.sd_finance +
         row.sd_service_retail +
-        row.sd_general +
+        // row.sd_general + // ignore ganeral
         row.sd_healthcare +
         row.sd_history_law_government +
         row.sd_language_fundamentals +
@@ -1166,6 +1167,44 @@ export const MetadataTable = (props: MetadataTableProps) => {
       }, 0);
       res.tc_domain_percentage =
         res.tc_val > 0 ? (100 * res.tc_with_domain) / res.tc_val : 0;
+      // sentence domain details
+      res.sd_agriculture_food = subset.reduce((sum, row) => {
+        return sum + row.sd_agriculture_food!;
+      }, 0);
+      res.sd_automotive_transport = subset.reduce((sum, row) => {
+        return sum + row.sd_automotive_transport!;
+      }, 0);
+      res.sd_finance = subset.reduce((sum, row) => {
+        return sum + row.sd_finance!;
+      }, 0);
+      res.sd_general = subset.reduce((sum, row) => {
+        return sum + row.sd_general!;
+      }, 0);
+      res.sd_healthcare = subset.reduce((sum, row) => {
+        return sum + row.sd_healthcare!;
+      }, 0);
+      res.sd_history_law_government = subset.reduce((sum, row) => {
+        return sum + row.sd_history_law_government!;
+      }, 0);
+      res.sd_language_fundamentals = subset.reduce((sum, row) => {
+        return sum + row.sd_language_fundamentals!;
+      }, 0);
+      res.sd_media_entertainment = subset.reduce((sum, row) => {
+        return sum + row.sd_media_entertainment!;
+      }, 0);
+      res.sd_nature_environment = subset.reduce((sum, row) => {
+        return sum + row.sd_nature_environment!;
+      }, 0);
+      res.sd_news_current_affairs = subset.reduce((sum, row) => {
+        return sum + row.sd_news_current_affairs!;
+      }, 0);
+      res.sd_service_retail = subset.reduce((sum, row) => {
+        return sum + row.sd_service_retail!;
+      }, 0);
+      res.sd_technology_robotics = subset.reduce((sum, row) => {
+        return sum + row.sd_technology_robotics!;
+      }, 0);
+      
 
       // put row to table
       totals.push(res);
@@ -1423,6 +1462,109 @@ export const TotalsTable = () => {
       width: "100px",
       selector: (row) => row.calc_1000plus,
     };
+    //
+    // Text Corpus Columns
+    //
+    const colSDAgricultureFood: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdAggFood",
+      name: intl.get("dom.agriculture_food"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_agriculture_food ? row.sd_agriculture_food.toLocaleString(langCode) : "-",
+    };
+
+    const colSDAutomotiveTransport: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdAutoTransport",
+      name: intl.get("dom.automotive_transport"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_automotive_transport ? row.sd_automotive_transport.toLocaleString(langCode) : "-",
+    };
+    const colSDFinance: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdFinance",
+      name: intl.get("dom.finance"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_finance ? row.sd_finance.toLocaleString(langCode) : "-",
+    };
+    const colSDGeneral: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdGeneral",
+      name: intl.get("dom.general"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_general ? row.sd_general.toLocaleString(langCode) : "-",
+    };
+    const colSDHealthcare: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdHealthcare",
+      name: intl.get("dom.healthcare"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_healthcare ? row.sd_healthcare.toLocaleString(langCode) : "-",
+    };
+    const colSDHistoryLawGovernment: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdHistLawGov",
+      name: intl.get("dom.history_law_government"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_history_law_government ? row.sd_history_law_government.toLocaleString(langCode) : "-",
+    };
+    const colSDLanguageFundamentals: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdLangFund",
+      name: intl.get("dom.language_fundamentals"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_language_fundamentals ? row.sd_language_fundamentals.toLocaleString(langCode) : "-",
+    };
+    const colSDMediaEntertainment: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdMediaEnt",
+      name: intl.get("dom.media_entertainment"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_media_entertainment ? row.sd_media_entertainment.toLocaleString(langCode) : "-",
+    };
+    const colSDNatureEnvironment: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdNatureEnv",
+      name: intl.get("dom.nature_environment"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_nature_environment ? row.sd_nature_environment.toLocaleString(langCode) : "-",
+    };
+    const colSDNewsCurrentAffairs: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdNews",
+      name: intl.get("dom.news_current_affairs"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_news_current_affairs ? row.sd_news_current_affairs.toLocaleString(langCode) : "-",
+    };
+    const colSDTechnologyRobotics: TableColumn<TOTALS_ROW_TYPE> = {
+      id: "sdTechRob",
+      name: intl.get("dom.technology_robotics"),
+      sortable: true,
+      right: true,
+      width: "70px",
+      selector: (row) =>
+        row.sd_technology_robotics ? row.sd_technology_robotics.toLocaleString(langCode) : "-",
+    };
 
     let viewCols1: TableColumn<TOTALS_ROW_TYPE>[];
     let viewTitle1 = "";
@@ -1454,6 +1596,17 @@ export const TotalsTable = () => {
       calcTCValidatedPercentage,
       calcTCWithDomain,
       calcTCWithDomainPercentage,
+      colSDGeneral,
+      colSDAgricultureFood,
+      colSDAutomotiveTransport,
+      colSDFinance,
+      colSDHealthcare,
+      colSDHistoryLawGovernment,
+      colSDLanguageFundamentals,
+      colSDMediaEntertainment,
+      colSDNatureEnvironment,
+      colSDNewsCurrentAffairs,
+      colSDTechnologyRobotics,
     ];
     viewTitle1 = intl.get("menu.views.totals");
     viewTitle2 = intl.get("menu.views.totals2");
