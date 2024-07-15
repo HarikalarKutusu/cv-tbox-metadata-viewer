@@ -133,12 +133,11 @@
   "calc.100_300": "100-300h",
   "calc.300_1000": "300-1000h",
   "calc.1000plus": "1000h+",
-  "graph.subtitle.voice_corpus_bands": "Ses Corpus Bandına Göre Dil Sayısı",
-
+  
   "api.native_name": "Yerel Adı",
   "api.id": "İç Kimliği",
   "api.target_sentence_count": "En Az Cümle",
-
+  
   "graph.title.cv_global_totals": "Common Voice Genel Toplamlar",
   "graph.subtitle.total_valid_hours": "Toplam ve Onaylı Süreler (saat)",
   "graph.subtitle.buckets_main_values": "Ana Gruplardaki Kayıt Sayısı",
@@ -149,7 +148,10 @@
   "graph.subtitle.gender_groups": "Tüm kayıtlar içinde cinsiyet dağılımları",
   "graph.subtitle.gender_in_given": "Demografik bilgisi olan erkek ve kadın yüzdeleri",
   "graph.subtitle.fm_ratio": "Tüm kayıtlar içinde kadın/erkek oranı",
-
+  "graph.subtitle.text_corpus_stats": "Yazı Korpusu İstatistikleri",
+  "graph.subtitle.sentence_domain_stats": "Cümle ALanı İstatistikleri",
+  "graph.subtitle.voice_corpus_bands": "Ses Korpus Bandına Göre Dil Sayısı",
+  
   "warn.to_view_graphs": "Grafikleri görmek için lütfen aşağıdaki filtreden tek bir dil seçiniz.",
 
   "lang.ab": "Abhazca",
