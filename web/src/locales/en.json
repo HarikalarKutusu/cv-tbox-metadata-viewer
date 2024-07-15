@@ -133,11 +133,11 @@
   "calc.100_300": "100-300h",
   "calc.300_1000": "300-1000h",
   "calc.1000plus": "1000h+",
-  
+
   "api.native_name": "Native Name",
   "api.id": "Internal Id",
   "api.target_sentence_count": "Min. Sentences",
-  
+
   "graph.title.cv_global_totals": "Common Voice Global Totals",
   "graph.subtitle.total_valid_hours": "Total and Validated Hours",
   "graph.subtitle.buckets_main_values": "Recordings in Main Buckets",
@@ -151,7 +151,7 @@
   "graph.subtitle.text_corpus_stats": "Text Corpus Statistics",
   "graph.subtitle.sentence_domain_stats": "Sentence Domain Statistics",
   "graph.subtitle.voice_corpus_bands": "Language Counts per Voice Corpus Band",
-  
+
   "warn.to_view_graphs": "To view graphs, please select a single locale from the filter below.",
 
   "lang.ab": "Abkhaz",
