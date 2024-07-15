@@ -659,6 +659,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_agriculture_food ? row.sd_agriculture_food.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_agriculture_food) > Number(b.sd_agriculture_food) ? 1 : -1),
     };
 
     const colSDAutomotiveTransport: TableColumn<DT_ROW_TYPE> = {
@@ -669,6 +670,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_automotive_transport ? row.sd_automotive_transport.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_automotive_transport) > Number(b.sd_automotive_transport) ? 1 : -1),
     };
     const colSDFinance: TableColumn<DT_ROW_TYPE> = {
       id: "sdFinance",
@@ -678,6 +680,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_finance ? row.sd_finance.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_finance) > Number(b.sd_finance) ? 1 : -1),
     };
     const colSDGeneral: TableColumn<DT_ROW_TYPE> = {
       id: "sdGeneral",
@@ -687,6 +690,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_general ? row.sd_general.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_general) > Number(b.sd_general) ? 1 : -1),
     };
     const colSDHealthcare: TableColumn<DT_ROW_TYPE> = {
       id: "sdHealthcare",
@@ -696,6 +700,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_healthcare ? row.sd_healthcare.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_healthcare) > Number(b.sd_healthcare) ? 1 : -1),
     };
     const colSDHistoryLawGovernment: TableColumn<DT_ROW_TYPE> = {
       id: "sdHistLawGov",
@@ -705,6 +710,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_history_law_government ? row.sd_history_law_government.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_history_law_government) > Number(b.sd_history_law_government) ? 1 : -1),
     };
     const colSDLanguageFundamentals: TableColumn<DT_ROW_TYPE> = {
       id: "sdLangFund",
@@ -714,6 +720,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_language_fundamentals ? row.sd_language_fundamentals.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_language_fundamentals) > Number(b.sd_language_fundamentals) ? 1 : -1),
     };
     const colSDMediaEntertainment: TableColumn<DT_ROW_TYPE> = {
       id: "sdMediaEnt",
@@ -723,6 +730,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_media_entertainment ? row.sd_media_entertainment.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_media_entertainment) > Number(b.sd_media_entertainment) ? 1 : -1),
     };
     const colSDNatureEnvironment: TableColumn<DT_ROW_TYPE> = {
       id: "sdNatureEnv",
@@ -732,6 +740,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_nature_environment ? row.sd_nature_environment.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_nature_environment) > Number(b.sd_nature_environment) ? 1 : -1),
     };
     const colSDNewsCurrentAffairs: TableColumn<DT_ROW_TYPE> = {
       id: "sdNews",
@@ -741,6 +750,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_news_current_affairs ? row.sd_news_current_affairs.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_news_current_affairs) > Number(b.sd_news_current_affairs) ? 1 : -1),
     };
     const colSDTechnologyRobotics: TableColumn<DT_ROW_TYPE> = {
       id: "sdTechRob",
@@ -750,6 +760,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       width: "70px",
       selector: (row) =>
         row.sd_technology_robotics ? row.sd_technology_robotics.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.sd_technology_robotics) > Number(b.sd_technology_robotics) ? 1 : -1),
     };
 
     // Icon Links
