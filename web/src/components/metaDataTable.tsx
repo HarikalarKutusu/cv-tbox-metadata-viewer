@@ -1019,6 +1019,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
       // if (row.size)
       newRow.size = Math.round(row.size / (1024 * 1024));
 
+      // Temporary fix for "-1" values in unvalidatedSentences
+      newRow.unvalidatedSentences = Math.max(0, row.unvalidatedSentences);
+
       //
       // calculated fields
       //
