@@ -117,10 +117,10 @@ export type DT_ROW_TYPE = {
   fmRatio?: number;
   malePercentage?: number;
   femalePercentage?: number;
-  totalSentences?: number;
-  validSentencePercentage?: number;
-  sentencesWithDomain?: number;
-  sentencesWithDomainPercentage?: number;
+  tc_totalSentences?: number;
+  tc_validSentencePercentage?: number;
+  sd_sentencesWithDomain?: number;
+  sd_sentencesWithDomainPercentage?: number;
 };
 
 export type CV_METADATATABLE_TYPE = DT_ROW_TYPE[];

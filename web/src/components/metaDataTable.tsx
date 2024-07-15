@@ -578,7 +578,8 @@ export const MetadataTable = (props: MetadataTableProps) => {
       right: true,
       width: "100px",
       selector: (row) =>
-        row.totalSentences ? row.totalSentences.toLocaleString(langCode) : "-",
+        row.tc_totalSentences ? row.tc_totalSentences.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (Number(a.tc_totalSentences) > Number(b.tc_totalSentences) ? 1 : -1),
     };
     const colTCValidated: TableColumn<DT_ROW_TYPE> = {
       id: "tcValidated",
@@ -613,11 +614,11 @@ export const MetadataTable = (props: MetadataTableProps) => {
       right: true,
       width: "100px",
       selector: (row) =>
-        row.validSentencePercentage
-          ? row.validSentencePercentage.toFixed(2)
+        row.tc_validSentencePercentage
+          ? row.tc_validSentencePercentage.toFixed(2)
           : "-",
       sortFunction: (a, b) =>
-        a.validSentencePercentage! > b.validSentencePercentage! ? 1 : -1,
+        a.tc_validSentencePercentage! > b.tc_validSentencePercentage! ? 1 : -1,
     };
     const calcTCWithDomain: TableColumn<DT_ROW_TYPE> = {
       id: "tcWithDomain",
@@ -626,11 +627,11 @@ export const MetadataTable = (props: MetadataTableProps) => {
       right: true,
       width: "120px",
       selector: (row) =>
-        row.sentencesWithDomain
-          ? row.sentencesWithDomain.toLocaleString(langCode)
+        row.sd_sentencesWithDomain
+          ? row.sd_sentencesWithDomain.toLocaleString(langCode)
           : "-",
       sortFunction: (a, b) =>
-        a.sentencesWithDomain! > b.sentencesWithDomain! ? 1 : -1,
+        a.sd_sentencesWithDomain! > b.sd_sentencesWithDomain! ? 1 : -1,
     };
     const calcTCWithDomainPercentage: TableColumn<DT_ROW_TYPE> = {
       id: "tcWithDomainPercentage",
@@ -639,11 +640,11 @@ export const MetadataTable = (props: MetadataTableProps) => {
       right: true,
       width: "120px",
       selector: (row) =>
-        row.sentencesWithDomainPercentage
-          ? row.sentencesWithDomainPercentage.toFixed(2)
+        row.sd_sentencesWithDomainPercentage
+          ? row.sd_sentencesWithDomainPercentage.toFixed(2)
           : "-",
       sortFunction: (a, b) =>
-        a.sentencesWithDomainPercentage! > b.sentencesWithDomainPercentage!
+        a.sd_sentencesWithDomainPercentage! > b.sd_sentencesWithDomainPercentage!
           ? 1
           : -1,
     };
@@ -905,8 +906,8 @@ export const MetadataTable = (props: MetadataTableProps) => {
           colLocale,
           apiNativeName,
           calcTCTotal,
-          calcTCWithDomain,
           colSDGeneral,
+          calcTCWithDomain,
           colSDAgricultureFood,
           colSDAutomotiveTransport,
           colSDFinance,
@@ -1043,12 +1044,12 @@ export const MetadataTable = (props: MetadataTableProps) => {
           (100 * row.g_female) / (1 - row.g_nodata);
       }
       // New text corpora related
-      newRow.totalSentences = row.validatedSentences + row.unvalidatedSentences;
-      newRow.validSentencePercentage =
-        newRow.totalSentences > 0
-          ? (100 * row.validatedSentences) / newRow.totalSentences
+      newRow.tc_totalSentences = row.validatedSentences + row.unvalidatedSentences;
+      newRow.tc_validSentencePercentage =
+        newRow.tc_totalSentences > 0
+          ? (100 * row.validatedSentences) / newRow.tc_totalSentences
           : 0;
-      newRow.sentencesWithDomain =
+      newRow.sd_sentencesWithDomain =
         row.sd_agriculture_food +
         row.sd_automotive_transport +
         row.sd_finance +
@@ -1060,9 +1061,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
         row.sd_media_entertainment +
         row.sd_nature_environment +
         row.sd_news_current_affairs;
-      newRow.sentencesWithDomainPercentage =
+      newRow.sd_sentencesWithDomainPercentage =
         row.validatedSentences > 0
-          ? (100 * newRow.sentencesWithDomain) / row.validatedSentences
+          ? (100 * newRow.sd_sentencesWithDomain) / row.validatedSentences
           : 0;
       // append to result table
       newData.push(newRow);
@@ -1152,7 +1153,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
       // Text Corpus Totals
       res.tc_total = subset.reduce((sum, row) => {
-        return sum + row.totalSentences!;
+        return sum + row.tc_totalSentences!;
       }, 0);
       res.tc_val = subset.reduce((sum, row) => {
         return sum + row.validatedSentences!;
@@ -1163,7 +1164,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       res.tc_val_percentage =
         res.tc_total > 0 ? (100 * res.tc_val) / res.tc_total : 0;
       res.tc_with_domain = subset.reduce((sum, row) => {
-        return sum + row.sentencesWithDomain!;
+        return sum + row.sd_sentencesWithDomain!;
       }, 0);
       res.tc_domain_percentage =
         res.tc_val > 0 ? (100 * res.tc_with_domain) / res.tc_val : 0;
@@ -1594,9 +1595,9 @@ export const TotalsTable = () => {
       colTCValidated,
       colTCUnvalidated,
       calcTCValidatedPercentage,
+      colSDGeneral,
       calcTCWithDomain,
       calcTCWithDomainPercentage,
-      colSDGeneral,
       colSDAgricultureFood,
       colSDAutomotiveTransport,
       colSDFinance,
