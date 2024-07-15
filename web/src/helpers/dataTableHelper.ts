@@ -58,47 +58,47 @@ export type DT_ROW_TYPE = {
   validDurationSecs: number;
   avgDurationSecs: number;
 
-  buckets_validated: number;
-  buckets_invalidated: number;
-  buckets_other: number;
-  buckets_train: number;
-  buckets_dev: number;
-  buckets_test: number;
-  buckets_reported: number;
+  b_validated: number;
+  b_invalidated: number;
+  b_other: number;
+  b_train: number;
+  b_dev: number;
+  b_test: number;
+  b_reported: number;
 
-  ages_nodata: number;
-  ages_teens: number;
-  ages_twenties: number;
-  ages_thirties: number;
-  ages_fourties: number;
-  ages_fifties: number;
-  ages_sixties: number;
-  ages_seventies: number;
-  ages_eighties: number;
-  ages_nineties: number;
+  a_nodata: number;
+  a_teens: number;
+  a_twenties: number;
+  a_thirties: number;
+  a_fourties: number;
+  a_fifties: number;
+  a_sixties: number;
+  a_seventies: number;
+  a_eighties: number;
+  a_nineties: number;
 
-  genders_nodata: number;
-  genders_male: number;
-  genders_female: number;
-  genders_other: number;
+  g_nodata: number;
+  g_male: number;
+  g_female: number;
+  g_other: number;
 
   reportedSentences: number;
   validatedSentences: number;
   unvalidatedSentences: number;
 
-  sentence_domain_nodata: number;
-  sentence_domain_agriculture_food: number;
-  sentence_domain_automotive_transport: number;
-  sentence_domain_finance: number;
-  sentence_domain_service_retail: number;
-  sentence_domain_general: number;
-  sentence_domain_healthcare: number;
-  sentence_domain_history_law_government: number;
-  sentence_domain_language_fundamentals: number;
-  sentence_domain_media_entertainment: number;
-  sentence_domain_nature_environment: number;
-  sentence_domain_news_current_affairs: number;
-  sentence_domain_technology_robotics: number;
+  sd_nodata: number;
+  sd_agriculture_food: number;
+  sd_automotive_transport: number;
+  sd_finance: number;
+  sd_service_retail: number;
+  sd_general: number;
+  sd_healthcare: number;
+  sd_history_law_government: number;
+  sd_language_fundamentals: number;
+  sd_media_entertainment: number;
+  sd_nature_environment: number;
+  sd_news_current_affairs: number;
+  sd_technology_robotics: number;
 
   size: number;
   checksum: string;
@@ -117,10 +117,10 @@ export type DT_ROW_TYPE = {
   fmRatio?: number;
   malePercentage?: number;
   femalePercentage?: number;
-  totalSentences?: number;
-  validSentencePercentage?: number;
-  sentencesWithDomain?: number;
-  sentencesWithDomainPercentage?: number;
+  tc_totalSentences?: number;
+  tc_validSentencePercentage?: number;
+  sd_sentencesWithDomain?: number;
+  sd_sentencesWithDomainPercentage?: number;
 };
 
 export type CV_METADATATABLE_TYPE = DT_ROW_TYPE[];
@@ -153,6 +153,20 @@ export type TOTALS_ROW_TYPE = {
   tc_val_percentage: number;
   tc_with_domain: number;
   tc_domain_percentage: number;
+  // sentence domains
+  sd_nodata: number;
+  sd_agriculture_food: number;
+  sd_automotive_transport: number;
+  sd_finance: number;
+  sd_service_retail: number;
+  sd_general: number;
+  sd_healthcare: number;
+  sd_history_law_government: number;
+  sd_language_fundamentals: number;
+  sd_media_entertainment: number;
+  sd_nature_environment: number;
+  sd_news_current_affairs: number;
+  sd_technology_robotics: number;
 };
 
 export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];

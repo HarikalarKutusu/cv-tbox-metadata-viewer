@@ -20,7 +20,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  // ListSubheader,,
+  // ListSubheader,
 } from "@mui/material";
 
 // import { createTheme, responsiveFontSizes } from "@mui/material/styles";
@@ -48,6 +48,8 @@ import ElderlyWomanIcon from "@mui/icons-material/ElderlyWoman";
 import TransgenderIcon from "@mui/icons-material/Transgender";
 // Text Corpus
 import AbcIcon from '@mui/icons-material/Abc';
+// Sentence Domains
+import TopicIcon from '@mui/icons-material/Topic';
 // Other (tech info)
 import BuildIcon from "@mui/icons-material/Build";
 
@@ -210,6 +212,16 @@ export function AppUI() {
           <ListItemText primary={intl.get("menu.views.textcorpus")} />
         </ListItemButton>
         <ListItemButton
+          onClick={() => setTableView("domains")}
+          title={intl.get("menu.views.domains")}
+          aria-label={intl.get("menu.views.domains")}
+        >
+          <ListItemIcon>
+            <TopicIcon />
+          </ListItemIcon>
+          <ListItemText primary={intl.get("menu.views.domains")} />
+        </ListItemButton>
+        <ListItemButton
           onClick={() => setTableView("other")}
           title={intl.get("menu.views.other")}
           aria-label={intl.get("menu.views.other")}
@@ -344,6 +356,9 @@ export function AppUI() {
             </Grid>
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
+          <Box sx={{height: "200px"}}>
+            <></>
+          </Box>
         </Box>
         <AppBar
           position="fixed"

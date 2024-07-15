@@ -88,6 +88,9 @@ export const GraphBuilder = () => {
     native_name_post = " (" + getCVLanguageRecord(lc).native_name + ")";
   }
 
+  // if it is text-corpus realated, the info starts with v17.0
+  let gdTCFilter: boolean = false
+
   return !metaData || !initDone || !viewGraphs ? (
     <>...</>
   ) : !gEnable ? (
@@ -101,10 +104,11 @@ export const GraphBuilder = () => {
             <Grid item xs={12} sm={12} md={6} key={index}>
               <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
                 <div style={{ width: "100%", height: "300px" }}>
+                  { gd.yKeys[0].slice(0,3) === "tc_" || gd.yKeys[0].slice(0,3) === "sd_" ? gdTCFilter = true : gdTCFilter = false }
                   {/* BAR CHART */}
                   {gd.type === "bar" ? (
                     <AppBarChart
-                      data={gData!}
+                      data={gdTCFilter ? (gData! as TOTALS_TABLE_TYPE).filter((row) => Number(row.version) >= 17.0) as TOTALS_TABLE_TYPE : gData!}
                       xKey={gd.xKey}
                       yKeys={gd.yKeys}
                       stacked={gd.stacked}
@@ -122,7 +126,7 @@ export const GraphBuilder = () => {
                     <>
                       {gd.type === "area" ? (
                         <AppAreaChart
-                          data={gData!}
+                          data={gdTCFilter ? (gData! as TOTALS_TABLE_TYPE).filter((row) => Number(row.version) >= 17.0) as TOTALS_TABLE_TYPE : gData!}
                           xKey={gd.xKey}
                           yKeys={gd.yKeys}
                           stacked={gd.stacked}
@@ -142,7 +146,7 @@ export const GraphBuilder = () => {
                         <>
                           {gd.type === "line" ? (
                             <AppLineChart
-                              data={gData!}
+                              data={gdTCFilter ? (gData! as TOTALS_TABLE_TYPE).filter((row) => Number(row.version) >= 17.0) as TOTALS_TABLE_TYPE : gData!}
                               xKey={gd.xKey}
                               yKeys={gd.yKeys}
                               seriesNames={getSeriesNames(gd.seriesNames)}
