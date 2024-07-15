@@ -957,7 +957,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       if (languageFilter.length > 0) {
         res = res.filter((row) => languageFilter.includes(row.locale));
       }
-      if (tableView === "domains") {
+      if (tableView === "textcorpus" || tableView === "domains") {
         res = res.filter((row) => Number(row.version) >= 17.0 );
       }
       return res;
