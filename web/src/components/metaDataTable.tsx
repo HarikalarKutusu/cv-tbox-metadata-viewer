@@ -1042,14 +1042,18 @@ export const MetadataTable = (props: MetadataTableProps) => {
     } else {
       // console.log("!!! METADATA READY !!!");
     }
-  }, [metaData, setMetaData, setCVTotals]);
+  }, [metaData, setMetaData, setCVTotals, setCVDelta]);
 
   return !metaData || !initDone ? (
     <></>
   ) : (
     <DataTable
       columns={viewColumns}
-      data={applyFilters(metaData)}
+      data={
+        tableView === "textcorpus"
+          ? applyFilters(metaData).filter((row) => row.totalSentences! > 0)
+          : applyFilters(metaData)
+      }
       progressPending={!metaData}
       responsive
       dense
