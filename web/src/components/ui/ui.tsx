@@ -30,8 +30,6 @@ import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
-// CV Totals
-import FunctionsIcon from "@mui/icons-material/Functions";
 // summary
 import SummarizeIcon from "@mui/icons-material/Summarize";
 // calculated
@@ -47,18 +45,24 @@ import ElderlyWomanIcon from "@mui/icons-material/ElderlyWoman";
 // gender
 import TransgenderIcon from "@mui/icons-material/Transgender";
 // Text Corpus
-import AbcIcon from '@mui/icons-material/Abc';
+import AbcIcon from "@mui/icons-material/Abc";
 // Other (tech info)
 import BuildIcon from "@mui/icons-material/Build";
+// CV Totals
+import FunctionsIcon from "@mui/icons-material/Functions";
+// Delta Values
+import DifferenceIcon from "@mui/icons-material/Difference";
 
 // APP
 import { appTheme } from "./theme";
 import { useStore } from "./../../stores/store";
 import { LanguageSelector } from "./../languageSelector";
-import { MetadataTable, TotalsTable } from "./../metaDataTable";
+import { MetadataTable } from "./../metaDataTable";
+import { TotalsTable } from "./../totalsTable";
 import { FilterSelectors } from "../filterSelectors";
 import { GraphBuilder } from "../graphBuilder";
 import { AppInfo } from "./appInfo";
+import { DeltaTable } from "../deltaTable";
 // import { ListItem } from "@mui/material";
 
 //
@@ -229,6 +233,16 @@ export function AppUI() {
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.totals")} />
         </ListItemButton>
+        <ListItemButton
+          onClick={() => setTableView("delta")}
+          title={intl.get("menu.views.delta")}
+          aria-label={intl.get("menu.views.delta")}
+        >
+          <ListItemIcon>
+            <DifferenceIcon />
+          </ListItemIcon>
+          <ListItemText primary={intl.get("menu.views.delta")} />
+        </ListItemButton>
       </>
     );
   };
@@ -309,38 +323,25 @@ export function AppUI() {
           <Toolbar />
           <Container maxWidth={false} sx={{ mt: 4, mb: 10 }}>
             <Grid container spacing={2}>
-              {/* Table & gRAPHS */}
-              {tableView !== "totals" ? (
-                <>
-                  <Grid item xs={12}>
-                    <Paper
-                      sx={{ p: 2, display: "flex", flexDirection: "column" }}
-                    >
-                      <MetadataTable
-                        view="main"
-                        defaultSortField="version"
-                        defaultSortAsc={false}
-                      />
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <GraphBuilder />
-                  </Grid>
-                </>
-              ) : (
-                <>
-                  <Grid item xs={12}>
-                    <Paper
-                      sx={{ p: 2, display: "flex", flexDirection: "column" }}
-                    >
-                      <TotalsTable />
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <GraphBuilder />
-                  </Grid>
-                </>
-              )}
+              {/* Table & Graphs */}
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  {tableView === "totals" ? (
+                    <TotalsTable />
+                  ) : tableView === "delta" ? (
+                    <DeltaTable />
+                  ) : (
+                    <MetadataTable
+                      view="main"
+                      defaultSortField="version"
+                      defaultSortAsc={false}
+                    />
+                  )}
+                </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <GraphBuilder />
+              </Grid>
             </Grid>
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
