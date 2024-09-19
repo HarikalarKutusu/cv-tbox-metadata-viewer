@@ -22,72 +22,14 @@ import {
   getCVLanguageText,
   dec2,
   dec3,
+  downloadCSV,
+  DELTA_TABLE_TYPE,
+  DELTA_ROW_TYPE,
 } from "../helpers/dataTableHelper";
 import { appDatasetAnalyzerURL } from "./../helpers/appHelper";
 
 // Data
 import METADATA_RAW from "./../assets/data/$metadata.json";
-
-//
-// Table Download
-//
-
-// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
-const convertArrayOfObjectsToCSV = (
-  array: DT_ROW_TYPE[] | TOTALS_ROW_TYPE[],
-) => {
-  let result: string;
-
-  const columnDelimiter = ",";
-  const lineDelimiter = "\n";
-  const keys = Object.keys(array[0]);
-
-  result = "";
-  result += keys.join(columnDelimiter);
-  result += lineDelimiter;
-
-  array.forEach((item: any) => {
-    let ctr = 0;
-    keys.forEach((key) => {
-      if (ctr > 0) result += columnDelimiter;
-
-      result += item[key];
-
-      ctr++;
-    });
-    result += lineDelimiter;
-  });
-
-  return result;
-};
-
-// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
-const downloadCSV = (
-  array: DT_ROW_TYPE[] | TOTALS_ROW_TYPE[],
-  lcList: string[],
-  verList: string[],
-) => {
-  const link = document.createElement("a");
-  let csv = convertArrayOfObjectsToCSV(array);
-  if (csv == null) return;
-
-  const ext: string = ".csv";
-  let fn: string = "cv-metadata";
-  if (lcList.length > 0) {
-    lcList.forEach((lc) => (fn += "-" + lc));
-  }
-  if (verList.length > 0) {
-    verList.forEach((ver) => (fn += "-v" + ver));
-  }
-
-  if (!csv.match(/^data:text\/csv/i)) {
-    csv = `data:text/csv;charset=utf-8,${csv}`;
-  }
-
-  link.setAttribute("href", encodeURI(csv));
-  link.setAttribute("download", fn + ext);
-  link.click();
-};
 
 //
 // JSX
@@ -105,6 +47,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
   const { langCode } = useStore();
   const { metaData, setMetaData } = useStore();
   const { setCVTotals } = useStore();
+  const { setCVDelta } = useStore();
   const { tableView } = useStore();
   const { versionFilter } = useStore();
   const { languageFilter } = useStore();
@@ -197,195 +140,188 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
     const colBucketsValidated: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsValidated",
-      name: intl.get("col.buckets_validated"),
+      name: intl.get("col.b_validated"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_validated
-          ? row.buckets_validated.toLocaleString(langCode)
-          : "-",
-      sortFunction: (a, b) =>
-        a.buckets_validated > b.buckets_validated ? 1 : -1,
+        row.b_validated ? row.b_validated.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_validated > b.b_validated ? 1 : -1),
     };
     const colBucketsInValidated: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsInValidated",
-      name: intl.get("col.buckets_invalidated"),
+      name: intl.get("col.b_invalidated"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_invalidated
-          ? row.buckets_invalidated.toLocaleString(langCode)
-          : "-",
-      sortFunction: (a, b) =>
-        a.buckets_invalidated > b.buckets_invalidated ? 1 : -1,
+        row.b_invalidated ? row.b_invalidated.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_invalidated > b.b_invalidated ? 1 : -1),
     };
     const colBucketsOther: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsOther",
-      name: intl.get("col.buckets_other"),
+      name: intl.get("col.b_other"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_other ? row.buckets_other.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.buckets_other > b.buckets_other ? 1 : -1),
+        row.b_other ? row.b_other.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_other > b.b_other ? 1 : -1),
     };
     const colBucketsTrain: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsTrain",
-      name: intl.get("col.buckets_train"),
+      name: intl.get("col.b_train"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_train ? row.buckets_train.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.buckets_train > b.buckets_train ? 1 : -1),
+        row.b_train ? row.b_train.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_train > b.b_train ? 1 : -1),
     };
     const colBucketsDev: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsDev",
-      name: intl.get("col.buckets_dev"),
+      name: intl.get("col.b_dev"),
       sortable: true,
       right: true,
-      selector: (row) =>
-        row.buckets_dev ? row.buckets_dev.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.buckets_dev > b.buckets_dev ? 1 : -1),
+      selector: (row) => (row.b_dev ? row.b_dev.toLocaleString(langCode) : "-"),
+      sortFunction: (a, b) => (a.b_dev > b.b_dev ? 1 : -1),
     };
     const colBucketsTest: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsTest",
-      name: intl.get("col.buckets_test"),
+      name: intl.get("col.b_test"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.buckets_test ? row.buckets_test.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.buckets_test > b.buckets_test ? 1 : -1),
+        row.b_test ? row.b_test.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_test > b.b_test ? 1 : -1),
     };
     // const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
     //   id: "bucketsReported",
-    //   name: intl.get("col.buckets_reported"),
+    //   name: intl.get("col.b_reported"),
     //   sortable: true,
     //   right: true,
-    //   selector: (row) => row.buckets_reported,
-    //   cell: (row) => row.buckets_reported.toLocaleString(langCode),
+    //   selector: (row) => row.b_reported,
+    //   cell: (row) => row.b_reported.toLocaleString(langCode),
     // };
 
     const colAgesNodata: TableColumn<DT_ROW_TYPE> = {
       id: "agesNodata",
-      name: intl.get("col.ages_nodata"),
+      name: intl.get("col.a_nodata"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_nodata ? row.ages_nodata : "-"),
-      sortFunction: (a, b) => (a.ages_nodata > b.ages_nodata ? 1 : -1),
+      selector: (row) => (row.a_nodata ? row.a_nodata : "-"),
+      sortFunction: (a, b) => (a.a_nodata > b.a_nodata ? 1 : -1),
     };
     const colAgesTeens: TableColumn<DT_ROW_TYPE> = {
       id: "agesTeens",
-      name: intl.get("col.ages_teens"),
+      name: intl.get("col.a_teens"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_teens ? row.ages_teens : "-"),
-      sortFunction: (a, b) => (a.ages_teens > b.ages_teens ? 1 : -1),
+      selector: (row) => (row.a_teens ? row.a_teens : "-"),
+      sortFunction: (a, b) => (a.a_teens > b.a_teens ? 1 : -1),
     };
     const colAgesTwenties: TableColumn<DT_ROW_TYPE> = {
       id: "agesTwenties",
-      name: intl.get("col.ages_twenties"),
+      name: intl.get("col.a_twenties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_twenties ? row.ages_twenties : "-"),
-      sortFunction: (a, b) => (a.ages_twenties > b.ages_twenties ? 1 : -1),
+      selector: (row) => (row.a_twenties ? row.a_twenties : "-"),
+      sortFunction: (a, b) => (a.a_twenties > b.a_twenties ? 1 : -1),
     };
     const colAgesThirties: TableColumn<DT_ROW_TYPE> = {
       id: "agesThirties",
-      name: intl.get("col.ages_thirties"),
+      name: intl.get("col.a_thirties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_thirties ? row.ages_thirties : "-"),
-      sortFunction: (a, b) => (a.ages_thirties > b.ages_thirties ? 1 : -1),
+      selector: (row) => (row.a_thirties ? row.a_thirties : "-"),
+      sortFunction: (a, b) => (a.a_thirties > b.a_thirties ? 1 : -1),
     };
     const colAgesFourties: TableColumn<DT_ROW_TYPE> = {
       id: "agesFourties",
-      name: intl.get("col.ages_fourties"),
+      name: intl.get("col.a_fourties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_fourties ? row.ages_fourties : "-"),
-      sortFunction: (a, b) => (a.ages_fourties > b.ages_fourties ? 1 : -1),
+      selector: (row) => (row.a_fourties ? row.a_fourties : "-"),
+      sortFunction: (a, b) => (a.a_fourties > b.a_fourties ? 1 : -1),
     };
     const colAgesFifties: TableColumn<DT_ROW_TYPE> = {
       id: "agesFifties",
-      name: intl.get("col.ages_fifties"),
+      name: intl.get("col.a_fifties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_fifties ? row.ages_fifties : "-"),
-      sortFunction: (a, b) => (a.ages_fifties > b.ages_fifties ? 1 : -1),
+      selector: (row) => (row.a_fifties ? row.a_fifties : "-"),
+      sortFunction: (a, b) => (a.a_fifties > b.a_fifties ? 1 : -1),
     };
     const colAgesSixties: TableColumn<DT_ROW_TYPE> = {
       id: "agesSixties",
-      name: intl.get("col.ages_sixties"),
+      name: intl.get("col.a_sixties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_sixties ? row.ages_sixties : "-"),
-      sortFunction: (a, b) => (a.ages_sixties > b.ages_sixties ? 1 : -1),
+      selector: (row) => (row.a_sixties ? row.a_sixties : "-"),
+      sortFunction: (a, b) => (a.a_sixties > b.a_sixties ? 1 : -1),
     };
     const colAgesSeventies: TableColumn<DT_ROW_TYPE> = {
       id: "agesSeventies",
-      name: intl.get("col.ages_seventies"),
+      name: intl.get("col.a_seventies"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_seventies ? row.ages_seventies : "-"),
-      sortFunction: (a, b) => (a.ages_seventies > b.ages_seventies ? 1 : -1),
+      selector: (row) => (row.a_seventies ? row.a_seventies : "-"),
+      sortFunction: (a, b) => (a.a_seventies > b.a_seventies ? 1 : -1),
     };
     const colAgesEighties: TableColumn<DT_ROW_TYPE> = {
       id: "agesEighties",
-      name: intl.get("col.ages_eighties"),
+      name: intl.get("col.a_eighties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_eighties ? row.ages_eighties : "-"),
-      sortFunction: (a, b) => (a.ages_eighties > b.ages_eighties ? 1 : -1),
+      selector: (row) => (row.a_eighties ? row.a_eighties : "-"),
+      sortFunction: (a, b) => (a.a_eighties > b.a_eighties ? 1 : -1),
     };
     const colAgesNineties: TableColumn<DT_ROW_TYPE> = {
       id: "agesNineties",
-      name: intl.get("col.ages_nineties"),
+      name: intl.get("col.a_nineties"),
       sortable: true,
       right: true,
       width: "80px",
-      selector: (row) => (row.ages_nineties ? row.ages_nineties : "-"),
-      sortFunction: (a, b) => (a.ages_nineties > b.ages_nineties ? 1 : -1),
+      selector: (row) => (row.a_nineties ? row.a_nineties : "-"),
+      sortFunction: (a, b) => (a.a_nineties > b.a_nineties ? 1 : -1),
     };
 
     const colGendersNodata: TableColumn<DT_ROW_TYPE> = {
       id: "gendersNodata",
-      name: intl.get("col.genders_nodata"),
+      name: intl.get("col.g_nodata"),
       sortable: true,
       right: true,
-      selector: (row) => (row.genders_nodata ? row.genders_nodata : "-"),
-      sortFunction: (a, b) => (a.genders_nodata > b.genders_nodata ? 1 : -1),
+      selector: (row) => (row.g_nodata ? row.g_nodata : "-"),
+      sortFunction: (a, b) => (a.g_nodata > b.g_nodata ? 1 : -1),
     };
     const colGendersMale: TableColumn<DT_ROW_TYPE> = {
       id: "gendersMale",
-      name: intl.get("col.genders_male"),
+      name: intl.get("col.g_male"),
       sortable: true,
       right: true,
-      selector: (row) => (row.genders_male ? row.genders_male : "-"),
-      sortFunction: (a, b) => (a.genders_male > b.genders_male ? 1 : -1),
+      selector: (row) => (row.g_male ? row.g_male : "-"),
+      sortFunction: (a, b) => (a.g_male > b.g_male ? 1 : -1),
     };
     const colGendersFemale: TableColumn<DT_ROW_TYPE> = {
       id: "gendersFemale",
-      name: intl.get("col.genders_female"),
+      name: intl.get("col.g_female"),
       sortable: true,
       right: true,
-      selector: (row) => (row.genders_female ? row.genders_female : "-"),
-      sortFunction: (a, b) => (a.genders_female > b.genders_female ? 1 : -1),
+      selector: (row) => (row.g_female ? row.g_female : "-"),
+      sortFunction: (a, b) => (a.g_female > b.g_female ? 1 : -1),
     };
     const colGendersOther: TableColumn<DT_ROW_TYPE> = {
       id: "gendersOther",
-      name: intl.get("col.genders_other"),
+      name: intl.get("col.g_other"),
       sortable: true,
       right: true,
-      selector: (row) => (row.genders_other ? row.genders_other : "-"),
-      sortFunction: (a, b) => (a.genders_other > b.genders_other ? 1 : -1),
+      selector: (row) => (row.g_other ? row.g_other : "-"),
+      sortFunction: (a, b) => (a.g_other > b.g_other ? 1 : -1),
     };
 
     const colSize: TableColumn<DT_ROW_TYPE> = {
@@ -841,35 +777,35 @@ export const MetadataTable = (props: MetadataTableProps) => {
       //
       // Handle some original values (percentages)
       //
-      // if (row.ages_teens)
-      newRow.ages_teens = Math.floor(100 * row.ages_teens);
-      // if (row.ages_twenties)
-      newRow.ages_twenties = Math.floor(100 * row.ages_twenties);
-      // if (row.ages_thirties)
-      newRow.ages_thirties = Math.floor(100 * row.ages_thirties);
-      // if (row.ages_fourties)
-      newRow.ages_fourties = Math.floor(100 * row.ages_fourties);
-      // if (row.ages_fifties)
-      newRow.ages_fifties = Math.floor(100 * row.ages_fifties);
-      // if (row.ages_sixties)
-      newRow.ages_sixties = Math.floor(100 * row.ages_sixties);
-      // if (row.ages_seventies)
-      newRow.ages_seventies = Math.floor(100 * row.ages_seventies);
-      // if (row.ages_eighties)
-      newRow.ages_eighties = Math.floor(100 * row.ages_eighties);
-      // if (row.ages_nineties)
-      newRow.ages_nineties = Math.floor(100 * row.ages_nineties);
-      // if (row.ages_nodata)
-      newRow.ages_nodata = Math.floor(100 * row.ages_nodata);
+      // if (row.a_teens)
+      newRow.a_teens = Math.floor(100 * row.a_teens);
+      // if (row.a_twenties)
+      newRow.a_twenties = Math.floor(100 * row.a_twenties);
+      // if (row.a_thirties)
+      newRow.a_thirties = Math.floor(100 * row.a_thirties);
+      // if (row.a_fourties)
+      newRow.a_fourties = Math.floor(100 * row.a_fourties);
+      // if (row.a_fifties)
+      newRow.a_fifties = Math.floor(100 * row.a_fifties);
+      // if (row.a_sixties)
+      newRow.a_sixties = Math.floor(100 * row.a_sixties);
+      // if (row.a_seventies)
+      newRow.a_seventies = Math.floor(100 * row.a_seventies);
+      // if (row.a_eighties)
+      newRow.a_eighties = Math.floor(100 * row.a_eighties);
+      // if (row.a_nineties)
+      newRow.a_nineties = Math.floor(100 * row.a_nineties);
+      // if (row.a_nodata)
+      newRow.a_nodata = Math.floor(100 * row.a_nodata);
 
-      // if (row.genders_male)
-      newRow.genders_male = Math.floor(100 * row.genders_male);
-      // if (row.genders_female)
-      newRow.genders_female = Math.floor(100 * row.genders_female);
-      // if (row.genders_other)
-      newRow.genders_other = Math.floor(100 * row.genders_other);
-      // if (row.genders_nodata)
-      newRow.genders_nodata = Math.floor(100 * row.genders_nodata);
+      // if (row.g_male)
+      newRow.g_male = Math.floor(100 * row.g_male);
+      // if (row.g_female)
+      newRow.g_female = Math.floor(100 * row.g_female);
+      // if (row.g_other)
+      newRow.g_other = Math.floor(100 * row.g_other);
+      // if (row.g_nodata)
+      newRow.g_nodata = Math.floor(100 * row.g_nodata);
 
       // if (row.size)
       newRow.size = Math.round(row.size / (1024 * 1024));
@@ -878,10 +814,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
       // calculated fields
       //
       if (row.clips !== 0) {
-        newRow.validRecsPercentage = (100 * row.buckets_validated) / row.clips;
-        newRow.invalidRecsPercentage =
-          (100 * row.buckets_invalidated) / row.clips;
-        newRow.otherRecsPercentage = (100 * row.buckets_other) / row.clips;
+        newRow.validRecsPercentage = (100 * row.b_validated) / row.clips;
+        newRow.invalidRecsPercentage = (100 * row.b_invalidated) / row.clips;
+        newRow.otherRecsPercentage = (100 * row.b_other) / row.clips;
       }
       if (row.totalHrs > 0) {
         newRow.validatedHrsPercentage = (100 * row.validHrs) / row.totalHrs;
@@ -890,24 +825,17 @@ export const MetadataTable = (props: MetadataTableProps) => {
         newRow.avgRecsPerUser = row.clips / row.users;
         newRow.avgSecsPerUser = row.duration / row.users;
       }
-      if (row.buckets_validated > 0) {
+      if (row.b_validated > 0) {
         newRow.percentageUsed =
-          (100 * (row.buckets_train + row.buckets_dev + row.buckets_test)) /
-          row.buckets_validated;
-        newRow.estTrainHrs =
-          row.validHrs * (row.buckets_train / row.buckets_validated);
-        newRow.estDevHrs =
-          row.validHrs * (row.buckets_dev / row.buckets_validated);
-        newRow.estTestHrs =
-          row.validHrs * (row.buckets_test / row.buckets_validated);
+          (100 * (row.b_train + row.b_dev + row.b_test)) / row.b_validated;
+        newRow.estTrainHrs = row.validHrs * (row.b_train / row.b_validated);
+        newRow.estDevHrs = row.validHrs * (row.b_dev / row.b_validated);
+        newRow.estTestHrs = row.validHrs * (row.b_test / row.b_validated);
       }
-      if (row.genders_male > 0)
-        newRow.fmRatio = row.genders_female / row.genders_male;
-      if (row.genders_nodata !== 1) {
-        newRow.malePercentage =
-          (100 * row.genders_male) / (1 - row.genders_nodata);
-        newRow.femalePercentage =
-          (100 * row.genders_female) / (1 - row.genders_nodata);
+      if (row.g_male > 0) newRow.fmRatio = row.g_female / row.g_male;
+      if (row.g_nodata !== 1) {
+        newRow.malePercentage = (100 * row.g_male) / (1 - row.g_nodata);
+        newRow.femalePercentage = (100 * row.g_female) / (1 - row.g_nodata);
       }
       // New text corpora related
       newRow.totalSentences = row.validatedSentences + row.unvalidatedSentences;
@@ -916,17 +844,17 @@ export const MetadataTable = (props: MetadataTableProps) => {
           ? (100 * row.validatedSentences) / newRow.totalSentences
           : 0;
       newRow.sentencesWithDomain =
-        row.sentence_domain_agriculture_food +
-        row.sentence_domain_automotive_transport +
-        row.sentence_domain_finance +
-        row.sentence_domain_service_retail +
-        row.sentence_domain_general +
-        row.sentence_domain_healthcare +
-        row.sentence_domain_history_law_government +
-        row.sentence_domain_language_fundamentals +
-        row.sentence_domain_media_entertainment +
-        row.sentence_domain_nature_environment +
-        row.sentence_domain_news_current_affairs;
+        row.sd_agriculture_food +
+        row.sd_automotive_transport +
+        row.sd_finance +
+        row.sd_service_retail +
+        row.sd_general +
+        row.sd_healthcare +
+        row.sd_history_law_government +
+        row.sd_language_fundamentals +
+        row.sd_media_entertainment +
+        row.sd_nature_environment +
+        row.sd_news_current_affairs;
       newRow.sentencesWithDomainPercentage =
         row.validatedSentences > 0
           ? (100 * newRow.sentencesWithDomain) / row.validatedSentences
@@ -1028,6 +956,65 @@ export const MetadataTable = (props: MetadataTableProps) => {
     return totals;
   };
 
+  const calcCVDelta = (data: CV_METADATATABLE_TYPE) => {
+    const delta: DELTA_TABLE_TYPE = []; // This will be the returned value
+    const languages = [...new Set(data.map((row) => row.locale))].sort(); // get all languages
+    languages.forEach((lc) => {
+      // get data with that language code, sorted in inc. ver
+      const lcdata = data
+        .filter((row) => row.locale === lc)
+        .sort((a, b) =>
+          parseFloat(a.version) > parseFloat(b.version) ? 1 : -1,
+        );
+      // get first, then loop from second till end to get dela values
+      let rec0: DT_ROW_TYPE = lcdata[0];
+      lcdata.slice(1).forEach((rec1) => {
+        const delta_rec: DELTA_ROW_TYPE = {
+          version: rec1.version + " -> " + rec0.version,
+          days: Math.ceil(
+            (new Date(rec1.date).getTime() - new Date(rec0.date).getTime()) /
+              (1000 * 3600 * 24),
+          ),
+          locale: lc,
+
+          clips: rec1.clips - rec0.clips,
+          users: rec1.users - rec0.users,
+          totalHrs: rec1.totalHrs - rec0.totalHrs,
+          validHrs: rec1.validHrs - rec0.validHrs,
+          avgDurationSecs: rec1.avgDurationSecs - rec0.avgDurationSecs,
+
+          buckets_validated: rec1.b_validated - rec0.b_validated,
+          buckets_invalidated: rec1.b_invalidated - rec0.b_invalidated,
+          buckets_other: rec1.b_other - rec0.b_other,
+          buckets_train: rec1.b_train - rec0.b_train,
+          buckets_dev: rec1.b_dev - rec0.b_dev,
+          buckets_test: rec1.b_test - rec0.b_test,
+          buckets_reported: rec1.b_reported - rec0.b_reported,
+
+          validRecsPercentage:
+            rec1.validRecsPercentage! - rec0.validRecsPercentage!,
+          invalidRecsPercentage:
+            rec1.invalidRecsPercentage! - rec0.invalidRecsPercentage!,
+          otherRecsPercentage:
+            rec1.otherRecsPercentage! - rec0.otherRecsPercentage!,
+          validatedHrsPercentage:
+            rec1.validatedHrsPercentage! - rec0.validatedHrsPercentage!,
+          avgRecsPerUser: rec1.avgRecsPerUser! - rec0.avgRecsPerUser!,
+          avgSecsPerUser: rec1.avgSecsPerUser! - rec0.avgSecsPerUser!,
+          percentageUsed: rec1.percentageUsed! - rec0.percentageUsed!,
+          malePercentage: rec1.malePercentage! - rec0.malePercentage!,
+          femalePercentage: rec1.femalePercentage! - rec0.femalePercentage!,
+
+          totalSentences: rec1.totalSentences! - rec0.totalSentences!,
+          sentencesWithDomain:
+            rec1.sentencesWithDomain! - rec0.sentencesWithDomain!,
+        };
+        delta.push();
+      });
+    });
+    return delta;
+  };
+
   const exportCVSMetadataMemo = useMemo(
     () => (
       <DownloadForOfflineIcon
@@ -1048,8 +1035,10 @@ export const MetadataTable = (props: MetadataTableProps) => {
       rawdata = rawdata.filter((row) => !IGNORE_VERSIONS.includes(row.version));
       const calcdata = calcCalculatedFields(rawdata);
       const totals = calcCVTotals(calcdata);
+      const delta = calcCVDelta(calcdata);
       setMetaData(calcdata);
       setCVTotals(totals);
+      setCVDelta(delta);
     } else {
       // console.log("!!! METADATA READY !!!");
     }
@@ -1076,304 +1065,5 @@ export const MetadataTable = (props: MetadataTableProps) => {
       customStyles={TABLE_STYLE}
       actions={exportCVSMetadataMemo}
     />
-  );
-};
-
-// TOTALS TABLE
-
-export const TotalsTable = () => {
-  const { initDone } = useStore();
-  const { langCode } = useStore();
-  const { cvTotals } = useStore();
-
-  const getTotalsTableView = (
-    langCode: string,
-  ): [TableColumn<TOTALS_ROW_TYPE>[], string, TableColumn<TOTALS_ROW_TYPE>[], string] => {
-    const colVersion: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "version",
-      name: intl.get("col.version"),
-      sortable: true,
-      center: true,
-      width: "80px",
-      selector: (row) => row.version,
-      sortFunction: (a, b) =>
-        parseFloat(a.version) > parseFloat(b.version) ? 1 : -1,
-    };
-    const colDate: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "date",
-      name: intl.get("col.date"),
-      sortable: true,
-      center: true,
-      width: "100px",
-      selector: (row) => row.date,
-    };
-    const colLocale: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_locales",
-      name: intl.get("col.total_locales"),
-      sortable: true,
-      center: true,
-      width: "80px",
-      selector: (row) => row.total_locales,
-    };
-    const colClips: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_clips",
-      name: intl.get("col.total_clips"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.total_clips,
-      cell: (row) => row.total_clips.toLocaleString(langCode),
-    };
-    const colUsers: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_users",
-      name: intl.get("col.total_users"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.total_users,
-      cell: (row) => row.total_users.toLocaleString(langCode),
-    };
-    const colTotalHrs: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_totalHrs",
-      name: intl.get("col.total_totalHrs"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.total_totalHrs,
-      cell: (row) => Math.round(row.total_totalHrs).toLocaleString(langCode),
-    };
-    const colValidHrs: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_validHrs",
-      name: intl.get("col.total_validHrs"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.total_validHrs,
-      cell: (row) => Math.round(row.total_validHrs).toLocaleString(langCode),
-    };
-
-    // Calculated Columns
-    const calcValidPercentage: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_validPercentage",
-      name: intl.get("calc.valid_percentage"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) =>
-        ((100 * row.total_validHrs) / row.total_totalHrs).toFixed(2),
-    };
-    const calcAvgDurClip: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_avg_dur_clip",
-      name: intl.get("calc.avg_dur_clip"),
-      sortable: true,
-      right: true,
-      width: "120px",
-      selector: (row) => row.calc_avg_dur_clip.toFixed(3),
-    };
-    const calcAvgDurUser: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_avg_dur_user",
-      name: intl.get("calc.avg_dur_user"),
-      sortable: true,
-      right: true,
-      width: "120px",
-      selector: (row) => row.calc_avg_dur_user.toLocaleString(langCode, dec2),
-    };
-    //
-    // Text Corpus Columns
-    //
-    const calcTCTotal: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcTotal",
-      name: intl.get("calc.tc.total"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) =>
-        row.tc_total ? row.tc_total.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.tc_total) > Number(b.tc_total) ? 1 : -1),
-    };
-    const colTCValidated: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcValidated",
-      name: intl.get("col.tc.validated"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) =>
-        row.tc_val ? row.tc_val.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.tc_val > b.tc_val ? 1 : -1),
-    };
-    const colTCUnvalidated: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcUnvalidated",
-      name: intl.get("col.tc.unvalidated"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) =>
-        row.tc_unval ? row.tc_unval.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.tc_unval > b.tc_unval ? 1 : -1),
-    };
-    const calcTCValidatedPercentage: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcTotal",
-      name: intl.get("calc.tc.validated_percentage"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) =>
-        row.tc_val_percentage ? row.tc_val_percentage.toFixed(2) : "-",
-      sortFunction: (a, b) =>
-        a.tc_val_percentage! > b.tc_val_percentage! ? 1 : -1,
-    };
-    const calcTCWithDomain: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcWithDomain",
-      name: intl.get("calc.tc.with_domain"),
-      sortable: true,
-      right: true,
-      width: "120px",
-      selector: (row) =>
-        row.tc_with_domain ? row.tc_with_domain.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.tc_with_domain! > b.tc_with_domain! ? 1 : -1),
-    };
-    const calcTCWithDomainPercentage: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcWithDomainPercentage",
-      name: intl.get("calc.tc.with_domain_percentage"),
-      sortable: true,
-      right: true,
-      width: "120px",
-      selector: (row) =>
-        row.tc_domain_percentage ? row.tc_domain_percentage.toFixed(2) : "-",
-      sortFunction: (a, b) =>
-        a.tc_domain_percentage! > b.tc_domain_percentage! ? 1 : -1,
-    };
-
-    // voice-corpus bands
-    const calc100minus: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_100minus",
-      name: intl.get("calc.100minus"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.calc_100minus,
-    };
-    const calc100_300: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_100_300",
-      name: intl.get("calc.100_300"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.calc_100_300,
-    };
-    const calc300_1000: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_300_1000",
-      name: intl.get("calc.300_1000"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.calc_300_1000,
-    };
-    const calc1000plus: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_1000plus",
-      name: intl.get("calc.1000plus"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.calc_1000plus,
-    };
-
-    let viewCols1: TableColumn<TOTALS_ROW_TYPE>[];
-    let viewTitle1 = "";
-    let viewCols2: TableColumn<TOTALS_ROW_TYPE>[];
-    let viewTitle2: string = "";
-
-    viewCols1 = [
-      colVersion,
-      colDate,
-      colLocale,
-      colClips,
-      colUsers,
-      colTotalHrs,
-      colValidHrs,
-      calcValidPercentage,
-      calcAvgDurClip,
-      calcAvgDurUser,
-      calc100minus,
-      calc100_300,
-      calc300_1000,
-      calc1000plus,
-    ];
-    viewCols2 = [
-      colVersion,
-      colDate,
-      calcTCTotal,
-      colTCValidated,
-      colTCUnvalidated,
-      calcTCValidatedPercentage,
-      calcTCWithDomain,
-      calcTCWithDomainPercentage,
-    ];
-    viewTitle1 = intl.get("menu.views.totals");
-    viewTitle2 = intl.get("menu.views.totals2");
-    // console.log(viewCols, viewTitle)
-    return [viewCols1, viewTitle1, viewCols2, viewTitle2];
-  };
-  const paginationComponentOptions = {
-    rowsPerPageText: intl.get("pagination.perpage"),
-    rangeSeparatorText: intl.get("pagination.rangeseparator"),
-    selectAllRowsItem: true,
-    selectAllRowsItemText: intl.get("pagination.selectallrows"),
-  };
-
-  const [viewColumns1, viewTitle1, viewColumns2, viewTitle2] = getTotalsTableView(langCode);
-
-  const exportCVSTotalsMemo = useMemo(
-    () => (
-      <DownloadForOfflineIcon
-        onClick={() => downloadCSV(cvTotals!, ["totals"], [])}
-        color="secondary"
-        sx={{ cursor: "grab" }}
-      />
-    ),
-    [cvTotals],
-  );
-
-  return !cvTotals || !initDone ? (
-    <></>
-  ) : (
-    <>
-      <DataTable
-        columns={viewColumns1}
-        data={cvTotals}
-        progressPending={!cvTotals}
-        responsive
-        dense
-        pagination
-        paginationPerPage={20}
-        paginationComponentOptions={paginationComponentOptions}
-        direction={Direction.AUTO}
-        highlightOnHover
-        title={viewTitle1}
-        persistTableHead
-        defaultSortFieldId={"version"}
-        defaultSortAsc={false}
-        customStyles={TABLE_STYLE}
-        actions={exportCVSTotalsMemo}
-      />
-      <DataTable
-        columns={viewColumns2}
-        data={cvTotals.filter(row => row.tc_total > 0)}
-        progressPending={!cvTotals}
-        responsive
-        dense
-        pagination
-        paginationPerPage={20}
-        paginationComponentOptions={paginationComponentOptions}
-        direction={Direction.AUTO}
-        highlightOnHover
-        title={viewTitle2}
-        persistTableHead
-        defaultSortFieldId={"version"}
-        defaultSortAsc={false}
-        customStyles={TABLE_STYLE}
-        actions={exportCVSTotalsMemo}
-      />
-    </>
   );
 };
