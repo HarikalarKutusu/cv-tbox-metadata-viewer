@@ -140,7 +140,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
     const colBucketsValidated: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsValidated",
-      name: intl.get("col.b_validated"),
+      name: intl.get("col.buckets_validated"),
       sortable: true,
       right: true,
       selector: (row) =>
@@ -149,7 +149,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colBucketsInValidated: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsInValidated",
-      name: intl.get("col.b_invalidated"),
+      name: intl.get("col.buckets_invalidated"),
       sortable: true,
       right: true,
       selector: (row) =>
@@ -158,7 +158,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colBucketsOther: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsOther",
-      name: intl.get("col.b_other"),
+      name: intl.get("col.buckets_other"),
       sortable: true,
       right: true,
       selector: (row) =>
@@ -167,7 +167,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colBucketsTrain: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsTrain",
-      name: intl.get("col.b_train"),
+      name: intl.get("col.buckets_train"),
       sortable: true,
       right: true,
       selector: (row) =>
@@ -176,7 +176,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colBucketsDev: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsDev",
-      name: intl.get("col.b_dev"),
+      name: intl.get("col.buckets_dev"),
       sortable: true,
       right: true,
       selector: (row) => (row.b_dev ? row.b_dev.toLocaleString(langCode) : "-"),
@@ -184,7 +184,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colBucketsTest: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsTest",
-      name: intl.get("col.b_test"),
+      name: intl.get("col.buckets_test"),
       sortable: true,
       right: true,
       selector: (row) =>
@@ -193,7 +193,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     // const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
     //   id: "bucketsReported",
-    //   name: intl.get("col.b_reported"),
+    //   name: intl.get("col.buckets_reported"),
     //   sortable: true,
     //   right: true,
     //   selector: (row) => row.b_reported,
@@ -202,7 +202,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
     const colAgesNodata: TableColumn<DT_ROW_TYPE> = {
       id: "agesNodata",
-      name: intl.get("col.a_nodata"),
+      name: intl.get("col.ages_nodata"),
       sortable: true,
       right: true,
       width: "80px",
@@ -211,7 +211,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesTeens: TableColumn<DT_ROW_TYPE> = {
       id: "agesTeens",
-      name: intl.get("col.a_teens"),
+      name: intl.get("col.ages_teens"),
       sortable: true,
       right: true,
       width: "80px",
@@ -220,7 +220,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesTwenties: TableColumn<DT_ROW_TYPE> = {
       id: "agesTwenties",
-      name: intl.get("col.a_twenties"),
+      name: intl.get("col.ages_twenties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -229,7 +229,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesThirties: TableColumn<DT_ROW_TYPE> = {
       id: "agesThirties",
-      name: intl.get("col.a_thirties"),
+      name: intl.get("col.ages_thirties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -238,7 +238,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesFourties: TableColumn<DT_ROW_TYPE> = {
       id: "agesFourties",
-      name: intl.get("col.a_fourties"),
+      name: intl.get("col.ages_fourties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -247,7 +247,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesFifties: TableColumn<DT_ROW_TYPE> = {
       id: "agesFifties",
-      name: intl.get("col.a_fifties"),
+      name: intl.get("col.ages_fifties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -256,7 +256,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesSixties: TableColumn<DT_ROW_TYPE> = {
       id: "agesSixties",
-      name: intl.get("col.a_sixties"),
+      name: intl.get("col.ages_sixties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -265,7 +265,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesSeventies: TableColumn<DT_ROW_TYPE> = {
       id: "agesSeventies",
-      name: intl.get("col.a_seventies"),
+      name: intl.get("col.ages_seventies"),
       sortable: true,
       right: true,
       width: "80px",
@@ -274,7 +274,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesEighties: TableColumn<DT_ROW_TYPE> = {
       id: "agesEighties",
-      name: intl.get("col.a_eighties"),
+      name: intl.get("col.ages_eighties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -283,7 +283,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesNineties: TableColumn<DT_ROW_TYPE> = {
       id: "agesNineties",
-      name: intl.get("col.a_nineties"),
+      name: intl.get("col.ages_nineties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -293,7 +293,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
     const colGendersNodata: TableColumn<DT_ROW_TYPE> = {
       id: "gendersNodata",
-      name: intl.get("col.g_nodata"),
+      name: intl.get("col.genders_nodata"),
       sortable: true,
       right: true,
       selector: (row) => (row.g_nodata ? row.g_nodata : "-"),
@@ -301,7 +301,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colGendersMale: TableColumn<DT_ROW_TYPE> = {
       id: "gendersMale",
-      name: intl.get("col.g_male"),
+      name: intl.get("col.genders_male"),
       sortable: true,
       right: true,
       selector: (row) => (row.g_male ? row.g_male : "-"),
@@ -309,7 +309,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colGendersFemale: TableColumn<DT_ROW_TYPE> = {
       id: "gendersFemale",
-      name: intl.get("col.g_female"),
+      name: intl.get("col.genders_female"),
       sortable: true,
       right: true,
       selector: (row) => (row.g_female ? row.g_female : "-"),
@@ -317,7 +317,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colGendersOther: TableColumn<DT_ROW_TYPE> = {
       id: "gendersOther",
-      name: intl.get("col.g_other"),
+      name: intl.get("col.genders_other"),
       sortable: true,
       right: true,
       selector: (row) => (row.g_other ? row.g_other : "-"),
