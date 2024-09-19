@@ -43,7 +43,7 @@ export const dec3 = { minimumFractionDigits: 3, maximumFractionDigits: 3 };
 //== Meta  DataTable
 //======================================
 
-export const IGNORE_VERSIONS: string[] = ["2", "5", "6.0", "16.0"]
+export const IGNORE_VERSIONS: string[] = ["2", "5", "6.0", "16.0"];
 
 export type DT_ROW_TYPE = {
   version: string;
@@ -58,47 +58,47 @@ export type DT_ROW_TYPE = {
   validDurationSecs: number;
   avgDurationSecs: number;
 
-  buckets_validated: number;
-  buckets_invalidated: number;
-  buckets_other: number;
-  buckets_train: number;
-  buckets_dev: number;
-  buckets_test: number;
-  buckets_reported: number;
+  b_validated: number;
+  b_invalidated: number;
+  b_other: number;
+  b_train: number;
+  b_dev: number;
+  b_test: number;
+  b_reported: number;
 
-  ages_nodata: number;
-  ages_teens: number;
-  ages_twenties: number;
-  ages_thirties: number;
-  ages_fourties: number;
-  ages_fifties: number;
-  ages_sixties: number;
-  ages_seventies: number;
-  ages_eighties: number;
-  ages_nineties: number;
+  a_nodata: number;
+  a_teens: number;
+  a_twenties: number;
+  a_thirties: number;
+  a_fourties: number;
+  a_fifties: number;
+  a_sixties: number;
+  a_seventies: number;
+  a_eighties: number;
+  a_nineties: number;
 
-  genders_nodata: number;
-  genders_male: number;
-  genders_female: number;
-  genders_other: number;
+  g_nodata: number;
+  g_male: number;
+  g_female: number;
+  g_other: number;
 
   reportedSentences: number;
   validatedSentences: number;
   unvalidatedSentences: number;
 
-  sentence_domain_nodata: number;
-  sentence_domain_agriculture_food: number;
-  sentence_domain_automotive_transport: number;
-  sentence_domain_finance: number;
-  sentence_domain_service_retail: number;
-  sentence_domain_general: number;
-  sentence_domain_healthcare: number;
-  sentence_domain_history_law_government: number;
-  sentence_domain_language_fundamentals: number;
-  sentence_domain_media_entertainment: number;
-  sentence_domain_nature_environment: number;
-  sentence_domain_news_current_affairs: number;
-  sentence_domain_technology_robotics: number;
+  sd_nodata: number;
+  sd_agriculture_food: number;
+  sd_automotive_transport: number;
+  sd_finance: number;
+  sd_service_retail: number;
+  sd_general: number;
+  sd_healthcare: number;
+  sd_history_law_government: number;
+  sd_language_fundamentals: number;
+  sd_media_entertainment: number;
+  sd_nature_environment: number;
+  sd_news_current_affairs: number;
+  sd_technology_robotics: number;
 
   size: number;
   checksum: string;
@@ -158,6 +158,45 @@ export type TOTALS_ROW_TYPE = {
 export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];
 
 //======================================
+//== TOTALS  DataTable
+//======================================
+
+export type DELTA_ROW_TYPE = {
+  version: string;
+  days: number;
+  locale: string;
+
+  clips: number;
+  users: number;
+  totalHrs: number;
+  validHrs: number;
+  avgDurationSecs: number;
+
+  buckets_validated: number;
+  buckets_invalidated: number;
+  buckets_other: number;
+  buckets_train: number;
+  buckets_dev: number;
+  buckets_test: number;
+  buckets_reported: number;
+
+  // Calculated Values added just after importing
+  validRecsPercentage: number;
+  invalidRecsPercentage: number;
+  otherRecsPercentage: number;
+  validatedHrsPercentage: number;
+  avgRecsPerUser: number;
+  avgSecsPerUser: number;
+  percentageUsed: number;
+  malePercentage: number;
+  femalePercentage: number;
+  totalSentences: number;
+  sentencesWithDomain: number;
+};
+
+export type DELTA_TABLE_TYPE = DELTA_ROW_TYPE[];
+
+//======================================
 //== CV Languages Table from api
 //======================================
 
@@ -181,5 +220,66 @@ export const getCVLanguageRecord = (lc: string): CV_LANGUAGE_ROW => {
 
 export const getCVLanguageText = (lc: string): string => {
   const langRec = getCVLanguageRecord(lc);
-  return langRec.native_name + " (" +  intl.get("lang." + langRec.name) + ")";
+  return langRec.native_name + " (" + intl.get("lang." + langRec.name) + ")";
+};
+
+//
+// Table Download
+//
+
+// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
+const convertArrayOfObjectsToCSV = (
+  array: DT_ROW_TYPE[] | TOTALS_ROW_TYPE[] | DELTA_ROW_TYPE[],
+) => {
+  let result: string;
+
+  const columnDelimiter = ",";
+  const lineDelimiter = "\n";
+  const keys = Object.keys(array[0]);
+
+  result = "";
+  result += keys.join(columnDelimiter);
+  result += lineDelimiter;
+
+  array.forEach((item: any) => {
+    let ctr = 0;
+    keys.forEach((key) => {
+      if (ctr > 0) result += columnDelimiter;
+
+      result += item[key];
+
+      ctr++;
+    });
+    result += lineDelimiter;
+  });
+
+  return result;
+};
+
+// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
+export const downloadCSV = (
+  array: DT_ROW_TYPE[] | TOTALS_ROW_TYPE[] | DELTA_ROW_TYPE[],
+  lcList: string[],
+  verList: string[],
+) => {
+  const link = document.createElement("a");
+  let csv = convertArrayOfObjectsToCSV(array);
+  if (csv == null) return;
+
+  const ext: string = ".csv";
+  let fn: string = "cv-metadata";
+  if (lcList.length > 0) {
+    lcList.forEach((lc) => (fn += "-" + lc));
+  }
+  if (verList.length > 0) {
+    verList.forEach((ver) => (fn += "-v" + ver));
+  }
+
+  if (!csv.match(/^data:text\/csv/i)) {
+    csv = `data:text/csv;charset=utf-8,${csv}`;
+  }
+
+  link.setAttribute("href", encodeURI(csv));
+  link.setAttribute("download", fn + ext);
+  link.click();
 };
