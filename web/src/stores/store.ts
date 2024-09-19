@@ -5,6 +5,7 @@ import create from "zustand";
 import {
   CV_METADATATABLE_TYPE,
   TOTALS_TABLE_TYPE,
+  DELTA_TABLE_TYPE,
 } from "./../helpers/dataTableHelper";
 import {
   LanguageCodesType,
@@ -27,6 +28,10 @@ export type StoreType = {
   // cv Aggregated data per version
   cvTotals: TOTALS_TABLE_TYPE | undefined;
   setCVTotals: (dt: TOTALS_TABLE_TYPE) => void;
+
+  // cv data changes between versions
+  cvDelta: DELTA_TABLE_TYPE | undefined;
+  setCVDelta: (dt: DELTA_TABLE_TYPE) => void;
 
   // Table View
   tableView: string;
@@ -54,9 +59,13 @@ const useStore = create<StoreType>((set) => ({
   metaData: undefined,
   setMetaData: (dt) => set((state) => ({ ...state, metaData: dt })),
 
-  // metadata
+  // torals
   cvTotals: undefined,
   setCVTotals: (dt) => set((state) => ({ ...state, cvTotals: dt })),
+
+  // delta
+  cvDelta: undefined,
+  setCVDelta: (dt) => set((state) => ({ ...state, cvDelta: dt })),
 
   // Table View
   tableView: "main",
