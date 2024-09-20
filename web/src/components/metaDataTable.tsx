@@ -191,14 +191,21 @@ export const MetadataTable = (props: MetadataTableProps) => {
         row.b_test ? row.b_test.toLocaleString(langCode) : "-",
       sortFunction: (a, b) => (a.b_test > b.b_test ? 1 : -1),
     };
-    // const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
-    //   id: "bucketsReported",
-    //   name: intl.get("col.buckets_reported"),
-    //   sortable: true,
-    //   right: true,
-    //   selector: (row) => row.b_reported,
-    //   cell: (row) => row.b_reported.toLocaleString(langCode),
-    // };
+    const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
+      id: "bucketsReported",
+      name: intl.get("col.buckets_reported"),
+      sortable: true,
+      right: true,
+      // selector: (row) => row.b_reported,
+      // NOTE: Reported sentences removed from "buckets" category to new reportedSentences field
+      cell: (row) =>
+        (row.b_reported
+          ? row.b_reported
+          : 0 + row.reportedSentences
+          ? row.reportedSentences
+          : 0
+        ).toLocaleString(langCode),
+    };
 
     const colAgesNodata: TableColumn<DT_ROW_TYPE> = {
       id: "agesNodata",
@@ -647,6 +654,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
           calcValidRecsPercentage,
           calcInvalidRecsPercentage,
           calcOtherRecsPercentage,
+          colBucketsReported,
         ];
         viewTitle = intl.get("menu.views.buckets-main");
         break;
@@ -723,6 +731,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
           calcTCValidatedPercentage,
           calcTCWithDomain,
           calcTCWithDomainPercentage,
+          colBucketsReported,
         ];
         viewTitle = intl.get("menu.views.textcorpus");
         break;
@@ -966,11 +975,12 @@ export const MetadataTable = (props: MetadataTableProps) => {
         .sort((a, b) =>
           parseFloat(a.version) > parseFloat(b.version) ? 1 : -1,
         );
-      // get first, then loop from second till end to get dela values
-      let rec0: DT_ROW_TYPE = lcdata[0];
+      // get first, then loop from second till end to get delta values
+      let rec0: DT_ROW_TYPE = lcdata[0]; // get first at 0
+      // loop through rest
       lcdata.slice(1).forEach((rec1) => {
         const delta_rec: DELTA_ROW_TYPE = {
-          version: rec1.version + " -> " + rec0.version,
+          version: rec0.version + " » " + rec1.version,
           days: Math.ceil(
             (new Date(rec1.date).getTime() - new Date(rec0.date).getTime()) /
               (1000 * 3600 * 24),
@@ -983,13 +993,23 @@ export const MetadataTable = (props: MetadataTableProps) => {
           validHrs: rec1.validHrs - rec0.validHrs,
           avgDurationSecs: rec1.avgDurationSecs - rec0.avgDurationSecs,
 
-          buckets_validated: rec1.b_validated - rec0.b_validated,
-          buckets_invalidated: rec1.b_invalidated - rec0.b_invalidated,
-          buckets_other: rec1.b_other - rec0.b_other,
-          buckets_train: rec1.b_train - rec0.b_train,
-          buckets_dev: rec1.b_dev - rec0.b_dev,
-          buckets_test: rec1.b_test - rec0.b_test,
-          buckets_reported: rec1.b_reported - rec0.b_reported,
+          b_validated: rec1.b_validated - rec0.b_validated,
+          b_invalidated: rec1.b_invalidated - rec0.b_invalidated,
+          b_other: rec1.b_other - rec0.b_other,
+          b_train: rec1.b_train - rec0.b_train,
+          b_dev: rec1.b_dev - rec0.b_dev,
+          b_test: rec1.b_test - rec0.b_test,
+          b_reported:
+            (rec1.b_reported
+              ? rec1.b_reported
+              : 0 + rec1.reportedSentences
+              ? rec1.reportedSentences
+              : 0) -
+            (rec1.b_reported
+              ? rec0.b_reported
+              : 0 + rec0.reportedSentences
+              ? rec0.reportedSentences
+              : 0),
 
           validRecsPercentage:
             rec1.validRecsPercentage! - rec0.validRecsPercentage!,
@@ -1009,9 +1029,11 @@ export const MetadataTable = (props: MetadataTableProps) => {
           sentencesWithDomain:
             rec1.sentencesWithDomain! - rec0.sentencesWithDomain!,
         };
-        delta.push();
+        delta.push(delta_rec);
+        rec0 = rec1;
       });
     });
+    console.log(delta);
     return delta;
   };
 
