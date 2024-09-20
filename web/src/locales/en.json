@@ -2,22 +2,17 @@
   "app.title": "Common Voice Metadata Viewer",
   "app.subtitle": "Part of CV-ToolBox",
   "app.copyright": "CV-ToolBox is (c) Harikalar Kutusu, it is free to use",
-
   "ui.languageselector.label": "UI Language",
   "ui.languageselector.title": "Select your user interface language",
-
   "ui.filter_version.label": "Version Filter",
   "ui.filter_version.title": "Select one or more versions to filter the table",
   "ui.filter_language.label": "Language Filter",
   "ui.filter_language.title": "Select one or more languages to filter the table",
-
   "ui.select.languages": "Select languages to work on",
   "ui.select.versions": "Select versions to work on",
-
   "ui.action.reset": "Reset table",
   "ui.action.open-menu": "Open Menu",
   "ui.action.close-menu": "Close Menu",
-
   "menu.views.alldata": "Fundamental Data",
   "menu.views.calculated": "Calculated",
   "menu.views.buckets-all": "All buckets",
@@ -30,15 +25,16 @@
   "menu.views.other": "Other Info",
   "menu.views.totals": "CV Totals",
   "menu.views.totals2": "CV Totals (Text Corpora)",
-
+  "menu.views.delta": "Version Delta",
+  "menu.views.delta2": "Changes in Buckets",
+  "menu.views.delta3": "Changes in xxx",
+  "menu.views.delta4": "Changes in xxx",
   "pagination.perpage": "Show per page",
   "pagination.rangeseparator": "of",
   "pagination.selectallrows": "All",
-
   "col.version": "Version",
   "col.date": "Rel.Date",
   "col.locale": "Locale",
-
   "col.clips": "Clips",
   "col.users": "Users",
   "col.duration": "Duration (sec)",
@@ -46,7 +42,6 @@
   "col.validHrs": "Valid Hours",
   "col.validDurationSecs": "Valid Duration (sec)",
   "col.avgDurationSecs": "Avg.Duration (sec)",
-
   "col.buckets": "Buckets",
   "col.buckets_validated": "Validated",
   "col.buckets_invalidated": "Invalidated",
@@ -55,7 +50,6 @@
   "col.buckets_dev": "Dev",
   "col.buckets_test": "Test",
   "col.buckets_reported": "Reported",
-
   "col.ages": "Age Info",
   "col.ages_nodata": "%No Data",
   "col.ages_teens": "%<20",
@@ -67,46 +61,35 @@
   "col.ages_seventies": "%70-79",
   "col.ages_eighties": "%80-89",
   "col.ages_nineties": "%90-99",
-
   "col.genders": "Gender Info",
   "col.genders_nodata": "%No Data/All",
   "col.genders_male": "%Male/All",
   "col.genders_female": "%Female/All",
   "col.genders_other": "%Other/All",
-
   "col.reportedSentences": "Reported",
-
   "col.size": "File Size (MB)",
   "col.checksum": "Checksum",
-
   "calc.link_to_analyzer": "Analyzer",
-
   "calc.valid_recs_percentage": "%Valid Recs",
   "calc.invalid_recs_percentage": "%Invalid Recs",
   "calc.other_recs_percentage": "%Other Recs",
-
   "calc.valid_hrs_percentage": "%Validated Hrs.",
   "calc.reported_percentage": "%Reported",
   "calc.avg_recs_per_user": "Avg.Recs/User",
   "calc.avg_secs_per_user": "Avg.Sec/User",
-
   "calc.percentage_used": "%Used",
-
   "calc.est_train_hrs": "~Train Hrs.",
   "calc.est_dev_hrs": "~Dev Hrs.",
   "calc.est_test_hrs": "~Test Hrs.",
-
   "calc.fm_ratio": "F/M Ratio",
   "calc.male_percentage": "%Male/Data",
   "calc.female_percentage": "%Female/Data",
-
   "calc.tc.total": "Total",
   "col.tc.validated": "Validated",
   "col.tc.unvalidated": "Unvalidated",
   "calc.tc.validated_percentage": "Validated %",
   "calc.tc.with_domain": "With Domain",
   "calc.tc.with_domain_percentage": "With Domain %",
-
   "col.total_locales": "Locales",
   "col.total_clips": "Clips",
   "col.total_users": "Users",
@@ -119,12 +102,13 @@
   "calc.100_300": "100-300h",
   "calc.300_1000": "300-1000h",
   "calc.1000plus": "1000h+",
+  "col.days": "Days",
+  "calc.total_sentences": "Text Corpora",
+  "calc.with_domain": "With Domain",
   "graph.subtitle.voice_corpus_bands": "Language Counts per Voice Corpus Band",
-
   "api.native_name": "Native Name",
   "api.id": "Internal Id",
   "api.target_sentence_count": "Min. Sentences",
-
   "graph.title.cv_global_totals": "Common Voice Global Totals",
   "graph.subtitle.total_valid_hours": "Total and Validated Hours",
   "graph.subtitle.buckets_main_values": "Recordings in Main Buckets",
@@ -135,9 +119,7 @@
   "graph.subtitle.gender_groups": "Gender percentage in all recordings",
   "graph.subtitle.gender_in_given": "Male & female percentage among people with demographics",
   "graph.subtitle.fm_ratio": "Female/Male ratio in all recordings",
-
   "warn.to_view_graphs": "To view graphs, please select a single locale from the filter below.",
-
   "lang.ab": "Abkhaz",
   "lang.ace": "Acehnese",
   "lang.ady": "Adyghe",
@@ -342,5 +324,8 @@
   "lang.zh-HK": "Chinese (Hong Kong)",
   "lang.zh-TW": "Chinese (Taiwan)",
   "lang.zu": "Zulu",
-  "lang.zza": "Zaza"
+  "lang.zza": "Zaza",
+  "lang.dav": "Kidaw'ida",
+  "lang.kln": "Kalenjin",
+  "lang.luo": "Dholuo"
 }
