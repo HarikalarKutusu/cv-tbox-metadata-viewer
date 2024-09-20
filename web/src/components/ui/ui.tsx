@@ -51,8 +51,7 @@ import BuildIcon from "@mui/icons-material/Build";
 // CV Totals
 import FunctionsIcon from "@mui/icons-material/Functions";
 // Delta Values
-import DifferenceIcon from "@mui/icons-material/Difference";
-
+import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
 // APP
 import { appTheme } from "./theme";
 import { useStore } from "./../../stores/store";
@@ -239,7 +238,7 @@ export function AppUI() {
           aria-label={intl.get("menu.views.delta")}
         >
           <ListItemIcon>
-            <DifferenceIcon />
+            <ChangeHistoryIcon />
           </ListItemIcon>
           <ListItemText primary={intl.get("menu.views.delta")} />
         </ListItemButton>
