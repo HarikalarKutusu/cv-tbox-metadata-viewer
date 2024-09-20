@@ -1,5 +1,5 @@
 // React
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 // i10n
 import intl from "react-intl-universal";
 // MUI
@@ -12,6 +12,7 @@ import DataTable, { Direction, TableColumn } from "react-data-table-component";
 import { useStore } from "../stores/store";
 import {
   DELTA_ROW_TYPE,
+  DELTA_TABLE_TYPE,
   TABLE_STYLE,
   dec2,
   downloadCSV,
@@ -25,6 +26,8 @@ export const DeltaTable = () => {
   const { initDone } = useStore();
   const { langCode } = useStore();
   const { cvDelta } = useStore();
+  const { versionFilter } = useStore();
+  const { languageFilter } = useStore();
 
   const getDeltaTableView = (
     langCode: string,
@@ -34,13 +37,15 @@ export const DeltaTable = () => {
     TableColumn<DELTA_ROW_TYPE>[],
     string,
   ] => {
-    // Base
+    //
+    // Table-1
+    //
     const colVersion: TableColumn<DELTA_ROW_TYPE> = {
       id: "version",
       name: intl.get("col.version"),
       sortable: true,
       center: true,
-      width: "80px",
+      width: "120px",
       selector: (row) => row.version,
       sortFunction: (a, b) =>
         parseFloat(a.version) > parseFloat(b.version) ? 1 : -1,
@@ -50,12 +55,12 @@ export const DeltaTable = () => {
       name: intl.get("col.days"),
       sortable: true,
       center: true,
-      width: "100px",
+      width: "80px",
       selector: (row) => row.days,
     };
     const colLocale: TableColumn<DELTA_ROW_TYPE> = {
-      id: "locales",
-      name: intl.get("col.locales"),
+      id: "locale",
+      name: intl.get("col.locale"),
       sortable: true,
       center: true,
       width: "80px",
@@ -67,18 +72,30 @@ export const DeltaTable = () => {
       name: intl.get("col.clips"),
       sortable: true,
       right: true,
-      width: "100px",
+      width: "80px",
       selector: (row) => row.clips,
       cell: (row) => row.clips.toLocaleString(langCode),
+      conditionalCellStyles: [
+        {
+          when: (row) => row.clips < 0,
+          style: { background: "pink" },
+        },
+      ],
     };
     const colUsers: TableColumn<DELTA_ROW_TYPE> = {
       id: "users",
       name: intl.get("col.users"),
       sortable: true,
       right: true,
-      width: "100px",
+      width: "80px",
       selector: (row) => row.users,
       cell: (row) => row.users.toLocaleString(langCode),
+      conditionalCellStyles: [
+        {
+          when: (row) => row.users < 0,
+          style: { background: "pink" },
+        },
+      ],
     };
     const colTotalHrs: TableColumn<DELTA_ROW_TYPE> = {
       id: "totalHrs",
@@ -88,6 +105,12 @@ export const DeltaTable = () => {
       width: "100px",
       selector: (row) => row.totalHrs,
       cell: (row) => Math.round(row.totalHrs).toLocaleString(langCode),
+      conditionalCellStyles: [
+        {
+          when: (row) => row.totalHrs < 0,
+          style: { background: "pink" },
+        },
+      ],
     };
     const colValidHrs: TableColumn<DELTA_ROW_TYPE> = {
       id: "validHrs",
@@ -97,133 +120,171 @@ export const DeltaTable = () => {
       width: "100px",
       selector: (row) => row.validHrs,
       cell: (row) => Math.round(row.validHrs).toLocaleString(langCode),
+      conditionalCellStyles: [
+        {
+          when: (row) => row.validHrs < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const calcAvgDurClip: TableColumn<DELTA_ROW_TYPE> = {
+      id: "calc_avg_dur_clip",
+      name: intl.get("calc.avg_dur_clip"),
+      sortable: true,
+      right: true,
+      width: "120px",
+      selector: (row) => row.avgDurationSecs.toFixed(3),
+      conditionalCellStyles: [
+        {
+          when: (row) => row.avgDurationSecs < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const calcAvgDurUser: TableColumn<DELTA_ROW_TYPE> = {
+      id: "calc_avg_dur_user",
+      name: intl.get("calc.avg_dur_user"),
+      sortable: true,
+      right: true,
+      width: "120px",
+      selector: (row) => row.avgSecsPerUser.toLocaleString(langCode, dec2),
+      conditionalCellStyles: [
+        {
+          when: (row) => row.avgSecsPerUser < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const calcTotalSentences: TableColumn<DELTA_ROW_TYPE> = {
+      id: "calc_total_sentences",
+      name: intl.get("calc.total_sentences"),
+      sortable: true,
+      right: true,
+      width: "120px",
+      selector: (row) => row.totalSentences,
+      conditionalCellStyles: [
+        {
+          when: (row) => row.totalSentences < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const calcWithDomain: TableColumn<DELTA_ROW_TYPE> = {
+      id: "calc_with_domain",
+      name: intl.get("calc.with_domain"),
+      sortable: true,
+      right: true,
+      width: "120px",
+      selector: (row) => row.sentencesWithDomain,
+      conditionalCellStyles: [
+        {
+          when: (row) => row.sentencesWithDomain < 0,
+          style: { background: "pink" },
+        },
+      ],
     };
 
-    // // From Calculated Columns
-    // const colValidPercentage: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "validPercentage",
-    //   name: intl.get("calc.valid_percentage"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "100px",
-    //   selector: (row) => ((100 * row.validHrs) / row.totalHrs).toFixed(2),
-    // };
-    // const calcAvgDurClip: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "calc_avg_dur_clip",
-    //   name: intl.get("calc.avg_dur_clip"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "120px",
-    //   selector: (row) => row.avgDurationSecs.toFixed(3),
-    // };
-    // const calcAvgDurUser: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "calc_avg_dur_user",
-    //   name: intl.get("calc.avg_dur_user"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "120px",
-    //   selector: (row) => row.avgSecsPerUser.toLocaleString(langCode, dec2),
-    // };
-    // //
-    // // Text Corpus Columns
-    // //
-    // const calcTCTotal: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "tcTotal",
-    //   name: intl.get("calc.tc.total"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "100px",
-    //   selector: (row) =>
-    //     row.tc_total ? row.tc_total.toLocaleString(langCode) : "-",
-    //   sortFunction: (a, b) =>
-    //     Number(a.tc_total) > Number(b.tc_total) ? 1 : -1,
-    // };
-    // const colTCValidated: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "tcValidated",
-    //   name: intl.get("col.tc.validated"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "100px",
-    //   selector: (row) =>
-    //     row.tc_val ? row.tc_val.toLocaleString(langCode) : "-",
-    //   sortFunction: (a, b) => (a.tc_val > b.tc_val ? 1 : -1),
-    // };
-    // const colTCUnvalidated: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "tcUnvalidated",
-    //   name: intl.get("col.tc.unvalidated"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "100px",
-    //   selector: (row) =>
-    //     row.tc_unval ? row.tc_unval.toLocaleString(langCode) : "-",
-    //   sortFunction: (a, b) => (a.tc_unval > b.tc_unval ? 1 : -1),
-    // };
-    // const calcTCValidatedPercentage: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "tcTotal",
-    //   name: intl.get("calc.tc.validated_percentage"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "100px",
-    //   selector: (row) =>
-    //     row.tc_val_percentage ? row.tc_val_percentage.toFixed(2) : "-",
-    //   sortFunction: (a, b) =>
-    //     a.tc_val_percentage! > b.tc_val_percentage! ? 1 : -1,
-    // };
-    // const calcTCWithDomain: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "tcWithDomain",
-    //   name: intl.get("calc.tc.with_domain"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "120px",
-    //   selector: (row) =>
-    //     row.tc_with_domain ? row.tc_with_domain.toLocaleString(langCode) : "-",
-    //   sortFunction: (a, b) => (a.tc_with_domain! > b.tc_with_domain! ? 1 : -1),
-    // };
-    // const calcTCWithDomainPercentage: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "tcWithDomainPercentage",
-    //   name: intl.get("calc.tc.with_domain_percentage"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "120px",
-    //   selector: (row) =>
-    //     row.tc_domain_percentage ? row.tc_domain_percentage.toFixed(2) : "-",
-    //   sortFunction: (a, b) =>
-    //     a.tc_domain_percentage! > b.tc_domain_percentage! ? 1 : -1,
-    // };
-
-    // // voice-corpus bands
-    // const calc100minus: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "calc_100minus",
-    //   name: intl.get("calc.100minus"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "100px",
-    //   selector: (row) => row.calc_100minus,
-    // };
-    // const calc100_300: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "calc_100_300",
-    //   name: intl.get("calc.100_300"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "100px",
-    //   selector: (row) => row.calc_100_300,
-    // };
-    // const calc300_1000: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "calc_300_1000",
-    //   name: intl.get("calc.300_1000"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "100px",
-    //   selector: (row) => row.calc_300_1000,
-    // };
-    // const calc1000plus: TableColumn<DELTA_ROW_TYPE> = {
-    //   id: "calc_1000plus",
-    //   name: intl.get("calc.1000plus"),
-    //   sortable: true,
-    //   right: true,
-    //   width: "100px",
-    //   selector: (row) => row.calc_1000plus,
-    // };
+    //
+    // Table-2: Buckets
+    //
+    const colBucketsValidated: TableColumn<DELTA_ROW_TYPE> = {
+      id: "b_validated",
+      name: intl.get("col.buckets_validated"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.b_validated,
+      conditionalCellStyles: [
+        {
+          when: (row) => row.b_validated < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const colBucketsInvalidated: TableColumn<DELTA_ROW_TYPE> = {
+      id: "b_invalidated",
+      name: intl.get("col.buckets_invalidated"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.b_invalidated,
+      conditionalCellStyles: [
+        {
+          when: (row) => row.b_invalidated < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const colBucketsOther: TableColumn<DELTA_ROW_TYPE> = {
+      id: "b_other",
+      name: intl.get("col.buckets_other"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.b_other,
+      conditionalCellStyles: [
+        {
+          when: (row) => row.b_other < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const colBucketsTrain: TableColumn<DELTA_ROW_TYPE> = {
+      id: "b_train",
+      name: intl.get("col.buckets_train"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.b_train,
+      conditionalCellStyles: [
+        {
+          when: (row) => row.b_train < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const colBucketsDev: TableColumn<DELTA_ROW_TYPE> = {
+      id: "b_dev",
+      name: intl.get("col.buckets_dev"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.b_dev,
+      conditionalCellStyles: [
+        {
+          when: (row) => row.b_dev < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const colBucketsTest: TableColumn<DELTA_ROW_TYPE> = {
+      id: "b_test",
+      name: intl.get("col.buckets_test"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.b_test,
+      conditionalCellStyles: [
+        {
+          when: (row) => row.b_test < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const colBucketsReported: TableColumn<DELTA_ROW_TYPE> = {
+      id: "b_reported",
+      name: intl.get("col.buckets_reported"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) => row.b_reported,
+      conditionalCellStyles: [
+        {
+          when: (row) => row.b_reported < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
 
     let viewCols1: TableColumn<DELTA_ROW_TYPE>[];
     let viewTitle1 = "";
@@ -238,26 +299,27 @@ export const DeltaTable = () => {
       colUsers,
       colTotalHrs,
       colValidHrs,
+      calcAvgDurClip,
+      calcAvgDurUser,
+      calcTotalSentences,
+      calcWithDomain,
       // colValidPercentage,
-      // calcAvgDurClip,
-      // calcAvgDurUser,
-      // calc100minus,
-      // calc100_300,
-      // calc300_1000,
-      // calc1000plus,
     ];
     viewCols2 = [
       colVersion,
-      colDays,
-      // calcTCTotal,
-      // colTCValidated,
-      // colTCUnvalidated,
-      // calcTCValidatedPercentage,
-      // calcTCWithDomain,
-      // calcTCWithDomainPercentage,
+      colLocale,
+      colClips,
+      colBucketsValidated,
+      colBucketsInvalidated,
+      colBucketsOther,
+      colBucketsTrain,
+      colBucketsDev,
+      colBucketsTest,
+      colBucketsReported,
+      //
     ];
-    viewTitle1 = intl.get("menu.views.totals");
-    viewTitle2 = intl.get("menu.views.totals2");
+    viewTitle1 = intl.get("menu.views.delta");
+    viewTitle2 = intl.get("menu.views.delta2");
     // console.log(viewCols, viewTitle)
     return [viewCols1, viewTitle1, viewCols2, viewTitle2];
   };
@@ -282,13 +344,27 @@ export const DeltaTable = () => {
     [cvDelta],
   );
 
+  const applyFilters = useCallback(
+    (data: DELTA_TABLE_TYPE) => {
+      let res: DELTA_TABLE_TYPE = data;
+      // if (versionFilter.length > 0) {
+      //   res = res.filter((row) => versionFilter.includes(row.version));
+      // }
+      if (languageFilter.length > 0) {
+        res = res.filter((row) => languageFilter.includes(row.locale));
+      }
+      return res;
+    },
+    [languageFilter, versionFilter],
+  );
+
   return !cvDelta || !initDone ? (
     <></>
   ) : (
     <>
       <DataTable
         columns={viewColumns1}
-        data={cvDelta}
+        data={applyFilters(cvDelta)}
         progressPending={!cvDelta}
         responsive
         dense
@@ -306,7 +382,7 @@ export const DeltaTable = () => {
       />
       <DataTable
         columns={viewColumns2}
-        data={cvDelta}
+        data={applyFilters(cvDelta)}
         progressPending={!cvDelta}
         responsive
         dense
