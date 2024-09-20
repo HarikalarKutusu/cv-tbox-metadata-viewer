@@ -80,12 +80,13 @@ export const GraphBuilder = () => {
       setGEnable(false);
     }
   }, [
+    cvDelta,
     cvTotals,
     languageFilter,
     metaData,
     tableView,
     versionFilter,
-    viewGraphs, // keep this for fix to intl not rendering correcty
+    viewGraphs,
   ]);
 
   let lc: string = "";
