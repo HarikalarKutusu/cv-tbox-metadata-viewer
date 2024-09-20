@@ -161,7 +161,7 @@ export const DeltaTable = () => {
       sortable: true,
       right: true,
       width: "120px",
-      selector: (row) => row.totalSentences,
+      selector: (row) => row.totalSentences.toLocaleString(langCode),
       conditionalCellStyles: [
         {
           when: (row) => row.totalSentences < 0,
@@ -175,7 +175,7 @@ export const DeltaTable = () => {
       sortable: true,
       right: true,
       width: "120px",
-      selector: (row) => row.sentencesWithDomain,
+      selector: (row) => row.sentencesWithDomain.toLocaleString(langCode),
       conditionalCellStyles: [
         {
           when: (row) => row.sentencesWithDomain < 0,
@@ -193,7 +193,7 @@ export const DeltaTable = () => {
       sortable: true,
       right: true,
       width: "100px",
-      selector: (row) => row.b_validated,
+      selector: (row) => row.b_validated.toLocaleString(langCode),
       conditionalCellStyles: [
         {
           when: (row) => row.b_validated < 0,
@@ -207,7 +207,7 @@ export const DeltaTable = () => {
       sortable: true,
       right: true,
       width: "100px",
-      selector: (row) => row.b_invalidated,
+      selector: (row) => row.b_invalidated.toLocaleString(langCode),
       conditionalCellStyles: [
         {
           when: (row) => row.b_invalidated < 0,
@@ -221,7 +221,7 @@ export const DeltaTable = () => {
       sortable: true,
       right: true,
       width: "100px",
-      selector: (row) => row.b_other,
+      selector: (row) => row.b_other.toLocaleString(langCode),
       conditionalCellStyles: [
         {
           when: (row) => row.b_other < 0,
@@ -235,7 +235,7 @@ export const DeltaTable = () => {
       sortable: true,
       right: true,
       width: "100px",
-      selector: (row) => row.b_train,
+      selector: (row) => row.b_train.toLocaleString(langCode),
       conditionalCellStyles: [
         {
           when: (row) => row.b_train < 0,
@@ -249,7 +249,7 @@ export const DeltaTable = () => {
       sortable: true,
       right: true,
       width: "100px",
-      selector: (row) => row.b_dev,
+      selector: (row) => row.b_dev.toLocaleString(langCode),
       conditionalCellStyles: [
         {
           when: (row) => row.b_dev < 0,
@@ -263,7 +263,7 @@ export const DeltaTable = () => {
       sortable: true,
       right: true,
       width: "100px",
-      selector: (row) => row.b_test,
+      selector: (row) => row.b_test.toLocaleString(langCode),
       conditionalCellStyles: [
         {
           when: (row) => row.b_test < 0,
@@ -277,7 +277,7 @@ export const DeltaTable = () => {
       sortable: true,
       right: true,
       width: "100px",
-      selector: (row) => row.b_reported,
+      selector: (row) => row.b_reported.toLocaleString(langCode),
       conditionalCellStyles: [
         {
           when: (row) => row.b_reported < 0,
