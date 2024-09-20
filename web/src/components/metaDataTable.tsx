@@ -22,72 +22,14 @@ import {
   getCVLanguageText,
   dec2,
   dec3,
+  downloadCSV,
+  DELTA_TABLE_TYPE,
+  DELTA_ROW_TYPE,
 } from "../helpers/dataTableHelper";
 import { appDatasetAnalyzerURL } from "./../helpers/appHelper";
 
 // Data
 import METADATA_RAW from "./../assets/data/$metadata.json";
-
-//
-// Table Download
-//
-
-// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
-const convertArrayOfObjectsToCSV = (
-  array: DT_ROW_TYPE[] | TOTALS_ROW_TYPE[],
-) => {
-  let result: string;
-
-  const columnDelimiter = ",";
-  const lineDelimiter = "\n";
-  const keys = Object.keys(array[0]);
-
-  result = "";
-  result += keys.join(columnDelimiter);
-  result += lineDelimiter;
-
-  array.forEach((item: any) => {
-    let ctr = 0;
-    keys.forEach((key) => {
-      if (ctr > 0) result += columnDelimiter;
-
-      result += item[key];
-
-      ctr++;
-    });
-    result += lineDelimiter;
-  });
-
-  return result;
-};
-
-// Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
-const downloadCSV = (
-  array: DT_ROW_TYPE[] | TOTALS_ROW_TYPE[],
-  lcList: string[],
-  verList: string[],
-) => {
-  const link = document.createElement("a");
-  let csv = convertArrayOfObjectsToCSV(array);
-  if (csv == null) return;
-
-  const ext: string = ".csv";
-  let fn: string = "cv-metadata";
-  if (lcList.length > 0) {
-    lcList.forEach((lc) => (fn += "-" + lc));
-  }
-  if (verList.length > 0) {
-    verList.forEach((ver) => (fn += "-v" + ver));
-  }
-
-  if (!csv.match(/^data:text\/csv/i)) {
-    csv = `data:text/csv;charset=utf-8,${csv}`;
-  }
-
-  link.setAttribute("href", encodeURI(csv));
-  link.setAttribute("download", fn + ext);
-  link.click();
-};
 
 //
 // JSX
@@ -105,6 +47,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
   const { langCode } = useStore();
   const { metaData, setMetaData } = useStore();
   const { setCVTotals } = useStore();
+  const { setCVDelta } = useStore();
   const { tableView } = useStore();
   const { versionFilter } = useStore();
   const { languageFilter } = useStore();
@@ -197,31 +140,25 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
     const colBucketsValidated: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsValidated",
-      name: intl.get("col.b_validated"),
+      name: intl.get("col.buckets_validated"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.b_validated
-          ? row.b_validated.toLocaleString(langCode)
-          : "-",
-      sortFunction: (a, b) =>
-        a.b_validated > b.b_validated ? 1 : -1,
+        row.b_validated ? row.b_validated.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_validated > b.b_validated ? 1 : -1),
     };
     const colBucketsInValidated: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsInValidated",
-      name: intl.get("col.b_invalidated"),
+      name: intl.get("col.buckets_invalidated"),
       sortable: true,
       right: true,
       selector: (row) =>
-        row.b_invalidated
-          ? row.b_invalidated.toLocaleString(langCode)
-          : "-",
-      sortFunction: (a, b) =>
-        a.b_invalidated > b.b_invalidated ? 1 : -1,
+        row.b_invalidated ? row.b_invalidated.toLocaleString(langCode) : "-",
+      sortFunction: (a, b) => (a.b_invalidated > b.b_invalidated ? 1 : -1),
     };
     const colBucketsOther: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsOther",
-      name: intl.get("col.b_other"),
+      name: intl.get("col.buckets_other"),
       sortable: true,
       right: true,
       selector: (row) =>
@@ -230,7 +167,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colBucketsTrain: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsTrain",
-      name: intl.get("col.b_train"),
+      name: intl.get("col.buckets_train"),
       sortable: true,
       right: true,
       selector: (row) =>
@@ -239,34 +176,40 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colBucketsDev: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsDev",
-      name: intl.get("col.b_dev"),
+      name: intl.get("col.buckets_dev"),
       sortable: true,
       right: true,
-      selector: (row) =>
-        row.b_dev ? row.b_dev.toLocaleString(langCode) : "-",
+      selector: (row) => (row.b_dev ? row.b_dev.toLocaleString(langCode) : "-"),
       sortFunction: (a, b) => (a.b_dev > b.b_dev ? 1 : -1),
     };
     const colBucketsTest: TableColumn<DT_ROW_TYPE> = {
       id: "bucketsTest",
-      name: intl.get("col.b_test"),
+      name: intl.get("col.buckets_test"),
       sortable: true,
       right: true,
       selector: (row) =>
         row.b_test ? row.b_test.toLocaleString(langCode) : "-",
       sortFunction: (a, b) => (a.b_test > b.b_test ? 1 : -1),
     };
-    // const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
-    //   id: "bucketsReported",
-    //   name: intl.get("col.b_reported"),
-    //   sortable: true,
-    //   right: true,
-    //   selector: (row) => row.b_reported,
-    //   cell: (row) => row.b_reported.toLocaleString(langCode),
-    // };
+    const colBucketsReported: TableColumn<DT_ROW_TYPE> = {
+      id: "bucketsReported",
+      name: intl.get("col.buckets_reported"),
+      sortable: true,
+      right: true,
+      // selector: (row) => row.b_reported,
+      // NOTE: Reported sentences removed from "buckets" category to new reportedSentences field
+      cell: (row) =>
+        (row.b_reported
+          ? row.b_reported
+          : 0 + row.reportedSentences
+          ? row.reportedSentences
+          : 0
+        ).toLocaleString(langCode),
+    };
 
     const colAgesNodata: TableColumn<DT_ROW_TYPE> = {
       id: "agesNodata",
-      name: intl.get("col.a_nodata"),
+      name: intl.get("col.ages_nodata"),
       sortable: true,
       right: true,
       width: "80px",
@@ -275,7 +218,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesTeens: TableColumn<DT_ROW_TYPE> = {
       id: "agesTeens",
-      name: intl.get("col.a_teens"),
+      name: intl.get("col.ages_teens"),
       sortable: true,
       right: true,
       width: "80px",
@@ -284,7 +227,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesTwenties: TableColumn<DT_ROW_TYPE> = {
       id: "agesTwenties",
-      name: intl.get("col.a_twenties"),
+      name: intl.get("col.ages_twenties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -293,7 +236,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesThirties: TableColumn<DT_ROW_TYPE> = {
       id: "agesThirties",
-      name: intl.get("col.a_thirties"),
+      name: intl.get("col.ages_thirties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -302,7 +245,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesFourties: TableColumn<DT_ROW_TYPE> = {
       id: "agesFourties",
-      name: intl.get("col.a_fourties"),
+      name: intl.get("col.ages_fourties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -311,7 +254,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesFifties: TableColumn<DT_ROW_TYPE> = {
       id: "agesFifties",
-      name: intl.get("col.a_fifties"),
+      name: intl.get("col.ages_fifties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -320,7 +263,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesSixties: TableColumn<DT_ROW_TYPE> = {
       id: "agesSixties",
-      name: intl.get("col.a_sixties"),
+      name: intl.get("col.ages_sixties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -329,7 +272,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesSeventies: TableColumn<DT_ROW_TYPE> = {
       id: "agesSeventies",
-      name: intl.get("col.a_seventies"),
+      name: intl.get("col.ages_seventies"),
       sortable: true,
       right: true,
       width: "80px",
@@ -338,7 +281,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesEighties: TableColumn<DT_ROW_TYPE> = {
       id: "agesEighties",
-      name: intl.get("col.a_eighties"),
+      name: intl.get("col.ages_eighties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -347,7 +290,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colAgesNineties: TableColumn<DT_ROW_TYPE> = {
       id: "agesNineties",
-      name: intl.get("col.a_nineties"),
+      name: intl.get("col.ages_nineties"),
       sortable: true,
       right: true,
       width: "80px",
@@ -357,7 +300,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
     const colGendersNodata: TableColumn<DT_ROW_TYPE> = {
       id: "gendersNodata",
-      name: intl.get("col.g_nodata"),
+      name: intl.get("col.genders_nodata"),
       sortable: true,
       right: true,
       selector: (row) => (row.g_nodata ? row.g_nodata : "-"),
@@ -365,7 +308,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colGendersMale: TableColumn<DT_ROW_TYPE> = {
       id: "gendersMale",
-      name: intl.get("col.g_male"),
+      name: intl.get("col.genders_male"),
       sortable: true,
       right: true,
       selector: (row) => (row.g_male ? row.g_male : "-"),
@@ -373,7 +316,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colGendersFemale: TableColumn<DT_ROW_TYPE> = {
       id: "gendersFemale",
-      name: intl.get("col.g_female"),
+      name: intl.get("col.genders_female"),
       sortable: true,
       right: true,
       selector: (row) => (row.g_female ? row.g_female : "-"),
@@ -381,7 +324,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
     };
     const colGendersOther: TableColumn<DT_ROW_TYPE> = {
       id: "gendersOther",
-      name: intl.get("col.g_other"),
+      name: intl.get("col.genders_other"),
       sortable: true,
       right: true,
       selector: (row) => (row.g_other ? row.g_other : "-"),
@@ -576,17 +519,14 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("calc.tc.total"),
       sortable: true,
       right: true,
-      width: "100px",
       selector: (row) =>
-        row.tc_totalSentences ? row.tc_totalSentences.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.tc_totalSentences) > Number(b.tc_totalSentences) ? 1 : -1),
+        row.totalSentences ? row.totalSentences.toLocaleString(langCode) : "-",
     };
     const colTCValidated: TableColumn<DT_ROW_TYPE> = {
       id: "tcValidated",
       name: intl.get("col.tc.validated"),
       sortable: true,
       right: true,
-      width: "100px",
       selector: (row) =>
         row.validatedSentences
           ? row.validatedSentences.toLocaleString(langCode)
@@ -599,7 +539,6 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("col.tc.unvalidated"),
       sortable: true,
       right: true,
-      width: "100px",
       selector: (row) =>
         row.unvalidatedSentences
           ? row.unvalidatedSentences.toLocaleString(langCode)
@@ -612,155 +551,38 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("calc.tc.validated_percentage"),
       sortable: true,
       right: true,
-      width: "100px",
       selector: (row) =>
-        row.tc_validSentencePercentage
-          ? row.tc_validSentencePercentage.toFixed(2)
+        row.validSentencePercentage
+          ? row.validSentencePercentage.toFixed(2)
           : "-",
       sortFunction: (a, b) =>
-        a.tc_validSentencePercentage! > b.tc_validSentencePercentage! ? 1 : -1,
+        a.validSentencePercentage! > b.validSentencePercentage! ? 1 : -1,
     };
     const calcTCWithDomain: TableColumn<DT_ROW_TYPE> = {
       id: "tcWithDomain",
       name: intl.get("calc.tc.with_domain"),
       sortable: true,
       right: true,
-      width: "120px",
       selector: (row) =>
-        row.sd_sentencesWithDomain
-          ? row.sd_sentencesWithDomain.toLocaleString(langCode)
+        row.sentencesWithDomain
+          ? row.sentencesWithDomain.toLocaleString(langCode)
           : "-",
       sortFunction: (a, b) =>
-        a.sd_sentencesWithDomain! > b.sd_sentencesWithDomain! ? 1 : -1,
+        a.sentencesWithDomain! > b.sentencesWithDomain! ? 1 : -1,
     };
     const calcTCWithDomainPercentage: TableColumn<DT_ROW_TYPE> = {
       id: "tcWithDomainPercentage",
       name: intl.get("calc.tc.with_domain_percentage"),
       sortable: true,
       right: true,
-      width: "120px",
       selector: (row) =>
-        row.sd_sentencesWithDomainPercentage
-          ? row.sd_sentencesWithDomainPercentage.toFixed(2)
+        row.sentencesWithDomainPercentage
+          ? row.sentencesWithDomainPercentage.toFixed(2)
           : "-",
       sortFunction: (a, b) =>
-        a.sd_sentencesWithDomainPercentage! > b.sd_sentencesWithDomainPercentage!
+        a.sentencesWithDomainPercentage! > b.sentencesWithDomainPercentage!
           ? 1
           : -1,
-    };
-    //
-    // Text Corpus Columns
-    //
-    const colSDAgricultureFood: TableColumn<DT_ROW_TYPE> = {
-      id: "sdAggFood",
-      name: intl.get("dom.agriculture_food"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_agriculture_food ? row.sd_agriculture_food.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_agriculture_food) > Number(b.sd_agriculture_food) ? 1 : -1),
-    };
-
-    const colSDAutomotiveTransport: TableColumn<DT_ROW_TYPE> = {
-      id: "sdAutoTransport",
-      name: intl.get("dom.automotive_transport"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_automotive_transport ? row.sd_automotive_transport.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_automotive_transport) > Number(b.sd_automotive_transport) ? 1 : -1),
-    };
-    const colSDFinance: TableColumn<DT_ROW_TYPE> = {
-      id: "sdFinance",
-      name: intl.get("dom.finance"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_finance ? row.sd_finance.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_finance) > Number(b.sd_finance) ? 1 : -1),
-    };
-    const colSDGeneral: TableColumn<DT_ROW_TYPE> = {
-      id: "sdGeneral",
-      name: intl.get("dom.general"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_general ? row.sd_general.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_general) > Number(b.sd_general) ? 1 : -1),
-    };
-    const colSDHealthcare: TableColumn<DT_ROW_TYPE> = {
-      id: "sdHealthcare",
-      name: intl.get("dom.healthcare"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_healthcare ? row.sd_healthcare.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_healthcare) > Number(b.sd_healthcare) ? 1 : -1),
-    };
-    const colSDHistoryLawGovernment: TableColumn<DT_ROW_TYPE> = {
-      id: "sdHistLawGov",
-      name: intl.get("dom.history_law_government"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_history_law_government ? row.sd_history_law_government.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_history_law_government) > Number(b.sd_history_law_government) ? 1 : -1),
-    };
-    const colSDLanguageFundamentals: TableColumn<DT_ROW_TYPE> = {
-      id: "sdLangFund",
-      name: intl.get("dom.language_fundamentals"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_language_fundamentals ? row.sd_language_fundamentals.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_language_fundamentals) > Number(b.sd_language_fundamentals) ? 1 : -1),
-    };
-    const colSDMediaEntertainment: TableColumn<DT_ROW_TYPE> = {
-      id: "sdMediaEnt",
-      name: intl.get("dom.media_entertainment"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_media_entertainment ? row.sd_media_entertainment.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_media_entertainment) > Number(b.sd_media_entertainment) ? 1 : -1),
-    };
-    const colSDNatureEnvironment: TableColumn<DT_ROW_TYPE> = {
-      id: "sdNatureEnv",
-      name: intl.get("dom.nature_environment"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_nature_environment ? row.sd_nature_environment.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_nature_environment) > Number(b.sd_nature_environment) ? 1 : -1),
-    };
-    const colSDNewsCurrentAffairs: TableColumn<DT_ROW_TYPE> = {
-      id: "sdNews",
-      name: intl.get("dom.news_current_affairs"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_news_current_affairs ? row.sd_news_current_affairs.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_news_current_affairs) > Number(b.sd_news_current_affairs) ? 1 : -1),
-    };
-    const colSDTechnologyRobotics: TableColumn<DT_ROW_TYPE> = {
-      id: "sdTechRob",
-      name: intl.get("dom.technology_robotics"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_technology_robotics ? row.sd_technology_robotics.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.sd_technology_robotics) > Number(b.sd_technology_robotics) ? 1 : -1),
     };
 
     // Icon Links
@@ -832,6 +654,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
           calcValidRecsPercentage,
           calcInvalidRecsPercentage,
           calcOtherRecsPercentage,
+          colBucketsReported,
         ];
         viewTitle = intl.get("menu.views.buckets-main");
         break;
@@ -908,29 +731,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
           calcTCValidatedPercentage,
           calcTCWithDomain,
           calcTCWithDomainPercentage,
+          colBucketsReported,
         ];
         viewTitle = intl.get("menu.views.textcorpus");
-        break;
-      case "domains":
-        viewCols = [
-          colVersion,
-          colLocale,
-          apiNativeName,
-          calcTCTotal,
-          colSDGeneral,
-          calcTCWithDomain,
-          colSDAgricultureFood,
-          colSDAutomotiveTransport,
-          colSDFinance,
-          colSDHealthcare,
-          colSDHistoryLawGovernment,
-          colSDLanguageFundamentals,
-          colSDMediaEntertainment,
-          colSDNatureEnvironment,
-          colSDNewsCurrentAffairs,
-          colSDTechnologyRobotics,
-        ];
-        viewTitle = intl.get("menu.views.domains");
         break;
       case "other":
         viewCols = [
@@ -969,12 +772,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
       if (languageFilter.length > 0) {
         res = res.filter((row) => languageFilter.includes(row.locale));
       }
-      if (tableView === "textcorpus" || tableView === "domains") {
-        res = res.filter((row) => Number(row.version) >= 17.0 );
-      }
       return res;
     },
-    [languageFilter, versionFilter, tableView],
+    [languageFilter, versionFilter],
   );
 
   const calcCalculatedFields = (data: CV_METADATATABLE_TYPE) => {
@@ -1019,16 +819,12 @@ export const MetadataTable = (props: MetadataTableProps) => {
       // if (row.size)
       newRow.size = Math.round(row.size / (1024 * 1024));
 
-      // Temporary fix for "-1" values in unvalidatedSentences
-      newRow.unvalidatedSentences = Math.max(0, row.unvalidatedSentences);
-
       //
       // calculated fields
       //
       if (row.clips !== 0) {
         newRow.validRecsPercentage = (100 * row.b_validated) / row.clips;
-        newRow.invalidRecsPercentage =
-          (100 * row.b_invalidated) / row.clips;
+        newRow.invalidRecsPercentage = (100 * row.b_invalidated) / row.clips;
         newRow.otherRecsPercentage = (100 * row.b_other) / row.clips;
       }
       if (row.totalHrs > 0) {
@@ -1040,44 +836,37 @@ export const MetadataTable = (props: MetadataTableProps) => {
       }
       if (row.b_validated > 0) {
         newRow.percentageUsed =
-          (100 * (row.b_train + row.b_dev + row.b_test)) /
-          row.b_validated;
-        newRow.estTrainHrs =
-          row.validHrs * (row.b_train / row.b_validated);
-        newRow.estDevHrs =
-          row.validHrs * (row.b_dev / row.b_validated);
-        newRow.estTestHrs =
-          row.validHrs * (row.b_test / row.b_validated);
+          (100 * (row.b_train + row.b_dev + row.b_test)) / row.b_validated;
+        newRow.estTrainHrs = row.validHrs * (row.b_train / row.b_validated);
+        newRow.estDevHrs = row.validHrs * (row.b_dev / row.b_validated);
+        newRow.estTestHrs = row.validHrs * (row.b_test / row.b_validated);
       }
-      if (row.g_male > 0)
-        newRow.fmRatio = row.g_female / row.g_male;
+      if (row.g_male > 0) newRow.fmRatio = row.g_female / row.g_male;
       if (row.g_nodata !== 1) {
-        newRow.malePercentage =
-          (100 * row.g_male) / (1 - row.g_nodata);
-        newRow.femalePercentage =
-          (100 * row.g_female) / (1 - row.g_nodata);
+        newRow.malePercentage = (100 * row.g_male) / (1 - row.g_nodata);
+        newRow.femalePercentage = (100 * row.g_female) / (1 - row.g_nodata);
       }
       // New text corpora related
-      newRow.tc_totalSentences = row.validatedSentences + row.unvalidatedSentences;
-      newRow.tc_validSentencePercentage =
-        newRow.tc_totalSentences > 0
-          ? (100 * row.validatedSentences) / newRow.tc_totalSentences
+      newRow.totalSentences = row.validatedSentences + row.unvalidatedSentences;
+      newRow.validSentencePercentage =
+        newRow.totalSentences > 0
+          ? (100 * row.validatedSentences) / newRow.totalSentences
           : 0;
-      newRow.sd_sentencesWithDomain =
+      newRow.sentencesWithDomain =
         row.sd_agriculture_food +
         row.sd_automotive_transport +
         row.sd_finance +
         row.sd_service_retail +
-        // row.sd_general + // ignore ganeral
+        row.sd_general +
         row.sd_healthcare +
         row.sd_history_law_government +
         row.sd_language_fundamentals +
         row.sd_media_entertainment +
         row.sd_nature_environment +
         row.sd_news_current_affairs;
-      newRow.sd_sentencesWithDomainPercentage =
+      newRow.sentencesWithDomainPercentage =
         row.validatedSentences > 0
-          ? (100 * newRow.sd_sentencesWithDomain) / row.validatedSentences
+          ? (100 * newRow.sentencesWithDomain) / row.validatedSentences
           : 0;
       // append to result table
       newData.push(newRow);
@@ -1115,20 +904,6 @@ export const MetadataTable = (props: MetadataTableProps) => {
         tc_val_percentage: 0,
         tc_with_domain: 0,
         tc_domain_percentage: 0,
-        // sentence domains
-        sd_nodata: 0,
-        sd_agriculture_food: 0,
-        sd_automotive_transport: 0,
-        sd_finance: 0,
-        sd_service_retail: 0,
-        sd_general: 0,
-        sd_healthcare: 0,
-        sd_history_law_government: 0,
-        sd_language_fundamentals: 0,
-        sd_media_entertainment: 0,
-        sd_nature_environment: 0,
-        sd_news_current_affairs: 0,
-        sd_technology_robotics: 0,
       };
 
       // now fill other values with reducers
@@ -1167,7 +942,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
 
       // Text Corpus Totals
       res.tc_total = subset.reduce((sum, row) => {
-        return sum + row.tc_totalSentences!;
+        return sum + row.totalSentences!;
       }, 0);
       res.tc_val = subset.reduce((sum, row) => {
         return sum + row.validatedSentences!;
@@ -1178,54 +953,87 @@ export const MetadataTable = (props: MetadataTableProps) => {
       res.tc_val_percentage =
         res.tc_total > 0 ? (100 * res.tc_val) / res.tc_total : 0;
       res.tc_with_domain = subset.reduce((sum, row) => {
-        return sum + row.sd_sentencesWithDomain!;
+        return sum + row.sentencesWithDomain!;
       }, 0);
       res.tc_domain_percentage =
         res.tc_val > 0 ? (100 * res.tc_with_domain) / res.tc_val : 0;
-      // sentence domain details
-      res.sd_agriculture_food = subset.reduce((sum, row) => {
-        return sum + row.sd_agriculture_food!;
-      }, 0);
-      res.sd_automotive_transport = subset.reduce((sum, row) => {
-        return sum + row.sd_automotive_transport!;
-      }, 0);
-      res.sd_finance = subset.reduce((sum, row) => {
-        return sum + row.sd_finance!;
-      }, 0);
-      res.sd_general = subset.reduce((sum, row) => {
-        return sum + row.sd_general!;
-      }, 0);
-      res.sd_healthcare = subset.reduce((sum, row) => {
-        return sum + row.sd_healthcare!;
-      }, 0);
-      res.sd_history_law_government = subset.reduce((sum, row) => {
-        return sum + row.sd_history_law_government!;
-      }, 0);
-      res.sd_language_fundamentals = subset.reduce((sum, row) => {
-        return sum + row.sd_language_fundamentals!;
-      }, 0);
-      res.sd_media_entertainment = subset.reduce((sum, row) => {
-        return sum + row.sd_media_entertainment!;
-      }, 0);
-      res.sd_nature_environment = subset.reduce((sum, row) => {
-        return sum + row.sd_nature_environment!;
-      }, 0);
-      res.sd_news_current_affairs = subset.reduce((sum, row) => {
-        return sum + row.sd_news_current_affairs!;
-      }, 0);
-      res.sd_service_retail = subset.reduce((sum, row) => {
-        return sum + row.sd_service_retail!;
-      }, 0);
-      res.sd_technology_robotics = subset.reduce((sum, row) => {
-        return sum + row.sd_technology_robotics!;
-      }, 0);
-      
 
       // put row to table
       totals.push(res);
     });
 
     return totals;
+  };
+
+  const calcCVDelta = (data: CV_METADATATABLE_TYPE) => {
+    const delta: DELTA_TABLE_TYPE = []; // This will be the returned value
+    const languages = [...new Set(data.map((row) => row.locale))].sort(); // get all languages
+    languages.forEach((lc) => {
+      // get data with that language code, sorted in inc. ver
+      const lcdata = data
+        .filter((row) => row.locale === lc)
+        .sort((a, b) =>
+          parseFloat(a.version) > parseFloat(b.version) ? 1 : -1,
+        );
+      // get first, then loop from second till end to get delta values
+      let rec0: DT_ROW_TYPE = lcdata[0]; // get first at 0
+      // loop through rest
+      lcdata.slice(1).forEach((rec1) => {
+        const delta_rec: DELTA_ROW_TYPE = {
+          version: rec0.version + " » " + rec1.version,
+          days: Math.ceil(
+            (new Date(rec1.date).getTime() - new Date(rec0.date).getTime()) /
+              (1000 * 3600 * 24),
+          ),
+          locale: lc,
+
+          clips: rec1.clips - rec0.clips,
+          users: rec1.users - rec0.users,
+          totalHrs: rec1.totalHrs - rec0.totalHrs,
+          validHrs: rec1.validHrs - rec0.validHrs,
+          avgDurationSecs: rec1.avgDurationSecs - rec0.avgDurationSecs,
+
+          b_validated: rec1.b_validated - rec0.b_validated,
+          b_invalidated: rec1.b_invalidated - rec0.b_invalidated,
+          b_other: rec1.b_other - rec0.b_other,
+          b_train: rec1.b_train - rec0.b_train,
+          b_dev: rec1.b_dev - rec0.b_dev,
+          b_test: rec1.b_test - rec0.b_test,
+          b_reported:
+            (rec1.b_reported
+              ? rec1.b_reported
+              : 0 + rec1.reportedSentences
+              ? rec1.reportedSentences
+              : 0) -
+            (rec1.b_reported
+              ? rec0.b_reported
+              : 0 + rec0.reportedSentences
+              ? rec0.reportedSentences
+              : 0),
+
+          validRecsPercentage:
+            rec1.validRecsPercentage! - rec0.validRecsPercentage!,
+          invalidRecsPercentage:
+            rec1.invalidRecsPercentage! - rec0.invalidRecsPercentage!,
+          otherRecsPercentage:
+            rec1.otherRecsPercentage! - rec0.otherRecsPercentage!,
+          validatedHrsPercentage:
+            rec1.validatedHrsPercentage! - rec0.validatedHrsPercentage!,
+          avgRecsPerUser: rec1.avgRecsPerUser! - rec0.avgRecsPerUser!,
+          avgSecsPerUser: rec1.avgSecsPerUser! - rec0.avgSecsPerUser!,
+          percentageUsed: rec1.percentageUsed! - rec0.percentageUsed!,
+          malePercentage: rec1.malePercentage! - rec0.malePercentage!,
+          femalePercentage: rec1.femalePercentage! - rec0.femalePercentage!,
+
+          totalSentences: rec1.totalSentences! - rec0.totalSentences!,
+          sentencesWithDomain:
+            rec1.sentencesWithDomain! - rec0.sentencesWithDomain!,
+        };
+        delta.push(delta_rec);
+        rec0 = rec1;
+      });
+    });
+    return delta;
   };
 
   const exportCVSMetadataMemo = useMemo(
@@ -1248,19 +1056,25 @@ export const MetadataTable = (props: MetadataTableProps) => {
       rawdata = rawdata.filter((row) => !IGNORE_VERSIONS.includes(row.version));
       const calcdata = calcCalculatedFields(rawdata);
       const totals = calcCVTotals(calcdata);
+      const delta = calcCVDelta(calcdata);
       setMetaData(calcdata);
       setCVTotals(totals);
+      setCVDelta(delta);
     } else {
       // console.log("!!! METADATA READY !!!");
     }
-  }, [metaData, setMetaData, setCVTotals]);
+  }, [metaData, setMetaData, setCVTotals, setCVDelta]);
 
   return !metaData || !initDone ? (
     <></>
   ) : (
     <DataTable
       columns={viewColumns}
-      data={applyFilters(metaData)}
+      data={
+        tableView === "textcorpus"
+          ? applyFilters(metaData).filter((row) => row.totalSentences! > 0)
+          : applyFilters(metaData)
+      }
       progressPending={!metaData}
       responsive
       dense
@@ -1276,418 +1090,5 @@ export const MetadataTable = (props: MetadataTableProps) => {
       customStyles={TABLE_STYLE}
       actions={exportCVSMetadataMemo}
     />
-  );
-};
-
-// TOTALS TABLE
-
-export const TotalsTable = () => {
-  const { initDone } = useStore();
-  const { langCode } = useStore();
-  const { cvTotals } = useStore();
-
-  const getTotalsTableView = (
-    langCode: string,
-  ): [TableColumn<TOTALS_ROW_TYPE>[], string, TableColumn<TOTALS_ROW_TYPE>[], string] => {
-    const colVersion: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "version",
-      name: intl.get("col.version"),
-      sortable: true,
-      center: true,
-      width: "80px",
-      selector: (row) => row.version,
-      sortFunction: (a, b) =>
-        parseFloat(a.version) > parseFloat(b.version) ? 1 : -1,
-    };
-    const colDate: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "date",
-      name: intl.get("col.date"),
-      sortable: true,
-      center: true,
-      width: "100px",
-      selector: (row) => row.date,
-    };
-    const colLocale: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_locales",
-      name: intl.get("col.total_locales"),
-      sortable: true,
-      center: true,
-      width: "80px",
-      selector: (row) => row.total_locales,
-    };
-    const colClips: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_clips",
-      name: intl.get("col.total_clips"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.total_clips,
-      cell: (row) => row.total_clips.toLocaleString(langCode),
-    };
-    const colUsers: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_users",
-      name: intl.get("col.total_users"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.total_users,
-      cell: (row) => row.total_users.toLocaleString(langCode),
-    };
-    const colTotalHrs: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_totalHrs",
-      name: intl.get("col.total_totalHrs"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.total_totalHrs,
-      cell: (row) => Math.round(row.total_totalHrs).toLocaleString(langCode),
-    };
-    const colValidHrs: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_validHrs",
-      name: intl.get("col.total_validHrs"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.total_validHrs,
-      cell: (row) => Math.round(row.total_validHrs).toLocaleString(langCode),
-    };
-
-    // Calculated Columns
-    const calcValidPercentage: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "total_validPercentage",
-      name: intl.get("calc.valid_percentage"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) =>
-        ((100 * row.total_validHrs) / row.total_totalHrs).toFixed(2),
-    };
-    const calcAvgDurClip: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_avg_dur_clip",
-      name: intl.get("calc.avg_dur_clip"),
-      sortable: true,
-      right: true,
-      width: "120px",
-      selector: (row) => row.calc_avg_dur_clip.toFixed(3),
-    };
-    const calcAvgDurUser: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_avg_dur_user",
-      name: intl.get("calc.avg_dur_user"),
-      sortable: true,
-      right: true,
-      width: "120px",
-      selector: (row) => row.calc_avg_dur_user.toLocaleString(langCode, dec2),
-    };
-    //
-    // Text Corpus Columns
-    //
-    const calcTCTotal: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcTotal",
-      name: intl.get("calc.tc.total"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) =>
-        row.tc_total ? row.tc_total.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (Number(a.tc_total) > Number(b.tc_total) ? 1 : -1),
-    };
-    const colTCValidated: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcValidated",
-      name: intl.get("col.tc.validated"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) =>
-        row.tc_val ? row.tc_val.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.tc_val > b.tc_val ? 1 : -1),
-    };
-    const colTCUnvalidated: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcUnvalidated",
-      name: intl.get("col.tc.unvalidated"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) =>
-        row.tc_unval ? row.tc_unval.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.tc_unval > b.tc_unval ? 1 : -1),
-    };
-    const calcTCValidatedPercentage: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcTotal",
-      name: intl.get("calc.tc.validated_percentage"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) =>
-        row.tc_val_percentage ? row.tc_val_percentage.toFixed(2) : "-",
-      sortFunction: (a, b) =>
-        a.tc_val_percentage! > b.tc_val_percentage! ? 1 : -1,
-    };
-    const calcTCWithDomain: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcWithDomain",
-      name: intl.get("calc.tc.with_domain"),
-      sortable: true,
-      right: true,
-      width: "120px",
-      selector: (row) =>
-        row.tc_with_domain ? row.tc_with_domain.toLocaleString(langCode) : "-",
-      sortFunction: (a, b) => (a.tc_with_domain! > b.tc_with_domain! ? 1 : -1),
-    };
-    const calcTCWithDomainPercentage: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "tcWithDomainPercentage",
-      name: intl.get("calc.tc.with_domain_percentage"),
-      sortable: true,
-      right: true,
-      width: "120px",
-      selector: (row) =>
-        row.tc_domain_percentage ? row.tc_domain_percentage.toFixed(2) : "-",
-      sortFunction: (a, b) =>
-        a.tc_domain_percentage! > b.tc_domain_percentage! ? 1 : -1,
-    };
-
-    // voice-corpus bands
-    const calc100minus: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_100minus",
-      name: intl.get("calc.100minus"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.calc_100minus,
-    };
-    const calc100_300: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_100_300",
-      name: intl.get("calc.100_300"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.calc_100_300,
-    };
-    const calc300_1000: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_300_1000",
-      name: intl.get("calc.300_1000"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.calc_300_1000,
-    };
-    const calc1000plus: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "calc_1000plus",
-      name: intl.get("calc.1000plus"),
-      sortable: true,
-      right: true,
-      width: "100px",
-      selector: (row) => row.calc_1000plus,
-    };
-    //
-    // Text Corpus Columns
-    //
-    const colSDAgricultureFood: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdAggFood",
-      name: intl.get("dom.agriculture_food"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_agriculture_food ? row.sd_agriculture_food.toLocaleString(langCode) : "-",
-    };
-
-    const colSDAutomotiveTransport: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdAutoTransport",
-      name: intl.get("dom.automotive_transport"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_automotive_transport ? row.sd_automotive_transport.toLocaleString(langCode) : "-",
-    };
-    const colSDFinance: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdFinance",
-      name: intl.get("dom.finance"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_finance ? row.sd_finance.toLocaleString(langCode) : "-",
-    };
-    const colSDGeneral: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdGeneral",
-      name: intl.get("dom.general"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_general ? row.sd_general.toLocaleString(langCode) : "-",
-    };
-    const colSDHealthcare: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdHealthcare",
-      name: intl.get("dom.healthcare"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_healthcare ? row.sd_healthcare.toLocaleString(langCode) : "-",
-    };
-    const colSDHistoryLawGovernment: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdHistLawGov",
-      name: intl.get("dom.history_law_government"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_history_law_government ? row.sd_history_law_government.toLocaleString(langCode) : "-",
-    };
-    const colSDLanguageFundamentals: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdLangFund",
-      name: intl.get("dom.language_fundamentals"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_language_fundamentals ? row.sd_language_fundamentals.toLocaleString(langCode) : "-",
-    };
-    const colSDMediaEntertainment: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdMediaEnt",
-      name: intl.get("dom.media_entertainment"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_media_entertainment ? row.sd_media_entertainment.toLocaleString(langCode) : "-",
-    };
-    const colSDNatureEnvironment: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdNatureEnv",
-      name: intl.get("dom.nature_environment"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_nature_environment ? row.sd_nature_environment.toLocaleString(langCode) : "-",
-    };
-    const colSDNewsCurrentAffairs: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdNews",
-      name: intl.get("dom.news_current_affairs"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_news_current_affairs ? row.sd_news_current_affairs.toLocaleString(langCode) : "-",
-    };
-    const colSDTechnologyRobotics: TableColumn<TOTALS_ROW_TYPE> = {
-      id: "sdTechRob",
-      name: intl.get("dom.technology_robotics"),
-      sortable: true,
-      right: true,
-      width: "70px",
-      selector: (row) =>
-        row.sd_technology_robotics ? row.sd_technology_robotics.toLocaleString(langCode) : "-",
-    };
-
-    let viewCols1: TableColumn<TOTALS_ROW_TYPE>[];
-    let viewTitle1 = "";
-    let viewCols2: TableColumn<TOTALS_ROW_TYPE>[];
-    let viewTitle2: string = "";
-
-    viewCols1 = [
-      colVersion,
-      colDate,
-      colLocale,
-      colClips,
-      colUsers,
-      colTotalHrs,
-      colValidHrs,
-      calcValidPercentage,
-      calcAvgDurClip,
-      calcAvgDurUser,
-      calc100minus,
-      calc100_300,
-      calc300_1000,
-      calc1000plus,
-    ];
-    viewCols2 = [
-      colVersion,
-      colDate,
-      calcTCTotal,
-      colTCValidated,
-      colTCUnvalidated,
-      calcTCValidatedPercentage,
-      colSDGeneral,
-      calcTCWithDomain,
-      calcTCWithDomainPercentage,
-      colSDAgricultureFood,
-      colSDAutomotiveTransport,
-      colSDFinance,
-      colSDHealthcare,
-      colSDHistoryLawGovernment,
-      colSDLanguageFundamentals,
-      colSDMediaEntertainment,
-      colSDNatureEnvironment,
-      colSDNewsCurrentAffairs,
-      colSDTechnologyRobotics,
-    ];
-    viewTitle1 = intl.get("menu.views.totals");
-    viewTitle2 = intl.get("menu.views.totals2");
-    // console.log(viewCols, viewTitle)
-    return [viewCols1, viewTitle1, viewCols2, viewTitle2];
-  };
-  const paginationComponentOptions = {
-    rowsPerPageText: intl.get("pagination.perpage"),
-    rangeSeparatorText: intl.get("pagination.rangeseparator"),
-    selectAllRowsItem: true,
-    selectAllRowsItemText: intl.get("pagination.selectallrows"),
-  };
-
-  const [viewColumns1, viewTitle1, viewColumns2, viewTitle2] = getTotalsTableView(langCode);
-
-  const exportCVSTotalsMemo = useMemo(
-    () => (
-      <DownloadForOfflineIcon
-        onClick={() => downloadCSV(cvTotals!, ["totals"], [])}
-        color="secondary"
-        sx={{ cursor: "grab" }}
-      />
-    ),
-    [cvTotals],
-  );
-
-  return !cvTotals || !initDone ? (
-    <></>
-  ) : (
-    <>
-      <DataTable
-        columns={viewColumns1}
-        data={cvTotals}
-        progressPending={!cvTotals}
-        responsive
-        dense
-        pagination
-        paginationPerPage={20}
-        paginationComponentOptions={paginationComponentOptions}
-        direction={Direction.AUTO}
-        highlightOnHover
-        title={viewTitle1}
-        persistTableHead
-        defaultSortFieldId={"version"}
-        defaultSortAsc={false}
-        customStyles={TABLE_STYLE}
-        actions={exportCVSTotalsMemo}
-      />
-      <DataTable
-        columns={viewColumns2}
-        data={cvTotals.filter(row => row.tc_total > 0)}
-        progressPending={!cvTotals}
-        responsive
-        dense
-        pagination
-        paginationPerPage={20}
-        paginationComponentOptions={paginationComponentOptions}
-        direction={Direction.AUTO}
-        highlightOnHover
-        title={viewTitle2}
-        persistTableHead
-        defaultSortFieldId={"version"}
-        defaultSortAsc={false}
-        customStyles={TABLE_STYLE}
-        actions={exportCVSTotalsMemo}
-      />
-    </>
   );
 };
