@@ -979,12 +979,13 @@ export const MetadataTable = (props: MetadataTableProps) => {
       let rec0: DT_ROW_TYPE = lcdata[0]; // get first at 0
       // loop through rest
       lcdata.slice(1).forEach((rec1) => {
+        const days: number = Math.ceil(
+          (new Date(rec1.date).getTime() - new Date(rec0.date).getTime()) /
+            (1000 * 3600 * 24),
+        );
         const delta_rec: DELTA_ROW_TYPE = {
-          version: rec0.version + " » " + rec1.version,
-          days: Math.ceil(
-            (new Date(rec1.date).getTime() - new Date(rec0.date).getTime()) /
-              (1000 * 3600 * 24),
-          ),
+          version: rec0.version + "»" + rec1.version,
+          days: days,
           locale: lc,
 
           clips: rec1.clips - rec0.clips,
@@ -1010,20 +1011,25 @@ export const MetadataTable = (props: MetadataTableProps) => {
               : 0 + rec0.reportedSentences
               ? rec0.reportedSentences
               : 0),
+          // monthly averages
+          mo_clips: (30 * (rec1.clips - rec0.clips)) / days,
+          mo_users: (30 * (rec1.users - rec0.users)) / days,
+          mo_totalHrs: (30 * (rec1.totalHrs - rec0.totalHrs)) / days,
+          mo_validHrs: (30 * (rec1.validHrs - rec0.validHrs)) / days,
 
-          validRecsPercentage:
-            rec1.validRecsPercentage! - rec0.validRecsPercentage!,
-          invalidRecsPercentage:
-            rec1.invalidRecsPercentage! - rec0.invalidRecsPercentage!,
-          otherRecsPercentage:
-            rec1.otherRecsPercentage! - rec0.otherRecsPercentage!,
-          validatedHrsPercentage:
-            rec1.validatedHrsPercentage! - rec0.validatedHrsPercentage!,
+          // validRecsPercentage:
+          //   rec1.validRecsPercentage! - rec0.validRecsPercentage!,
+          // invalidRecsPercentage:
+          //   rec1.invalidRecsPercentage! - rec0.invalidRecsPercentage!,
+          // otherRecsPercentage:
+          //   rec1.otherRecsPercentage! - rec0.otherRecsPercentage!,
+          // validatedHrsPercentage:
+          //   rec1.validatedHrsPercentage! - rec0.validatedHrsPercentage!,
           avgRecsPerUser: rec1.avgRecsPerUser! - rec0.avgRecsPerUser!,
           avgSecsPerUser: rec1.avgSecsPerUser! - rec0.avgSecsPerUser!,
-          percentageUsed: rec1.percentageUsed! - rec0.percentageUsed!,
-          malePercentage: rec1.malePercentage! - rec0.malePercentage!,
-          femalePercentage: rec1.femalePercentage! - rec0.femalePercentage!,
+          // percentageUsed: rec1.percentageUsed! - rec0.percentageUsed!,
+          // malePercentage: rec1.malePercentage! - rec0.malePercentage!,
+          // femalePercentage: rec1.femalePercentage! - rec0.femalePercentage!,
 
           totalSentences: rec1.totalSentences! - rec0.totalSentences!,
           sentencesWithDomain:

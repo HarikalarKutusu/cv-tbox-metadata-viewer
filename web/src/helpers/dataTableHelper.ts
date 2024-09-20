@@ -180,16 +180,21 @@ export type DELTA_ROW_TYPE = {
   b_test: number;
   b_reported: number;
 
+  // Monthly Averages
+  mo_clips: number;
+  mo_users: number;
+  mo_totalHrs: number;
+  mo_validHrs: number;
   // Calculated Values added just after importing
-  validRecsPercentage: number;
-  invalidRecsPercentage: number;
-  otherRecsPercentage: number;
-  validatedHrsPercentage: number;
+  // validRecsPercentage: number;
+  // invalidRecsPercentage: number;
+  // otherRecsPercentage: number;
+  // validatedHrsPercentage: number;
   avgRecsPerUser: number;
   avgSecsPerUser: number;
-  percentageUsed: number;
-  malePercentage: number;
-  femalePercentage: number;
+  // percentageUsed: number;
+  // malePercentage: number;
+  // femalePercentage: number;
   totalSentences: number;
   sentencesWithDomain: number;
 };

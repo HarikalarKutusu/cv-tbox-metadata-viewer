@@ -26,12 +26,14 @@ export const DeltaTable = () => {
   const { initDone } = useStore();
   const { langCode } = useStore();
   const { cvDelta } = useStore();
-  const { versionFilter } = useStore();
+  // const { versionFilter } = useStore();
   const { languageFilter } = useStore();
 
   const getDeltaTableView = (
     langCode: string,
   ): [
+    TableColumn<DELTA_ROW_TYPE>[],
+    string,
     TableColumn<DELTA_ROW_TYPE>[],
     string,
     TableColumn<DELTA_ROW_TYPE>[],
@@ -143,11 +145,25 @@ export const DeltaTable = () => {
     };
     const calcAvgDurUser: TableColumn<DELTA_ROW_TYPE> = {
       id: "calc_avg_dur_user",
-      name: intl.get("calc.avg_dur_user"),
+      name: intl.get("calc.avg_secs_per_user"),
       sortable: true,
       right: true,
       width: "120px",
       selector: (row) => row.avgSecsPerUser.toLocaleString(langCode, dec2),
+      conditionalCellStyles: [
+        {
+          when: (row) => row.avgSecsPerUser < 0,
+          style: { background: "pink" },
+        },
+      ],
+    };
+    const calcAvgRecsUser: TableColumn<DELTA_ROW_TYPE> = {
+      id: "calc_avg_recs_user",
+      name: intl.get("calc.avg_recs_per_user"),
+      sortable: true,
+      right: true,
+      width: "120px",
+      selector: (row) => row.avgRecsPerUser.toLocaleString(langCode, dec2),
       conditionalCellStyles: [
         {
           when: (row) => row.avgSecsPerUser < 0,
@@ -285,11 +301,52 @@ export const DeltaTable = () => {
         },
       ],
     };
+    //
+    // Table 3 & For Graphs: Per month values
+    //
+    const calcMonthlyClips: TableColumn<DELTA_ROW_TYPE> = {
+      id: "monthly_clips",
+      name: intl.get("col.clips"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) =>
+        row.mo_clips ? row.mo_clips.toLocaleString(langCode, dec2) : "-",
+    };
+    const calcMonthlyUsers: TableColumn<DELTA_ROW_TYPE> = {
+      id: "monthly_users",
+      name: intl.get("col.users"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) =>
+        row.mo_users ? row.mo_users.toLocaleString(langCode, dec2) : "-",
+    };
+    const calcMonthlyHours: TableColumn<DELTA_ROW_TYPE> = {
+      id: "monthly_totalHrs",
+      name: intl.get("col.totalHrs"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) =>
+        row.mo_totalHrs ? row.mo_totalHrs.toLocaleString(langCode, dec2) : "-",
+    };
+    const calcMonthlyValidatedHours: TableColumn<DELTA_ROW_TYPE> = {
+      id: "monthly_validHrs",
+      name: intl.get("col.validHrs"),
+      sortable: true,
+      right: true,
+      width: "100px",
+      selector: (row) =>
+        row.mo_validHrs ? row.mo_validHrs.toLocaleString(langCode, dec2) : "-",
+    };
 
     let viewCols1: TableColumn<DELTA_ROW_TYPE>[];
     let viewTitle1 = "";
     let viewCols2: TableColumn<DELTA_ROW_TYPE>[];
     let viewTitle2: string = "";
+    let viewCols3: TableColumn<DELTA_ROW_TYPE>[];
+    let viewTitle3: string = "";
 
     viewCols1 = [
       colVersion,
@@ -301,6 +358,7 @@ export const DeltaTable = () => {
       colValidHrs,
       calcAvgDurClip,
       calcAvgDurUser,
+      calcAvgRecsUser,
       calcTotalSentences,
       calcWithDomain,
       // colValidPercentage,
@@ -318,10 +376,27 @@ export const DeltaTable = () => {
       colBucketsReported,
       //
     ];
+    viewCols3 = [
+      colVersion,
+      colLocale,
+      calcMonthlyClips,
+      calcMonthlyUsers,
+      calcMonthlyHours,
+      calcMonthlyValidatedHours,
+      //
+    ];
     viewTitle1 = intl.get("menu.views.delta");
     viewTitle2 = intl.get("menu.views.delta2");
+    viewTitle3 = intl.get("menu.views.delta3");
     // console.log(viewCols, viewTitle)
-    return [viewCols1, viewTitle1, viewCols2, viewTitle2];
+    return [
+      viewCols1,
+      viewTitle1,
+      viewCols2,
+      viewTitle2,
+      viewCols3,
+      viewTitle3,
+    ];
   };
   const paginationComponentOptions = {
     rowsPerPageText: intl.get("pagination.perpage"),
@@ -330,8 +405,14 @@ export const DeltaTable = () => {
     selectAllRowsItemText: intl.get("pagination.selectallrows"),
   };
 
-  const [viewColumns1, viewTitle1, viewColumns2, viewTitle2] =
-    getDeltaTableView(langCode);
+  const [
+    viewColumns1,
+    viewTitle1,
+    viewColumns2,
+    viewTitle2,
+    viewColumns3,
+    viewTitle3,
+  ] = getDeltaTableView(langCode);
 
   const exportCVSTotalsMemo = useMemo(
     () => (
@@ -355,7 +436,7 @@ export const DeltaTable = () => {
       }
       return res;
     },
-    [languageFilter, versionFilter],
+    [languageFilter],
   );
 
   return !cvDelta || !initDone ? (
@@ -392,6 +473,24 @@ export const DeltaTable = () => {
         direction={Direction.AUTO}
         highlightOnHover
         title={viewTitle2}
+        persistTableHead
+        defaultSortFieldId={"version"}
+        defaultSortAsc={false}
+        customStyles={TABLE_STYLE}
+        actions={exportCVSTotalsMemo}
+      />
+      <DataTable
+        columns={viewColumns3}
+        data={applyFilters(cvDelta)}
+        progressPending={!cvDelta}
+        responsive
+        dense
+        pagination
+        paginationPerPage={20}
+        paginationComponentOptions={paginationComponentOptions}
+        direction={Direction.AUTO}
+        highlightOnHover
+        title={viewTitle3}
         persistTableHead
         defaultSortFieldId={"version"}
         defaultSortAsc={false}
