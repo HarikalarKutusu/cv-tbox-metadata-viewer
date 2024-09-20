@@ -10,8 +10,9 @@ import { useStore } from "./../stores/store";
 
 import {
   CV_METADATATABLE_TYPE,
-  getCVLanguageRecord,
   TOTALS_TABLE_TYPE,
+  DELTA_TABLE_TYPE,
+  getCVLanguageRecord,
 } from "../helpers/dataTableHelper";
 
 // App Charts
@@ -26,13 +27,13 @@ import { AppLineChart } from "./graphs/lineChart";
 
 export const GraphBuilder = () => {
   const { initDone } = useStore();
-  const { metaData, cvTotals } = useStore();
+  const { metaData, cvTotals, cvDelta } = useStore();
   const { tableView } = useStore();
   const { versionFilter, languageFilter } = useStore();
 
   const [gEnable, setGEnable] = useState<boolean>(false);
   const [gData, setGData] = useState<
-    CV_METADATATABLE_TYPE | TOTALS_TABLE_TYPE
+    CV_METADATATABLE_TYPE | TOTALS_TABLE_TYPE | DELTA_TABLE_TYPE
   >();
   const [viewGraphs, setViewGraphs] = useState<GRAPH_VIEW_TYPE[]>();
 
@@ -49,9 +50,16 @@ export const GraphBuilder = () => {
 
   useEffect(() => {
     // It firstly depends on if table view is "totals"
-    if (tableView === "totals") {
+    if (cvTotals && tableView === "totals") {
       setGEnable(true);
       setGData(cvTotals);
+    } else if (
+      cvDelta &&
+      tableView === "delta" &&
+      languageFilter.length === 1
+    ) {
+      setGEnable(true);
+      setGData(cvDelta.filter((row) => languageFilter.includes(row.locale)));
     } else if (
       metaData &&
       languageFilter.length > 0 &&
@@ -89,7 +97,7 @@ export const GraphBuilder = () => {
   }
 
   // if it is text-corpus realated, the info starts with v17.0
-  let gdTCFilter: boolean = false
+  let gdTCFilter: boolean = false;
 
   return !metaData || !initDone || !viewGraphs ? (
     <>...</>
@@ -104,11 +112,20 @@ export const GraphBuilder = () => {
             <Grid item xs={12} sm={12} md={6} key={index}>
               <Paper sx={{ p: 1, display: "flex", flexDirection: "column" }}>
                 <div style={{ width: "100%", height: "300px" }}>
-                  { gd.yKeys[0].slice(0,3) === "tc_" || gd.yKeys[0].slice(0,3) === "sd_" ? gdTCFilter = true : gdTCFilter = false }
+                  {gd.yKeys[0].slice(0, 3) === "tc_" ||
+                  gd.yKeys[0].slice(0, 3) === "sd_"
+                    ? (gdTCFilter = true)
+                    : (gdTCFilter = false)}
                   {/* BAR CHART */}
                   {gd.type === "bar" ? (
                     <AppBarChart
-                      data={gdTCFilter ? (gData! as TOTALS_TABLE_TYPE).filter((row) => Number(row.version) >= 17.0) as TOTALS_TABLE_TYPE : gData!}
+                      data={
+                        gdTCFilter
+                          ? ((gData! as TOTALS_TABLE_TYPE).filter(
+                              (row) => Number(row.version) >= 17.0,
+                            ) as TOTALS_TABLE_TYPE)
+                          : gData!
+                      }
                       xKey={gd.xKey}
                       yKeys={gd.yKeys}
                       stacked={gd.stacked}
@@ -126,7 +143,13 @@ export const GraphBuilder = () => {
                     <>
                       {gd.type === "area" ? (
                         <AppAreaChart
-                          data={gdTCFilter ? (gData! as TOTALS_TABLE_TYPE).filter((row) => Number(row.version) >= 17.0) as TOTALS_TABLE_TYPE : gData!}
+                          data={
+                            gdTCFilter
+                              ? ((gData! as TOTALS_TABLE_TYPE).filter(
+                                  (row) => Number(row.version) >= 17.0,
+                                ) as TOTALS_TABLE_TYPE)
+                              : gData!
+                          }
                           xKey={gd.xKey}
                           yKeys={gd.yKeys}
                           stacked={gd.stacked}
@@ -146,7 +169,13 @@ export const GraphBuilder = () => {
                         <>
                           {gd.type === "line" ? (
                             <AppLineChart
-                              data={gdTCFilter ? (gData! as TOTALS_TABLE_TYPE).filter((row) => Number(row.version) >= 17.0) as TOTALS_TABLE_TYPE : gData!}
+                              data={
+                                gdTCFilter
+                                  ? ((gData! as TOTALS_TABLE_TYPE).filter(
+                                      (row) => Number(row.version) >= 17.0,
+                                    ) as TOTALS_TABLE_TYPE)
+                                  : gData!
+                              }
                               xKey={gd.xKey}
                               yKeys={gd.yKeys}
                               seriesNames={getSeriesNames(gd.seriesNames)}

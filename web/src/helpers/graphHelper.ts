@@ -1,4 +1,8 @@
-import { CV_METADATATABLE_TYPE, TOTALS_TABLE_TYPE } from "./dataTableHelper";
+import {
+  CV_METADATATABLE_TYPE,
+  DELTA_TABLE_TYPE,
+  TOTALS_TABLE_TYPE,
+} from "./dataTableHelper";
 
 export const GRAPH_COLORS = [
   "#4e79a7",
@@ -25,7 +29,7 @@ export type CHART_TYPES =
   | "funnel";
 
 export interface IAppChartProps {
-  data: CV_METADATATABLE_TYPE | TOTALS_TABLE_TYPE;
+  data: CV_METADATATABLE_TYPE | TOTALS_TABLE_TYPE | DELTA_TABLE_TYPE;
   xKey: string;
   yKeys: string[];
   seriesNames: string[];
@@ -38,7 +42,7 @@ export interface IAppChartProps {
 
 export type GRAPH_VIEW_TYPE = {
   view: string;
-  data: "totals" | "metadata";
+  data: "totals" | "metadata" | "delta";
   type: CHART_TYPES;
   stacked?: boolean;
   xKey: string;
@@ -417,16 +421,16 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
   {
     view: "textcorpus",
     data: "metadata",
-    type: "bar",
+    type: "line",
     xKey: "version",
-    yKeys: ["tc_totalSentences", "validatedSentences", "unvalidatedSentences"],
+    yKeys: ["totalSentences", "validatedSentences", "unvalidatedSentences"],
     seriesNames: ["calc.tc.total", "col.tc.validated", "col.tc.unvalidated"],
     subTitle: "graph.subtitle.text_corpus_stats",
   },
   {
-    view: "domains",
+    view: "textcorpus",
     data: "metadata",
-    type: "bar",
+    type: "line",
     xKey: "version",
     stacked: true,
     yKeys: [
@@ -456,5 +460,51 @@ export const GRAPH_DATA: GRAPH_VIEW_TYPE[] = [
       "dom.technology_robotics",
     ],
     subTitle: "graph.subtitle.sentence_domain_stats",
+  },
+  {
+    view: "textcorpus",
+    data: "metadata",
+    type: "line",
+    xKey: "version",
+    yKeys: ["reportedSentences"],
+    seriesNames: ["col.reportedSentences"],
+    subTitle: "graph.subtitle.reported_sentences",
+  },
+  // view = delta
+  {
+    view: "delta",
+    data: "delta",
+    type: "line",
+    xKey: "version",
+    yKeys: ["mo_clips"],
+    seriesNames: ["col.clips"],
+    subTitle: "graph.subtitle.monthly_clips",
+  },
+  {
+    view: "delta",
+    data: "delta",
+    type: "line",
+    xKey: "version",
+    yKeys: ["mo_users"],
+    seriesNames: ["col.users"],
+    subTitle: "graph.subtitle.monthly_users",
+  },
+  {
+    view: "delta",
+    data: "delta",
+    type: "line",
+    xKey: "version",
+    yKeys: ["mo_totalHrs"],
+    seriesNames: ["col.totalHrs"],
+    subTitle: "graph.subtitle.monthly_totalHrs",
+  },
+  {
+    view: "delta",
+    data: "delta",
+    type: "line",
+    xKey: "version",
+    yKeys: ["mo_validHrs"],
+    seriesNames: ["col.validHrs"],
+    subTitle: "graph.subtitle.monthly_validHrs",
   },
 ];
