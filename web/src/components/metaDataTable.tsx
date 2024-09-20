@@ -1033,7 +1033,6 @@ export const MetadataTable = (props: MetadataTableProps) => {
         rec0 = rec1;
       });
     });
-    console.log(delta);
     return delta;
   };
 
