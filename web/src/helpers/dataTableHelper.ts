@@ -172,13 +172,13 @@ export type DELTA_ROW_TYPE = {
   validHrs: number;
   avgDurationSecs: number;
 
-  buckets_validated: number;
-  buckets_invalidated: number;
-  buckets_other: number;
-  buckets_train: number;
-  buckets_dev: number;
-  buckets_test: number;
-  buckets_reported: number;
+  b_validated: number;
+  b_invalidated: number;
+  b_other: number;
+  b_train: number;
+  b_dev: number;
+  b_test: number;
+  b_reported: number;
 
   // Calculated Values added just after importing
   validRecsPercentage: number;
