@@ -63,7 +63,8 @@ const FilterSelectors = () => {
     languageList = [...new Set(localeCol)].sort();
   }
 
-  const isDisabled = tableView === "totals";
+  const isTotals = tableView === "totals";
+  const isDelta = tableView === "delta";
 
   return !metaData ? (
     <></>
@@ -81,12 +82,12 @@ const FilterSelectors = () => {
         <FormControl sx={{ m: 1, minWidth: 160, maxWidth: 160 }} size="small">
           <InputLabel
             id="ui-version-filter-select-label"
-            sx={{ color: isDisabled ? "#000000" : "#fafafa" }}
+            sx={{ color: isTotals ? "#000000" : "#fafafa" }}
           >
             {intl.get("ui.filter_version.label")}
           </InputLabel>
           <Select
-            disabled={isDisabled}
+            disabled={isTotals || isDelta}
             labelId="ui-version-filter-select"
             id="ui-version-filter-select"
             title={intl.get("ui.filter_version.title")}
@@ -104,7 +105,7 @@ const FilterSelectors = () => {
                 borderColor: "white",
               },
               "& .MuiSvgIcon-root": {
-                color: isDisabled ? "#000000" : "#fafafa",
+                color: isTotals ? "#000000" : "#fafafa",
               },
             }}
           >
@@ -122,12 +123,12 @@ const FilterSelectors = () => {
         <FormControl sx={{ m: 1, minWidth: 160, maxWidth: 160 }} size="small">
           <InputLabel
             id="ui-language-filter-select-label"
-            sx={{ color: isDisabled ? "#000000" : "#fafafa" }}
+            sx={{ color: isTotals ? "#000000" : "#fafafa" }}
           >
             {intl.get("ui.filter_language.label")}
           </InputLabel>
           <Select
-            disabled={isDisabled}
+            disabled={isTotals}
             labelId="ui-language-filter-select"
             id="ui-language-filter-select"
             title={intl.get("ui.filter_language.title")}
@@ -145,7 +146,7 @@ const FilterSelectors = () => {
                 borderColor: "white",
               },
               "& .MuiSvgIcon-root": {
-                color: isDisabled ? "#000000" : "#fafafa",
+                color: isTotals ? "#000000" : "#fafafa",
               },
             }}
           >
