@@ -904,6 +904,19 @@ export const MetadataTable = (props: MetadataTableProps) => {
         tc_val_percentage: 0,
         tc_with_domain: 0,
         tc_domain_percentage: 0,
+        // sd_nodata: 0,
+        sd_agriculture_food: 0,
+        sd_automotive_transport: 0,
+        sd_finance: 0,
+        sd_service_retail: 0,
+        sd_general: 0,
+        sd_healthcare: 0,
+        sd_history_law_government: 0,
+        sd_language_fundamentals: 0,
+        sd_media_entertainment: 0,
+        sd_nature_environment: 0,
+        sd_news_current_affairs: 0,
+        sd_technology_robotics: 0,
       };
 
       // now fill other values with reducers
@@ -957,6 +970,43 @@ export const MetadataTable = (props: MetadataTableProps) => {
       }, 0);
       res.tc_domain_percentage =
         res.tc_val > 0 ? (100 * res.tc_with_domain) / res.tc_val : 0;
+      // Sentence Domain Totals
+      res.sd_agriculture_food = subset.reduce((sum, row) => {
+        return sum + row.sd_agriculture_food!;
+      }, 0);
+      res.sd_automotive_transport = subset.reduce((sum, row) => {
+        return sum + row.sd_automotive_transport!;
+      }, 0);
+      res.sd_finance = subset.reduce((sum, row) => {
+        return sum + row.sd_finance!;
+      }, 0);
+      res.sd_general = subset.reduce((sum, row) => {
+        return sum + row.sd_general!;
+      }, 0);
+      res.sd_healthcare = subset.reduce((sum, row) => {
+        return sum + row.sd_healthcare!;
+      }, 0);
+      res.sd_history_law_government = subset.reduce((sum, row) => {
+        return sum + row.sd_history_law_government!;
+      }, 0);
+      res.sd_language_fundamentals = subset.reduce((sum, row) => {
+        return sum + row.sd_language_fundamentals!;
+      }, 0);
+      res.sd_media_entertainment = subset.reduce((sum, row) => {
+        return sum + row.sd_media_entertainment!;
+      }, 0);
+      res.sd_nature_environment = subset.reduce((sum, row) => {
+        return sum + row.sd_nature_environment!;
+      }, 0);
+      res.sd_news_current_affairs = subset.reduce((sum, row) => {
+        return sum + row.sd_news_current_affairs!;
+      }, 0);
+      res.sd_service_retail = subset.reduce((sum, row) => {
+        return sum + row.sd_service_retail!;
+      }, 0);
+      res.sd_technology_robotics = subset.reduce((sum, row) => {
+        return sum + row.sd_technology_robotics!;
+      }, 0);
 
       // put row to table
       totals.push(res);

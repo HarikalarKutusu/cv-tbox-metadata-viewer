@@ -320,7 +320,7 @@ export function AppUI() {
           }}
         >
           <Toolbar />
-          <Container maxWidth={false} sx={{ mt: 4, mb: 10 }}>
+          <Container maxWidth={false} sx={{ mt: 4, mb: 30 }}>
             <Grid container spacing={2}>
               {/* Table & Graphs */}
               <Grid item xs={12}>
