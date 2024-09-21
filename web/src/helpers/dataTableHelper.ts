@@ -153,6 +153,20 @@ export type TOTALS_ROW_TYPE = {
   tc_val_percentage: number;
   tc_with_domain: number;
   tc_domain_percentage: number;
+  // sentence domains
+  // sd_nodata: number;
+  sd_agriculture_food: number;
+  sd_automotive_transport: number;
+  sd_finance: number;
+  sd_service_retail: number;
+  sd_general: number;
+  sd_healthcare: number;
+  sd_history_law_government: number;
+  sd_language_fundamentals: number;
+  sd_media_entertainment: number;
+  sd_nature_environment: number;
+  sd_news_current_affairs: number;
+  sd_technology_robotics: number;
 };
 
 export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];
