@@ -547,7 +547,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
         a.unvalidatedSentences > b.unvalidatedSentences ? 1 : -1,
     };
     const calcTCValidatedPercentage: TableColumn<DT_ROW_TYPE> = {
-      id: "tcTotal",
+      id: "tcValidatedPercentage",
       name: intl.get("calc.tc.validated_percentage"),
       sortable: true,
       right: true,
