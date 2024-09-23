@@ -1,5 +1,5 @@
 // State management / store using zustand
-import create from "zustand";
+import { create } from "zustand";
 
 // App
 import {
