@@ -1,7 +1,7 @@
 {
   "name": "cv-toolbox-metadata-viewer",
   "homepage": "/",
-  "version": "0.10.1",
+  "version": "0.10.3",
   "private": true,
   "scripts": {
     "start": "react-app-rewired start",
@@ -12,8 +12,8 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@mui/icons-material": "^5.10.3",
-    "@mui/material": "^5.10.10",
+    "@mui/icons-material": "^6.1.1",
+    "@mui/material": "^6.1.1",
     "file-saver": "^2.0.5",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.3",
