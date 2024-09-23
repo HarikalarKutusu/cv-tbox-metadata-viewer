@@ -126,6 +126,50 @@ export type DT_ROW_TYPE = {
 export type CV_METADATATABLE_TYPE = DT_ROW_TYPE[];
 
 //======================================
+//== DELTA DataTable
+//======================================
+
+export type DELTA_ROW_TYPE = {
+  version: string;
+  days: number;
+  locale: string;
+
+  clips: number;
+  users: number;
+  totalHrs: number;
+  validHrs: number;
+  avgDurationSecs: number;
+
+  b_validated: number;
+  b_invalidated: number;
+  b_other: number;
+  b_train: number;
+  b_dev: number;
+  b_test: number;
+  b_reported: number;
+
+  // Monthly Averages
+  mo_clips: number;
+  mo_users: number;
+  mo_totalHrs: number;
+  mo_validHrs: number;
+  // Calculated Values added just after importing
+  // validRecsPercentage: number;
+  // invalidRecsPercentage: number;
+  // otherRecsPercentage: number;
+  // validatedHrsPercentage: number;
+  avgRecsPerUser: number;
+  avgSecsPerUser: number;
+  // percentageUsed: number;
+  // malePercentage: number;
+  // femalePercentage: number;
+  totalSentences: number;
+  sentencesWithDomain: number;
+};
+
+export type DELTA_TABLE_TYPE = DELTA_ROW_TYPE[];
+
+//======================================
 //== TOTALS  DataTable
 //======================================
 
@@ -175,45 +219,27 @@ export type TOTALS_TABLE_TYPE = TOTALS_ROW_TYPE[];
 //== TOTALS  DataTable
 //======================================
 
-export type DELTA_ROW_TYPE = {
+export type TOTALS_DELTA_ROW_TYPE = {
   version: string;
   days: number;
-  locale: string;
-
-  clips: number;
-  users: number;
-  totalHrs: number;
-  validHrs: number;
-  avgDurationSecs: number;
-
-  b_validated: number;
-  b_invalidated: number;
-  b_other: number;
-  b_train: number;
-  b_dev: number;
-  b_test: number;
-  b_reported: number;
-
-  // Monthly Averages
-  mo_clips: number;
-  mo_users: number;
-  mo_totalHrs: number;
-  mo_validHrs: number;
-  // Calculated Values added just after importing
-  // validRecsPercentage: number;
-  // invalidRecsPercentage: number;
-  // otherRecsPercentage: number;
-  // validatedHrsPercentage: number;
-  avgRecsPerUser: number;
-  avgSecsPerUser: number;
-  // percentageUsed: number;
-  // malePercentage: number;
-  // femalePercentage: number;
-  totalSentences: number;
-  sentencesWithDomain: number;
+  total_locales: number;
+  total_clips: number;
+  total_users: number;
+  total_duration: number;
+  total_totalHrs: number;
+  total_validHrs: number;
+  // calculated
+  calc_valid_percentage: number;
+  calc_avg_dur_clip: number;
+  calc_avg_dur_user: number;
+  // text corpus
+  tc_total: number;
+  tc_val: number;
+  tc_unval: number;
+  tc_with_domain: number;
 };
 
-export type DELTA_TABLE_TYPE = DELTA_ROW_TYPE[];
+export type TOTALS_DELTA_TABLE_TYPE = TOTALS_DELTA_ROW_TYPE[];
 
 //======================================
 //== CV Languages Table from api
