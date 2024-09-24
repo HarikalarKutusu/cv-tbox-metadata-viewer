@@ -103,7 +103,7 @@ export const GraphBuilder = () => {
 
   return !metaData || !initDone || !viewGraphs ? (
     <>...</>
-  ) : !gEnable ? (
+  ) : !gEnable && tableView !== "totals" ? (
     <Alert severity="warning">{intl.get("warn.to_view_graphs")}</Alert>
   ) : (
     <Container maxWidth={false} style={{ padding: 0 }}>
