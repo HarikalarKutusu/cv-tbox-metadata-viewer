@@ -37,9 +37,25 @@ export type StoreType = {
   tableView: string;
   setTableView: (view: string) => void;
 
+  // versions extracted from data
+  versions: string[];
+  setVersions: (lst: string[]) => void;
+
+  // delta version strings
+  deltaVersions: string[];
+  setDeltaVersions: (lst: string[]) => void;
+
+  // languages extracted from data
+  languages: string[];
+  setLanguages: (lst: string[]) => void;
+
   // selected version filter
   versionFilter: string[];
   setVersionFilter: (lst: string[]) => void;
+
+  // selected delta version filter
+  deltaVersionFilter: string[];
+  setDeltaVersionFilter: (lst: string[]) => void;
 
   // selected language filter
   languageFilter: string[];
@@ -72,10 +88,29 @@ const useStore = create<StoreType>((set) => ({
   setTableView: (view: string) =>
     set((state) => ({ ...state, tableView: view })),
 
+  // versions from data
+  versions: [],
+  setVersions: (lst: string[]) => set((state) => ({ ...state, versions: lst })),
+
+  // delta versions from data
+  deltaVersions: [],
+  setDeltaVersions: (lst: string[]) =>
+    set((state) => ({ ...state, deltaVersions: lst })),
+
+  // languages from data
+  languages: [],
+  setLanguages: (lst: string[]) =>
+    set((state) => ({ ...state, languages: lst })),
+
   // selected version filter
   versionFilter: [],
   setVersionFilter: (lst: string[]) =>
     set((state) => ({ ...state, versionFilter: lst })),
+
+  // selected delta version filter
+  deltaVersionFilter: [],
+  setDeltaVersionFilter: (lst: string[]) =>
+    set((state) => ({ ...state, deltaVersionFilter: lst })),
 
   // selected language filter
   languageFilter: [],

@@ -26,7 +26,7 @@ export const DeltaTable = () => {
   const { initDone } = useStore();
   const { langCode } = useStore();
   const { cvDelta } = useStore();
-  // const { versionFilter } = useStore();
+  const { deltaVersionFilter } = useStore();
   const { languageFilter } = useStore();
 
   const getDeltaTableView = (
@@ -428,15 +428,15 @@ export const DeltaTable = () => {
   const applyFilters = useCallback(
     (data: DELTA_TABLE_TYPE) => {
       let res: DELTA_TABLE_TYPE = data;
-      // if (versionFilter.length > 0) {
-      //   res = res.filter((row) => versionFilter.includes(row.version));
-      // }
+      if (deltaVersionFilter.length > 0) {
+        res = res.filter((row) => deltaVersionFilter.includes(row.version));
+      }
       if (languageFilter.length > 0) {
         res = res.filter((row) => languageFilter.includes(row.locale));
       }
       return res;
     },
-    [languageFilter],
+    [deltaVersionFilter, languageFilter],
   );
 
   return !cvDelta || !initDone ? (

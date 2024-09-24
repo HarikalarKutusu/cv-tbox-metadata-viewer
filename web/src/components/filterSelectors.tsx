@@ -19,9 +19,11 @@ import { appTheme } from "./ui/theme";
 import { useStore } from "../stores/store";
 import { getCVLanguageRecord } from "../helpers/dataTableHelper";
 
-const FilterSelectors = () => {
+export const FilterSelectors = () => {
   const { metaData } = useStore();
+  const { versions, deltaVersions, languages } = useStore();
   const { versionFilter, setVersionFilter } = useStore();
+  const { deltaVersionFilter, setDeltaVersionFilter } = useStore();
   const { languageFilter, setLanguageFilter } = useStore();
   const { tableView } = useStore();
 
@@ -32,7 +34,13 @@ const FilterSelectors = () => {
       target: { value },
     } = e;
     // On autofill we get a stringified value.
-    setVersionFilter(typeof value === "string" ? value.split(",") : value);
+    if (isDelta) {
+      setDeltaVersionFilter(
+        typeof value === "string" ? value.split(",") : value,
+      );
+    } else {
+      setVersionFilter(typeof value === "string" ? value.split(",") : value);
+    }
   };
 
   const handleLocaleFilterChange = (
@@ -45,26 +53,10 @@ const FilterSelectors = () => {
     setLanguageFilter(typeof value === "string" ? value.split(",") : value);
   };
 
-  let versionList: string[] = [];
-  let languageList: string[] = [];
-
-  if (metaData) {
-    // get unique lists
-    let versionCol = metaData.map((row) => {
-      return row.version.toString();
-    });
-    versionList = [...new Set(versionCol)].sort(
-      (a, b) => Number(b) - Number(a),
-    );
-    // versionList = versionList.reverse()
-    let localeCol = metaData.map((row) => {
-      return row.locale;
-    });
-    languageList = [...new Set(localeCol)].sort();
-  }
-
   const isTotals = tableView === "totals";
   const isDelta = tableView === "delta";
+  const versionList: string[] = isDelta ? deltaVersions : versions;
+  const languageList: string[] = languages;
 
   return !metaData ? (
     <></>
@@ -87,12 +79,12 @@ const FilterSelectors = () => {
             {intl.get("ui.filter_version.label")}
           </InputLabel>
           <Select
-            disabled={isTotals || isDelta}
+            disabled={isTotals}
             labelId="ui-version-filter-select"
             id="ui-version-filter-select"
             title={intl.get("ui.filter_version.title")}
             multiple
-            value={versionFilter}
+            value={isDelta ? deltaVersionFilter : versionFilter}
             input={<OutlinedInput label="Tag" />}
             renderValue={(selected) => selected.join(", ")}
             // MenuProps={MenuProps}
@@ -112,7 +104,13 @@ const FilterSelectors = () => {
             {versionList.map((x) => {
               return (
                 <MenuItem key={x} value={x}>
-                  <Checkbox checked={versionFilter.indexOf(x) > -1} />
+                  <Checkbox
+                    checked={
+                      isDelta
+                        ? deltaVersionFilter.indexOf(x) > -1
+                        : versionFilter.indexOf(x) > -1
+                    }
+                  />
                   <ListItemText primary={x} />
                 </MenuItem>
               );
@@ -174,5 +172,3 @@ const FilterSelectors = () => {
     </ThemeProvider>
   );
 };
-
-export { FilterSelectors };
