@@ -1,7 +1,7 @@
 {
   "name": "cv-toolbox-metadata-viewer",
   "homepage": "/",
-  "version": "0.10.1",
+  "version": "0.10.3",
   "private": true,
   "scripts": {
     "start": "react-app-rewired start",
@@ -12,17 +12,17 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@mui/icons-material": "^5.10.3",
-    "@mui/material": "^5.10.10",
+    "@mui/icons-material": "^6.1.1",
+    "@mui/material": "^6.1.1",
     "file-saver": "^2.0.5",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
     "react-intl-universal": "^2.6.10",
     "react-scripts": "5.0.1",
-    "react-virtualized-auto-sizer": "^1.0.7",
-    "recharts": "^2.1.14",
-    "recharts-to-png": "^2.2.0",
+    "react-virtualized-auto-sizer": "^1.0.24",
+    "recharts": "^2.12.7",
+    "recharts-to-png": "^2.3.2",
     "zustand": "^4.1.2"
   },
   "devDependencies": {

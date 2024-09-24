@@ -15,13 +15,13 @@ import {
   Divider,
   IconButton,
   Container,
-  Grid,
   Paper,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   // ListSubheader,,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 // import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
@@ -323,7 +323,7 @@ export function AppUI() {
           <Container maxWidth={false} sx={{ mt: 4, mb: 30 }}>
             <Grid container spacing={2}>
               {/* Table & Graphs */}
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                   {tableView === "totals" ? (
                     <TotalsTable />
@@ -338,7 +338,7 @@ export function AppUI() {
                   )}
                 </Paper>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <GraphBuilder />
               </Grid>
             </Grid>
