@@ -414,10 +414,10 @@ export const DeltaTable = () => {
     viewTitle3,
   ] = getDeltaTableView(langCode);
 
-  const exportCVSTotalsMemo = useMemo(
+  const exportCVSDeltaMemo = useMemo(
     () => (
       <DownloadForOfflineIcon
-        onClick={() => downloadCSV(cvDelta!, ["totals"], [])}
+        onClick={() => downloadCSV(cvDelta!, ["delta"], [])}
         color="secondary"
         sx={{ cursor: "grab" }}
       />
@@ -459,7 +459,7 @@ export const DeltaTable = () => {
         defaultSortFieldId={"version"}
         defaultSortAsc={false}
         customStyles={TABLE_STYLE}
-        actions={exportCVSTotalsMemo}
+        actions={exportCVSDeltaMemo}
       />
       <DataTable
         columns={viewColumns2}
@@ -477,7 +477,7 @@ export const DeltaTable = () => {
         defaultSortFieldId={"version"}
         defaultSortAsc={false}
         customStyles={TABLE_STYLE}
-        actions={exportCVSTotalsMemo}
+        actions={exportCVSDeltaMemo}
       />
       <DataTable
         columns={viewColumns3}
@@ -495,7 +495,7 @@ export const DeltaTable = () => {
         defaultSortFieldId={"version"}
         defaultSortAsc={false}
         customStyles={TABLE_STYLE}
-        actions={exportCVSTotalsMemo}
+        actions={exportCVSDeltaMemo}
       />
     </>
   );
