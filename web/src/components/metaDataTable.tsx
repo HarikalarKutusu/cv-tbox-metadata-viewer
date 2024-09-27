@@ -46,11 +46,9 @@ export const MetadataTable = (props: MetadataTableProps) => {
   const { initDone } = useStore();
   const { langCode } = useStore();
   const { metaData, setMetaData } = useStore();
-  const { setCVTotals } = useStore();
-  const { setCVDelta } = useStore();
-  const { tableView } = useStore();
-  const { versionFilter } = useStore();
-  const { languageFilter } = useStore();
+  const { setVersions, setDeltaVersions, setLanguages } = useStore();
+  const { setCVTotals, setCVDelta } = useStore();
+  const { tableView, versionFilter, languageFilter } = useStore();
 
   // const view = props.view ? props.view : "main";
 
@@ -1116,10 +1114,43 @@ export const MetadataTable = (props: MetadataTableProps) => {
       setMetaData(calcdata);
       setCVTotals(totals);
       setCVDelta(delta);
-    } else {
-      // console.log("!!! METADATA READY !!!");
+      // Filters
+      // get unique lists
+      setVersions(
+        totals
+          .map((row) => {
+            return row.version.toString();
+          })
+          .sort((a, b) => Number(b) - Number(a)),
+      );
+      setDeltaVersions(
+        [
+          ...new Set(
+            delta.map((row) => {
+              return row.version.toString();
+            }),
+          ),
+        ].sort((a, b) => Number(b.split("»")[0]) - Number(a.split("»")[0])),
+      );
+      setLanguages(
+        [
+          ...new Set(
+            calcdata.map((row) => {
+              return row.locale;
+            }),
+          ),
+        ].sort(),
+      );
     }
-  }, [metaData, setMetaData, setCVTotals, setCVDelta]);
+  }, [
+    metaData,
+    setMetaData,
+    setCVTotals,
+    setCVDelta,
+    setVersions,
+    setLanguages,
+    setDeltaVersions,
+  ]);
 
   return !metaData || !initDone ? (
     <></>

@@ -26,7 +26,7 @@ export const DeltaTable = () => {
   const { initDone } = useStore();
   const { langCode } = useStore();
   const { cvDelta } = useStore();
-  // const { versionFilter } = useStore();
+  const { deltaVersionFilter } = useStore();
   const { languageFilter } = useStore();
 
   const getDeltaTableView = (
@@ -414,10 +414,10 @@ export const DeltaTable = () => {
     viewTitle3,
   ] = getDeltaTableView(langCode);
 
-  const exportCVSTotalsMemo = useMemo(
+  const exportCVSDeltaMemo = useMemo(
     () => (
       <DownloadForOfflineIcon
-        onClick={() => downloadCSV(cvDelta!, ["totals"], [])}
+        onClick={() => downloadCSV(cvDelta!, ["delta"], [])}
         color="secondary"
         sx={{ cursor: "grab" }}
       />
@@ -428,15 +428,15 @@ export const DeltaTable = () => {
   const applyFilters = useCallback(
     (data: DELTA_TABLE_TYPE) => {
       let res: DELTA_TABLE_TYPE = data;
-      // if (versionFilter.length > 0) {
-      //   res = res.filter((row) => versionFilter.includes(row.version));
-      // }
+      if (deltaVersionFilter.length > 0) {
+        res = res.filter((row) => deltaVersionFilter.includes(row.version));
+      }
       if (languageFilter.length > 0) {
         res = res.filter((row) => languageFilter.includes(row.locale));
       }
       return res;
     },
-    [languageFilter],
+    [deltaVersionFilter, languageFilter],
   );
 
   return !cvDelta || !initDone ? (
@@ -459,7 +459,7 @@ export const DeltaTable = () => {
         defaultSortFieldId={"version"}
         defaultSortAsc={false}
         customStyles={TABLE_STYLE}
-        actions={exportCVSTotalsMemo}
+        actions={exportCVSDeltaMemo}
       />
       <DataTable
         columns={viewColumns2}
@@ -477,7 +477,7 @@ export const DeltaTable = () => {
         defaultSortFieldId={"version"}
         defaultSortAsc={false}
         customStyles={TABLE_STYLE}
-        actions={exportCVSTotalsMemo}
+        actions={exportCVSDeltaMemo}
       />
       <DataTable
         columns={viewColumns3}
@@ -495,7 +495,7 @@ export const DeltaTable = () => {
         defaultSortFieldId={"version"}
         defaultSortAsc={false}
         customStyles={TABLE_STYLE}
-        actions={exportCVSTotalsMemo}
+        actions={exportCVSDeltaMemo}
       />
     </>
   );
