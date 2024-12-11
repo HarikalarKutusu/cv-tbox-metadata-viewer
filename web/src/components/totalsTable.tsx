@@ -118,7 +118,8 @@ export const TotalsTable = () => {
       sortable: true,
       right: true,
       width: "120px",
-      selector: (row) => row.calc_avg_dur_clip.toFixed(3),
+      selector: (row) => row.calc_avg_dur_clip,
+      cell: (row) => row.calc_avg_dur_clip.toFixed(3),
     };
     const calcAvgDurUser: TableColumn<TOTALS_ROW_TYPE> = {
       id: "calc_avg_dur_user",
@@ -126,7 +127,8 @@ export const TotalsTable = () => {
       sortable: true,
       right: true,
       width: "120px",
-      selector: (row) => row.calc_avg_dur_user.toLocaleString(langCode, dec2),
+      selector: (row) => row.calc_avg_dur_user,
+      cell: (row) => row.calc_avg_dur_user.toLocaleString(langCode, dec2),
     };
     //
     // Text Corpus Columns
@@ -341,6 +343,11 @@ export const TotalsTable = () => {
       width: "100px",
       selector: (row) =>
         ((100 * row.total_validHrs) / row.total_totalHrs).toFixed(2),
+      sortFunction: (a, b) =>
+        a.total_validHrs / a.total_totalHrs >
+        b.total_validHrs / b.total_totalHrs
+          ? 1
+          : -1,
     };
     const calcAvgDurClip: TableColumn<TOTALS_DELTA_ROW_TYPE> = {
       id: "calc_avg_dur_clip",
@@ -348,7 +355,8 @@ export const TotalsTable = () => {
       sortable: true,
       right: true,
       width: "120px",
-      selector: (row) => row.calc_avg_dur_clip.toFixed(3),
+      selector: (row) => row.calc_avg_dur_clip,
+      cell: (row) => row.calc_avg_dur_clip.toFixed(3),
       conditionalCellStyles: [
         {
           when: (row) => row.calc_avg_dur_clip < 0,
@@ -362,7 +370,8 @@ export const TotalsTable = () => {
       sortable: true,
       right: true,
       width: "120px",
-      selector: (row) => row.calc_avg_dur_user.toLocaleString(langCode, dec2),
+      selector: (row) => row.calc_avg_dur_user,
+      cell: (row) => row.calc_avg_dur_user.toLocaleString(langCode, dec2),
       conditionalCellStyles: [
         {
           when: (row) => row.calc_avg_dur_user < 0,
