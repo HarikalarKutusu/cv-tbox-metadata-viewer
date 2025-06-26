@@ -210,7 +210,7 @@ export const MetadataTable = (props: MetadataTableProps) => {
       name: intl.get("col.ages_nodata"),
       sortable: true,
       right: true,
-      width: "80px",
+      width: "100px",
       selector: (row) => (row.a_nodata ? row.a_nodata : "-"),
       sortFunction: (a, b) => (a.a_nodata > b.a_nodata ? 1 : -1),
     };
