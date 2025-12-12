@@ -5,7 +5,7 @@
 import packageJson from "./../../package.json";
 export const appVersion: string = packageJson.version;
 export const isBeta: boolean = packageJson.version.endsWith("b");
-export const appDataDate = "2025-03-20";
+export const appDataDate = "2025-12-12";
 
 // URLs
 export const appCommonVoiceURL = "https://commonvoice.mozilla.org/";
